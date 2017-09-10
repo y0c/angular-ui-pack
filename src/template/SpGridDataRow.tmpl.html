@@ -1,0 +1,6 @@
+<div class="sp-grid-data-row" 
+    ng-right-click="openContextMenu($event, $index, rowManager)"
+    ng-click="onGridDataRowClick(row)"
+    ng-hide="isRowDeleted()" >
+    <sp-grid-data-column ng-repeat="(key, value) in filterDataColumn(row) track by $index"></sp-grid-data-column>
+</div>

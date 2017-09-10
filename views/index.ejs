@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+      <link rel="stylesheet" href="/stylesheets/SpGrid.css">
+    <script type="text/javascript" src="/javascripts/SpGrid.js"></script>
+
+      <script type="text/javascript">
+
+        angular.module("gridApp", [ "spGrid"] )
+            .controller("gridController", ['$scope','SpGrid','$http', function( $scope, SpGrid, $http ){
+                /* jQuery의 ajax 통신과 거의 유사하다. */
+                $scope.grid = new SpGrid({
+                    editMode : true,
+                    columnDef: [
+                        {id: "username", name: "유저이름", width: "100px", editType : "text"},
+                        {id: "email", name: "이메일", width: "100px", editType : "email"},
+                        {id: "phone", name: "핸드폰", width: "200px", editType : "text"},
+                        {id: "website", name: "웹 사이트", width: "300px", editType : "text"}
+
+                    ]
+                });
+                $http.get("users.json")
+                    .then(function( response ){
+                        console.log(response.data);
+                        $scope.grid.setData(response.data);
+                    });
+
+                $scope.showChangedData = function(){
+                    console.log($scope.grid.getChangedRow());
+                };
+
+                $scope.addRow = function(){
+                    $scope.grid.addEmptyRow();
+                };
+
+
+            }]);
+    </script>
+
+    <style>
+
+    </style>
+  </head>
+  <body ng-app="gridApp" ng-controller="gridController">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <sp-grid grid-object="grid">
+        </sp-grid>
+      </div>
+    </div>
+    <p>
+      <button class="btn btn-default" ng-click="showChangedData();">변화된 데이터 찍어보기</button>
+      <button class="btn btn-primary" ng-click="addRow()">추가하기</button>
+    </p>
+  </div>
+
+  </body>
+
+</html>
