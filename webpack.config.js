@@ -31,7 +31,8 @@ const config = {
             { test: /\.scss$/, loaders: ['style', 'css', 'postcss', 'sass'] },
             { test: /\.(woff2?|ttf|eot|svg)$/, loader: 'url?limit=10000' }
         ]
-    }
+    },
+    devtool: '#inline-source-map'
 };
 
 module.exports = config;
