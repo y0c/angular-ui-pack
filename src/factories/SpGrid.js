@@ -1,4 +1,4 @@
-module.exports = function( SpGridConstant ){
+function SpGrid( SpGridConstant, $templateCache ){
 
     function SpGrid( gridOptions ){
         var _self = this;
@@ -18,8 +18,21 @@ module.exports = function( SpGridConstant ){
         this._gridOptions     = angular.extend( this._defaultOptions, gridOptions );
 
         this._originalDataset = angular.copy( this._gridOptions.dataset );
+
+        this.init();
     }
 
+    SpGrid.prototype.init = function(){
+        var _columns = this.getColumnDef();
+        if( this._gridOptions.editMode ){
+            _columns.push({
+                type : "html",
+                name: "버튼",
+                width: "100px",
+                bindHtml : $templateCache.get(SpGridConstant.template.SP_GRID_DATA_ROW_BTN_GROUP)
+            });
+        }
+    };
     /**
      * Grid 컬럼 Define 목록 리턴
      * @returns {Array}
@@ -121,4 +134,8 @@ module.exports = function( SpGridConstant ){
         return _result;
     };
     return SpGrid;
+}
+
+module.exports = function(app){
+    app.factory("SpGrid", SpGrid);
 };

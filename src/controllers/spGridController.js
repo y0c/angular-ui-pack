@@ -1,6 +1,5 @@
-var app = require("angular").module("spGrid");
 
-app.controller("spGridController",  function( $scope, SpGridUtil ){
+function spGridController( $scope, SpGridUtil ){
     var _gridObject  = $scope.gridObject;
     var _gridColumns = _gridObject.getColumnDef();
 
@@ -24,7 +23,8 @@ app.controller("spGridController",  function( $scope, SpGridUtil ){
     function getGridColumnIds(){
         var result = [];
         angular.forEach( _gridColumns, function( col ){
-            result.push(col.id);
+            if( col.hasOwnProperty("id"))
+                result.push(col.id);
         });
         return result;
     }
@@ -36,11 +36,14 @@ app.controller("spGridController",  function( $scope, SpGridUtil ){
      */
     function filterDataColumn( data ){
         var result      = {};
+        var _columns    = this.getColumnDef();
+
         angular.forEach( data, function( value, key ){
             if( _gridColumnIds.indexOf(key) != -1 ){
                 result[key] = value;
             }
         });
+
         return result;
     }
 
@@ -54,4 +57,9 @@ app.controller("spGridController",  function( $scope, SpGridUtil ){
     function getColumnData( id, targetField ){
         return SpGridUtil.getMapData( _gridColumns, id, 'id', targetField );
     }
-});
+};
+
+
+module.exports = function( app ){
+    app.controller("spGridController", spGridController);
+};

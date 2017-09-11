@@ -1,8 +1,7 @@
-var app = require("angular").module("spGrid");
 /**
  * Grid Data Row Directive
  */
-app.directive("spGridDataRow", function( SpGridConstant ){
+function spGridDataRow( SpGridConstant ){
     return {
         restrict : "E",
         controller : "spGridController",
@@ -75,4 +74,9 @@ app.directive("spGridDataRow", function( SpGridConstant ){
 
         }
     }
-});
+};
+
+
+module.exports = function(app){
+    app.directive("spGridDataRow", spGridDataRow);
+};

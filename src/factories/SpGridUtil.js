@@ -1,4 +1,4 @@
-module.exports = function(){
+function SpGridUtil(){
     return  {
         /**
          * 배열안에 객체를 탐색해서 원하는 필드값을 리턴
@@ -16,4 +16,9 @@ module.exports = function(){
             }
         }
     }
+}
+
+module.exports = function( app ){
+    app.factory("SpGridUtil", SpGridUtil );
 };
+

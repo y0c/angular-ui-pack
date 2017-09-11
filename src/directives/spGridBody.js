@@ -1,9 +1,8 @@
-var app = require("angular").module("spGrid");
 /**
  * Grid Body Wrap Directive
  */
 
-app.directive("spGridBody", function($compile, SpGridConstant){
+function spGridBody($compile, SpGridConstant, $templateCache ){
     return {
         restrict : "E",
         controller : "spGridController",
@@ -12,6 +11,8 @@ app.directive("spGridBody", function($compile, SpGridConstant){
         templateUrl : SpGridConstant.template.SP_GRID_BODY,
         link : function( scope, element, attr ){
             scope.isContextMenuShow   = false;
+            scope.rightClickPosition = {};
+
 
             scope.openContextMenu     = openContextMenu;
 
@@ -20,10 +21,8 @@ app.directive("spGridBody", function($compile, SpGridConstant){
 
             function openContextMenu( event, index, rowManager ){
                 scope.rowManager = rowManager;
-                scope.rightClickPosition = {
-                    currentX : event.pageX,
-                    currentY : event.pageY
-                };
+                scope.rightClickPosition.currentX = event.pageX + 'px';
+                scope.rightClickPosition.currentY = event.pageY + 'px';
                 scope.isContextMenuShow = true;
             }
 
@@ -33,4 +32,8 @@ app.directive("spGridBody", function($compile, SpGridConstant){
             }
         }
     }
-});
+};
+
+module.exports = function(app){
+    app.directive("spGridBody", spGridBody);
+};

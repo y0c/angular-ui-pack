@@ -1,7 +1,4 @@
-
-var app = require("angular").module("spGrid");
-
-app.directive('ngRightClick', function($parse) {
+function ngRightClick($parse) {
     return function(scope, element, attrs) {
         var fn = $parse(attrs.ngRightClick);
         element.bind('contextmenu', function(event) {
@@ -11,4 +8,14 @@ app.directive('ngRightClick', function($parse) {
             });
         });
     };
-});
+}
+
+
+module.exports = function(app){
+    app.directive("ngRightClick", ngRightClick);
+    app.filter("to_trusted", ['$sce', function($sce){
+        return function(text) {
+            return $sce.trustAsHtml(text);
+        };
+    }]);
+};

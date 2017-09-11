@@ -1,9 +1,8 @@
-var app = require("angular").module("spGrid");
 /**
  * Grid 전체 영역 Directive
  */
 
-app.directive("spGrid", function( $compile, SpGridConstant ){
+function spGrid( $compile, SpGridConstant ){
     return {
         restrict : "E",
         scope : {
@@ -14,4 +13,9 @@ app.directive("spGrid", function( $compile, SpGridConstant ){
         link : function( scope, element, attrs, ctrls, transclude ){
         }
     }
-});
+};
+
+
+module.exports = function(app){
+    app.directive("spGrid", spGrid);
+};
