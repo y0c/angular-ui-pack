@@ -7,10 +7,19 @@ function SpGrid( SpGridConstant, $templateCache ){
             editMode  : false,
             columnDef : [],
             dataset   : [],
+            registerFunction : [],
             gridSize : {
                 width  : "auto",
                 height : "300px"
+            },
+            filterOptions : {
+                query : ""
+            },
+            pagingOptions : {
+                currentPage : 1,
+                pageSize    : 10
             }
+
         };
 
 
@@ -19,6 +28,7 @@ function SpGrid( SpGridConstant, $templateCache ){
 
         this._originalDataset = angular.copy( this._gridOptions.dataset );
 
+        this.pageDataset      = angular.copy( this._gridOptions.dataset);
         this.init();
     }
 
@@ -27,11 +37,40 @@ function SpGrid( SpGridConstant, $templateCache ){
         if( this._gridOptions.editMode ){
             _columns.push({
                 type : "html",
-                name: "버튼",
-                width: "100px",
+                name: "",
+                width: "150px",
                 bindHtml : $templateCache.get(SpGridConstant.template.SP_GRID_DATA_ROW_BTN_GROUP)
             });
         }
+    };
+
+    SpGrid.prototype.getFilterOptions = function(){
+        return this._gridOptions.filterOptions;
+    };
+
+    SpGrid.prototype.getPageSize = function(){
+        return this._gridOptions.pagingOptions.pageSize;
+    };
+
+    SpGrid.prototype.getCurrentPage = function(){
+        return this._gridOptions.pagingOptions.currentPage;
+    };
+    SpGrid.prototype.getTotalRecordCount = function(){
+        return this.getData().length;
+    };
+    /**
+     *
+     * @returns {SpGrid._defaultOptions.pagingOptions|{currentPage, pageSize}}
+     */
+    SpGrid.prototype.getPagingOptions = function(){
+        return this._gridOptions.pagingOptions;
+    };
+    /**
+     * 등록할 Function List
+     * @returns {Array}
+     */
+    SpGrid.prototype.getRegisterFunction = function(){
+        return this._gridOptions.registerFunction;
     };
     /**
      * Grid 컬럼 Define 목록 리턴

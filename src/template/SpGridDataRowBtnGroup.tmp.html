@@ -1,3 +1,14 @@
-<button ng-show="gridObject.isEditMode() && !rowManager.isRowEditting()" ng-click="rowManager.rowEdit();" class="btn btn-default">수정</button>
-<button ng-show="gridObject.isEditMode() && rowManager.isRowEditting()" ng-click="rowManager.rowRevert()" class="btn btn-default">복원</button>
-<button ng-click="rowManager.rowDelete()" class="btn btn-danger">삭제</button>
+<!--<button ng-show="gridObject.isEditMode() && !rowManager.isRowEditting()" ng-click="rowManager.rowEdit();" class="btn btn-default"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>-->
+<!--<button ng-show="gridObject.isEditMode() && rowManager.isRowEditting()" ng-click="rowManager.rowRevert()" class="btn btn-default"><i class="fa fa-reply" aria-hidden="true"></i></button>-->
+<!--<button ng-click="rowManager.rowDelete()" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>-->
+
+<div class="nb-buttons left nb-inline">
+    <div class="nb-btn-save" ng-show="gridObject.isEditMode() && !rowManager.isRowEditting()" ng-click="rowManager.rowEdit();">
+        <button><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+    </div>
+    <div class="nb-btn-delete" ng-show="gridObject.isEditMode() && rowManager.isRowEditting()" ng-click="rowManager.rowRevert()">
+        <button><i class="fa fa-reply" aria-hidden="true"></i></button></div>
+    <div class="nb-btn-delete" ng-click="rowManager.rowDelete()">
+        <button><i class="fa fa-trash" aria-hidden="true"></i></button></div>
+
+</div>

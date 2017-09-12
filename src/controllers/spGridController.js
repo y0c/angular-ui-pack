@@ -13,8 +13,10 @@ function spGridController( $scope, SpGridUtil ){
     $scope.getColumnData = getColumnData;
 
 
-    function init(){
 
+
+    function init(){
+        registerFunction();
     }
     /**
      * Header Column 의 아이디 값만 배열로 리턴
@@ -57,7 +59,20 @@ function spGridController( $scope, SpGridUtil ){
     function getColumnData( id, targetField ){
         return SpGridUtil.getMapData( _gridColumns, id, 'id', targetField );
     }
-};
+
+
+    function registerFunction(){
+        var _functions = _gridObject.getRegisterFunction();
+        for( var i = 0 ; i < _functions.length ; i ++ ){
+            $scope[SpGridUtil.getFunctionName(_functions[i])] = _functions[i]
+        }
+    }
+
+
+
+
+    init();
+}
 
 
 module.exports = function( app ){

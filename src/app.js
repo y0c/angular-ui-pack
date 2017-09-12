@@ -1,4 +1,5 @@
 require("../public/stylesheets/SpGrid.css");
+require("fontawesome");
 // var angular = require("angular");
 
 
@@ -34,11 +35,14 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
     $templateCache.put( SpGridConstant.template.CONTEXT_MENU, require("./template/SpGridDataContextMenu.tmpl.html"));
     $templateCache.put( SpGridConstant.template.DATA_VIEW   , require("./template/SpGridDataView.tmpl.html"));
 
+    $templateCache.put( SpGridConstant.template.SP_GRID_PAGING, require("./template/SpGridPaging.tmpl.html"));
+
 }]);
 
     require("./factories/SpGrid")(app);
     require("./factories/SpGridUtil")(app)
     require("./controllers/spGridController")(app);
+    require("./controllers/spGridBodyController")(app);
     require("./directives/spGrid")(app);
     require("./directives/spGridHeader")(app);
     require("./directives/spGridHeaderRow")(app);
@@ -48,5 +52,6 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
     // require("./directives/spGridDataContextMenu")(app);
     require("./directives/spGridDataColumn")(app);
     require("./directives/util/spUtil")(app);
+    require("./directives/spGridPaging")(app);
 
 
