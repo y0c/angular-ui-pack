@@ -68,6 +68,8 @@ function SpGrid( SpGridConstant, $templateCache ){
 
     SpGrid.prototype.init = function(){
         var _columns = this.getColumnDef();
+
+
         if( this._gridOptions.editMode ){
             _columns.push({
                 type : "html",
@@ -77,9 +79,9 @@ function SpGrid( SpGridConstant, $templateCache ){
             });
         }
 
-        if( this.getData() && this.getData.length > 0 ){
-            this.generateIdx( this.getData());
-        }
+        // if( this.getData() && this.getData.length > 0 ){
+        //     this.generateIdx( this.getData());
+        // }
 
         //Column Type 초기화
         if( _columns && _columns.length > 0 ){
@@ -91,11 +93,13 @@ function SpGrid( SpGridConstant, $templateCache ){
         }
 
     };
-    SpGrid.prototype.generateIdx = function( dataset){
-        for( var i = 0 ; i < dataset.length ; i ++ ){
-            dataset[i].__idx = i+1;
-        }
-    };
+
+    // SpGrid.prototype.generateIdx = function( dataset){
+    //     for( var i = 0 ; i < dataset.length ; i ++ ){
+    //         dataset[i].__idx = i+1;
+    //     }
+    // };
+
     SpGrid.prototype.getFilterOptions = function(){
         return this._gridOptions.filterOptions;
     };
@@ -107,6 +111,7 @@ function SpGrid( SpGridConstant, $templateCache ){
     SpGrid.prototype.getCurrentPage = function(){
         return this._gridOptions.pagingOptions.currentPage;
     };
+
     SpGrid.prototype.getTotalRecordCount = function(){
         return this.getData().length;
     };
@@ -153,9 +158,11 @@ function SpGrid( SpGridConstant, $templateCache ){
      * @returns {SpGrid}
      */
     SpGrid.prototype.setData = function( dataset ){
-        this.generateIdx( dataset );
-        this._gridOptions.dataset = dataset;
-        this._originalDataset = angular.copy( this._gridOptions.dataset );
+        // this.generateIdx( dataset );
+        angular.copy(dataset,this._gridOptions.dataset);
+        angular.copy(this._gridOptions.dataset,this._originalDataset );
+        // this._gridOptions.dataset = dataset;
+        // this._originalDataset = angular.copy( this._gridOptions.dataset );
         return this;
     };
 
