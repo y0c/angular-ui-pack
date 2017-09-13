@@ -1,7 +1,7 @@
 <div class="sp-grid-data-row" 
     ng-click="onGridDataRowClick(row)"
     ng-hide="isRowDeleted()" >
-    <form class="sp-grid-row-form" novalidate>
+    <form class="sp-grid-row-form" novalidate name="rowForm">
         <sp-grid-data-column ng-repeat="headerColumn in gridObject.getColumnDef() track by $index" ></sp-grid-data-column>
     </form>
 </div>
