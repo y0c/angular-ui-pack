@@ -32,6 +32,7 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
      * Grid Util
      */
     $templateCache.put( SpGridConstant.template.EDIT_INPUT  , require("./template/SpGridEditInput.tmpl.html"));
+    $templateCache.put( SpGridConstant.template.EDIT_CHECKBOX, require("./template/SpGridEditCheckBox.tmpl.html"));
     $templateCache.put( SpGridConstant.template.CONTEXT_MENU, require("./template/SpGridDataContextMenu.tmpl.html"));
     $templateCache.put( SpGridConstant.template.DATA_VIEW   , require("./template/SpGridDataView.tmpl.html"));
 

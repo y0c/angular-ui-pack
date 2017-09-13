@@ -4,6 +4,7 @@ module.exports = {
     DELETE_FLAG : "D",
     template : {
         EDIT_INPUT            : "SpGridEditInput.tmpl.html",
+        EDIT_CHECKBOX         : "SpGridEditCheckBox.tmpl.html",
         CONTEXT_MENU          : "SpGridDataContextMenu.tmpl.html",
         DATA_VIEW             : "SpGridDataView.tmpl.html",
         SP_GRID               : "SpGrid.tmpl.html",
