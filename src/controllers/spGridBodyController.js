@@ -1,4 +1,4 @@
-function spGridBodyController(){
+function spGridBodyController( $scope ){
 
 }
 

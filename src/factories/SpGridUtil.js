@@ -29,6 +29,28 @@ function SpGridUtil(){
             var result = /^function\s+([\w\$]+)\s*\(/.exec( func.toString() )
 
             return  result  ?  result[ 1 ]  :  '' // for an anonymous function there won't be a match
+        },
+        getValidateObject : function(){
+            var _validateObject =
+                {
+                    required : function( value ){
+                        return value != "" && value != null && value !== undefined
+                    },
+                    minLength : function( data, obj ){
+                        if( obj.value == "" || obj.value == null || obj.value === undefined ){
+                            throw new Error(["MinLength 조건은 value값을 넣어주셔야 합니다."]);
+                        }
+                        return data.length > obj.value;
+                    },
+                    maxLength : function( data, obj ){
+                        if( obj.value == "" || obj.value == null || obj.value === undefined ){
+                            throw new Error(["MaxLength 조건은 value값을 넣어주셔야 합니다."]);
+                        }
+                        return data.length < obj.value;
+                    }
+                };
+
+            return _validateObject;
         }
     }
 }

@@ -7,6 +7,7 @@ function SpGrid( SpGridConstant, $templateCache ){
             editMode  : false,
             columnDef : [],
             dataset   : [],
+            createDataset : [],
             registerFunction : [],
             gridSize : {
                 width  : "auto",
@@ -18,6 +19,9 @@ function SpGrid( SpGridConstant, $templateCache ){
             pagingOptions : {
                 currentPage : 1,
                 pageSize    : 10
+            },
+            validateCallback : function( message ){
+                alert(message);
             }
 
         };
@@ -29,8 +33,38 @@ function SpGrid( SpGridConstant, $templateCache ){
         this._originalDataset = angular.copy( this._gridOptions.dataset );
 
         this.pageDataset      = angular.copy( this._gridOptions.dataset);
+
+        this.status = "";
+
         this.init();
     }
+
+    SpGrid.prototype.getCreateData = function(){
+        return this._gridOptions.createDataset;
+    };
+
+    SpGrid.prototype.getValidateCallback = function( ){
+        return this._gridOptions.validateCallback;
+    };
+
+    SpGrid.prototype.setValidateCallback = function( callback ){
+        this._gridOptions.validateCallback = callback;
+        return this;
+    };
+
+
+    SpGrid.prototype.setStatus = function( status ){
+        this.status = status;
+        return this;
+    };
+
+    SpGrid.prototype.getStatus = function(){
+        return this.status;
+    };
+
+    SpGrid.prototype.isStatusChanged = function(){
+        return this.status == "edit" || this.status == "create";
+    };
 
     SpGrid.prototype.init = function(){
         var _columns = this.getColumnDef();
@@ -42,8 +76,26 @@ function SpGrid( SpGridConstant, $templateCache ){
                 bindHtml : $templateCache.get(SpGridConstant.template.SP_GRID_DATA_ROW_BTN_GROUP)
             });
         }
-    };
 
+        if( this.getData() && this.getData.length > 0 ){
+            this.generateIdx( this.getData());
+        }
+
+        //Column Type 초기화
+        if( _columns && _columns.length > 0 ){
+            angular.forEach( _columns, function( _column){
+                if( !_column.hasOwnProperty("type") ){
+                    _column.type = "data";
+                }
+            });
+        }
+
+    };
+    SpGrid.prototype.generateIdx = function( dataset){
+        for( var i = 0 ; i < dataset.length ; i ++ ){
+            dataset[i].__idx = i+1;
+        }
+    };
     SpGrid.prototype.getFilterOptions = function(){
         return this._gridOptions.filterOptions;
     };
@@ -101,6 +153,7 @@ function SpGrid( SpGridConstant, $templateCache ){
      * @returns {SpGrid}
      */
     SpGrid.prototype.setData = function( dataset ){
+        this.generateIdx( dataset );
         this._gridOptions.dataset = dataset;
         this._originalDataset = angular.copy( this._gridOptions.dataset );
         return this;
@@ -149,11 +202,16 @@ function SpGrid( SpGridConstant, $templateCache ){
         var _columns = this.getColumnDef();
         var _row     = {};
 
+        if( this.isStatusChanged() ){
+            return;
+        }
+
         for( var i = 0 ; i < _columns.length ; i ++ ){
             _row[_columns[i].id] = "";
         }
         _row.cudFlag = SpGridConstant.CREATE_FLAG;
-        this.getData().push(_row);
+        this.setStatus("create");
+        this.getCreateData().push(_row);
     };
 
 
@@ -166,7 +224,7 @@ function SpGrid( SpGridConstant, $templateCache ){
         var _dataset = this.getData();
         for( var i = 0 ; i < _dataset.length ; i ++ ){
             if( _dataset[i] && _dataset[i].hasOwnProperty("cudFlag")
-                && _dataset[i].cudFlag != "" ){
+                && _dataset[i].cudFlag != "" && _dataset[i].__valid ){
                 _result.push(_dataset[i]);
             }
         }

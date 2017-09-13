@@ -1,7 +1,7 @@
 <div class="sp-grid-data-column" ng-style="{ 'max-width' : columnWidth , 'min-width' : columnWidth }">
-    <div class="sp-grid-data-header" ng-show="displayData != null || displayData !== undefined">{{columnHeader}}</div>
+    <div class="sp-grid-data-header">{{columnHeader}}</div>
     <div class="sp-grid-data">
-        <span class="sp-grid-data-view" ng-show="displayData != null || displayData !== undefined" ng-bind="{{displayData}}"></span>
-        <div class="sp-grid-data-html" ng-show="bindHtml != null || bindHtml !== undefined"></div>
+        <span class="sp-grid-data-view" ng-show="isTypeData() || isTypeRowno()">{{displayData}}</span>
+        <div class="sp-grid-data-html" ng-show="isTypeHtml()"></div>
     </div>
 </div>
