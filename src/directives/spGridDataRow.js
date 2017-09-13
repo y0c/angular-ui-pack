@@ -40,10 +40,15 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 if( scope.gridObject.isStatusChanged() ){
                     return ;
                 }
+                if( !scope.row.hasOwnProperty("cudFlag")  ){
+                    scope.row._originalRow = {};
+                    //Deep Copy
+                    angular.copy(scope.row, scope.row._originalRow);
+                    scope.row.cudFlag      = SpGridConstant.UPDATE_FLAG;
+                }
+
                 scope.row.__isTempSave = false;
                 scope.gridObject.setStatus("edit");
-                scope.row._originalRow = angular.copy(scope.row);
-                scope.row.cudFlag      = SpGridConstant.UPDATE_FLAG;
                 scope.$broadcast("changeMode");
             };
 
