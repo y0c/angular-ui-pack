@@ -3,31 +3,71 @@
   <head>
     <title><%= title %></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-
+    <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-      <link rel="stylesheet" href="/stylesheets/SpGrid.css">
-    <script type="text/javascript" src="/javascripts/SpGrid.js"></script>
+    <link rel="stylesheet" href="http://nana.band/template/style/reset.css">
+    <link rel="stylesheet" href="http://nana.band/template/style/page.css">
+    <link rel="stylesheet" href="http://nana.band/template/style/animation.css">
+    <link rel="stylesheet" href="http://nana.band/template/style/theme.css">
+
+    <!--<link rel="stylesheet" href="/stylesheets/SpGrid.css">-->
+    <script type="text/javascript" src="/javascripts/dist/SpGrid.js"></script>
 
       <script type="text/javascript">
 
         angular.module("gridApp", [ "spGrid"] )
             .controller("gridController", ['$scope','SpGrid','$http', function( $scope, SpGrid, $http ){
-                /* jQuery의 ajax 통신과 거의 유사하다. */
+                $scope.pagingOptions = {
+                    pageSize : 10,
+                    pageBlockSize : 10
+                };
+                var variable1  = 'v'
                 $scope.grid = new SpGrid({
                     editMode : true,
                     columnDef: [
-                        {id: "username", name: "유저이름", width: "100px", editType : "text"},
+                        { id : "__idx", name : "순번", width: "50px", type : "rowno"},
+                        {id: "username", name: "유저이름", width: "100px", editType : "text", validate : {
+                            required : {
+                                message : "유저이름을 입력해주세요"
+                            },
+                            minLength : {
+                                value : 2,
+                                message : "유저이름은 3글자 이상입니다."
+                            },
+                            maxLength : {
+                                value : 8,
+                                message : "유저이름은 8글자 이하여야합니다."
+                            },
+                            custom : {
+                                message : "무조건 5자리 맞춰",
+                                fn : function( col ){
+                                    if( col.length == 5 ){
+                                        return true;
+                                    }
+                                    return false;
+                                }
+                            }
+                        }},
                         {id: "email", name: "이메일", width: "100px", editType : "email"},
                         {id: "phone", name: "핸드폰", width: "200px", editType : "text"},
-                        {id: "website", name: "웹 사이트", width: "300px", editType : "text"}
+                        {id: "website", name: "웹 사이트", width: "300px", editType : "text"},
+                        {id : "test", name:"Html", width:"300px", type : "html", bindHtml : "<a href=\"#\">{{displayData}}</a>"}
 
-                    ]
+
+                    ],
+                    registerFunction : [
+                        function test(){
+                            alert("test!!!" + variable1);
+                        }
+                    ],
+                    pagingOptions : $scope.pagingOptions
                 });
                 $http.get("users.json")
                     .then(function( response ){
                         console.log(response.data);
                         $scope.grid.setData(response.data);
+                        $scope.pagingOptions.totalRecordCount = response.data.length;
                     });
 
                 $scope.showChangedData = function(){
@@ -38,6 +78,9 @@
                     $scope.grid.addEmptyRow();
                 };
 
+                $scope.test = function(){
+                    alert("test");
+                }
 
             }]);
     </script>
@@ -48,13 +91,34 @@
   </head>
   <body ng-app="gridApp" ng-controller="gridController">
   <div class="container">
+
+    <div class="row" style="margin-top:40px;margin-bottom:10px;">
+        <div class="col-md-3">
+           <select ng-model="queryBy" class="form-control">
+             <option value="$">전체</option>
+             <option ng-repeat="col in grid.getColumnDef()" value="{{col.id}}">{{col.name}}</option>
+           </select>
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control search-query" ng-model="query[queryBy]" />
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
     <div class="row">
       <div class="col-md-12">
         <sp-grid grid-object="grid">
         </sp-grid>
       </div>
     </div>
-    <p>
+    <div class="row" style="margin-top:30px;">
+      <sp-grid-paging paging-options="pagingOptions" style="margin-top:20px;">
+      </sp-grid-paging>
+    </div>
+
+
+    <p class="text-center" style="margin-top:30px;">
       <button class="btn btn-default" ng-click="showChangedData();">변화된 데이터 찍어보기</button>
       <button class="btn btn-primary" ng-click="addRow()">추가하기</button>
     </p>

@@ -1,5 +1,6 @@
 require("../public/stylesheets/SpGrid.css");
-var angular = require("angular");
+require("fontawesome");
+// var angular = require("angular");
 
 
 var app = angular.module("spGrid", []);
@@ -25,6 +26,7 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
     $templateCache.put( SpGridConstant.template.SP_GRID_BODY        , require("./template/SpGridBody.tmpl.html"));
     $templateCache.put( SpGridConstant.template.SP_GRID_DATA_ROW    , require("./template/SpGridDataRow.tmpl.html"));
     $templateCache.put( SpGridConstant.template.SP_GRID_DATA_COLUMN , require("./template/SpGridDataColumn.tmpl.html"));
+    $templateCache.put( SpGridConstant.template.SP_GRID_DATA_ROW_BTN_GROUP, require("./template/SpGridDataRowBtnGroup.tmp.html"));
 
     /**
      * Grid Util
@@ -33,18 +35,23 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
     $templateCache.put( SpGridConstant.template.CONTEXT_MENU, require("./template/SpGridDataContextMenu.tmpl.html"));
     $templateCache.put( SpGridConstant.template.DATA_VIEW   , require("./template/SpGridDataView.tmpl.html"));
 
-}])
-    .factory("SpGrid"                   , require("./factories/SpGrid"))
-    .factory("SpGridUtil"               , require("./factories/SpGridUtil"));
+    $templateCache.put( SpGridConstant.template.SP_GRID_PAGING, require("./template/SpGridPaging.tmpl.html"));
 
-    require("./controllers/spGridController");
-    require("./directives/spGrid");
-    require("./directives/spGridHeader");
-    require("./directives/spGridHeaderRow");
-    require("./directives/spGridBody");
-    require("./directives/spGridDataRow");
-    require("./directives/spGridDataContextMenu");
-    require("./directives/spGridDataColumn");
-    require("./directives/util/ngRightClick");
+}]);
+
+    require("./factories/SpGrid")(app);
+    require("./factories/SpGridUtil")(app)
+    require("./controllers/spGridController")(app);
+    require("./controllers/spGridBodyController")(app);
+    require("./directives/spGrid")(app);
+    require("./directives/spGridHeader")(app);
+    require("./directives/spGridHeaderRow")(app);
+    require("./directives/spGridHeaderColumn")(app);
+    require("./directives/spGridBody")(app);
+    require("./directives/spGridDataRow")(app);
+    // require("./directives/spGridDataContextMenu")(app);
+    require("./directives/spGridDataColumn")(app);
+    require("./directives/util/spUtil")(app);
+    require("./directives/spGridPaging")(app);
 
 

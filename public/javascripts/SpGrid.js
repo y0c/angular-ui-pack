@@ -61,7 +61,7 @@
         $templateCache.put( SpGridConstant.template.SP_GRID_BODY,
                         "<div class=\"sp-grid-body\" ng-style=\"{ 'height' : gridObject.getSize().height }\" >" +
                             "<sp-grid-data-row ng-repeat=\"row in gridObject.getData() track by $index\"></sp-grid-data-row>" +
-                            "<sp-grid-data-context-menu></sp-grid-data-context-menu>" +
+                            // "<sp-grid-data-context-menu></sp-grid-data-context-menu>" +
                         "</div>");
 
         $templateCache.put( SpGridConstant.template.SP_GRID_DATA_ROW,

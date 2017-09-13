@@ -12,6 +12,8 @@ module.exports = {
         SP_GRID_HEADER_COLUMN : "SpGridHeaderColumn.tmpl.html",
         SP_GRID_BODY          : "SpGridBody.tmpl.html",
         SP_GRID_DATA_ROW      : "SpGridDataRow.tmpl.html",
-        SP_GRID_DATA_COLUMN   : "SpGridDataColumn.tmpl.html"
+        SP_GRID_DATA_ROW_BTN_GROUP : "SpGridDataRowBtnGroup.tmpl.html",
+        SP_GRID_DATA_COLUMN   : "SpGridDataColumn.tmpl.html",
+        SP_GRID_PAGING        : "SpGridPaging.tmpl.html"
     }
 };

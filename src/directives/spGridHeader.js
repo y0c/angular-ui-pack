@@ -1,8 +1,7 @@
-var app = require("angular").module("spGrid");
 /**
  * Grid Header Wrap Directive
  */
-app.directive("spGridHeader", function( $compile, SpGridConstant){
+function spGridHeader( $compile, SpGridConstant){
     return {
         restrict : "E",
         controller : "spGridController",
@@ -13,4 +12,8 @@ app.directive("spGridHeader", function( $compile, SpGridConstant){
             console.log("spGridHeader");
         }
     }
-});
+}
+
+module.exports = function(app){
+    app.directive("spGridHeader", spGridHeader);
+};

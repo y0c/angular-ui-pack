@@ -1,4 +1,5 @@
 <div class="sp-grid-body" ng-style="{ 'height' : gridObject.getSize().height }" >
-    <sp-grid-data-row ng-repeat="row in gridObject.getData() track by $index"></sp-grid-data-row>
-    <sp-grid-data-context-menu></sp-grid-data-context-menu>
+    <sp-grid-data-row ng-repeat="row in gridObject.getCreateData()"></sp-grid-data-row>
+    <sp-grid-data-row
+            ng-repeat="row in gridObject.getData() | startFrom:start | limitTo:pageSize"></sp-grid-data-row>
 </div>
