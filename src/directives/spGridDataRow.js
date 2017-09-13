@@ -137,11 +137,17 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                     }
                 });
 
+              /*  var _form = scope['rowForm' + scope.$index];
+                if( _form.$dirty ){
+                    scope.gridObject.getValidateCallback()("변경된 내용이 없습니다");
+                }*/
+
                 if( _invalidArray.length > 0 ){
                     scope.gridObject.getValidateCallback()(_invalidArray[0]);
                     return false;
                 } else {
-                    if( scope.row.hasOwnProperty("cudFlag") && scope.row.cudFlag == SpGridConstant.CREATE_FLAG ){
+                    if( scope.row.hasOwnProperty("cudFlag") &&
+                        scope.row.cudFlag == SpGridConstant.CREATE_FLAG ){
                         scope.gridObject.getData().unshift(
                             scope.gridObject.getCreateData().splice(0,1)[0]
                         );
@@ -149,6 +155,8 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                     scope.row.__valid = true;
                     scope.row.__isTempSave = true;
                 }
+
+
 
                 scope.gridObject.setStatus("");
                 scope.$broadcast("changeMode");

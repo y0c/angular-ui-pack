@@ -21,8 +21,10 @@ function spGridBody($compile, SpGridConstant, $templateCache ){
 
 
             scope.$watch("gridObject.getPagingOptions()", function(){
-                scope.start    = (scope.gridObject.getCurrentPage()-1)*scope.gridObject.getPageSize();
-                scope.pageSize = scope.gridObject.getPageSize();
+                var _currentPage = scope.gridObject.getCurrentPage() || 1;
+                var _pageSize    = scope.gridObject.getPageSize();
+                scope.start    = (_currentPage-1) * _pageSize;
+                scope.pageSize = _pageSize;
                 // scope.$rows               = range( scope.gridObject.getData(), scope.start, scope.start + scope.pageSize );
             }, true);
 
