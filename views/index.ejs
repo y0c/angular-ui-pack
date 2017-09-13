@@ -27,33 +27,16 @@
                     editMode : true,
                     columnDef: [
                         { id : "__idx", name : "순번", width: "50px", type : "rowno"},
-                        {id: "username", name: "유저이름", width: "100px", editType : "text", validate : {
-                            required : {
-                                message : "유저이름을 입력해주세요"
-                            },
-                            minLength : {
-                                value : 2,
-                                message : "유저이름은 3글자 이상입니다."
-                            },
-                            maxLength : {
-                                value : 8,
-                                message : "유저이름은 8글자 이하여야합니다."
-                            },
-                            custom : {
-                                message : "무조건 5자리 맞춰",
-                                fn : function( col ){
-                                    if( col.length == 5 ){
-                                        return true;
-                                    }
-                                    return false;
-                                }
-                            }
-                        }},
-                        {id: "email", name: "이메일", width: "100px", editType : "email"},
-                        {id: "phone", name: "핸드폰", width: "200px", editType : "text"},
-                        {id: "website", name: "웹 사이트", width: "300px", editType : "text"},
-                        {id : "test", name:"Html", width:"300px", type : "html", bindHtml : "<a href=\"#\">{{displayData}}</a>"}
-
+                        { id : "SUBJECT_NO", name : "과목번호", width:"150px", editType : "text"},
+                        { id : "BUNBAN", name : "분반", width : "50px", editType : "text"},
+                        { id : "CHASU_SEQ", name : "차수", width : "50px", editType : "text"},
+                        { id : "COMPT_UNIT_ELE_NO", name : "능력단위요소번호",  width: "200px", editType : "text"},
+                        { id : "LIMIT_SCO", name : "요소별 배점", width:"70px", editType : "text"},
+                        { id : "USE_YN" , name :"사용여부", width: "50px", editType : {
+                            name : "checkbox",
+                            trueValue : "Y",
+                            falseValue : "N"
+                        } }
 
                     ],
                     registerFunction : [
@@ -63,7 +46,7 @@
                     ],
                     pagingOptions : $scope.pagingOptions
                 });
-                $http.get("users.json")
+                $http.get("test.json")
                     .then(function( response ){
                         console.log(response.data);
                         $scope.grid.setData(response.data);
