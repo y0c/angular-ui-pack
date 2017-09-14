@@ -21,8 +21,7 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
              * Grid Data Row 클릭시 기본 Action 과 커스텀 Action 동작
              */
             function onGridDataRowClick( row ){
-                //TODO 그리드 오브젝트를 통해 커스텀 이벤트 등록이 가능하도록 조정 gridObject.gridAction
-                console.log(row);
+                scope.gridObject.getGridAction().onRowClick( row );
             }
 
             function checkRowValid(){
@@ -40,6 +39,11 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 if( scope.gridObject.isStatusChanged() ){
                     return ;
                 }
+
+                if( !scope.gridObject.getGridAction().onRowEditBefore() ){
+                    return ;
+                }
+
                 scope.row._originalRow = {};
                 //Deep Copy
                 angular.copy(scope.row, scope.row._originalRow);
@@ -77,7 +81,12 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 if( scope.gridObject.isStatusChanged() ){
                     return ;
                 }
+
+                if( !scope.gridObject.getGridAction().onRowDeleteBefore( scope.row ) ){
+                   return ;
+                }
                 scope.row.cudFlag = SpGridConstant.DELETE_FLAG;
+                scope.gridObject.getGridAction().onRowDeleteAfter( scope.row );
             };
 
             /**
@@ -177,6 +186,12 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                                 scope.gridObject.getCreateData().splice(0,1)[0]
                             );
                         }
+                        scope.gridObject.getGridAction().onRowCreateAfter( scope.row );
+                    }
+
+                    if( scope.row.hasOwnProperty("cudFlag") &&
+                        scope.row.cudFlag == SpGridConstant.UPDATE_FLAG ){
+                        scope.gridObject.getGridAction().onRowEditAfter( scope.row );
                     }
                     scope.row.__valid      = true;
                     scope.row.__isTempSave = true;

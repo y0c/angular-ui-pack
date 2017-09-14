@@ -1,5 +1,4 @@
-require("../public/stylesheets/SpGrid.css");
-require("fontawesome");
+require("../public/less/SpGrid.less");
 // var angular = require("angular");
 
 

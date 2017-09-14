@@ -1,0 +1,196 @@
+@border-color:#ababab;
+@background-color:#f7f7f7;
+
+.sp-grid-wrap{
+    width: 100%;
+    overflow-x : auto;
+    .sp-grid {
+        .sp-grid-body{
+            position : relative;
+        }
+
+        .sp-grid-data-context-menu-backdrop{
+            position:fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+        }
+
+        //Context Menu 현재 미사용
+        .sp-grid-data-context-menu-wrap{
+            position: absolute;
+
+            & > .sp-grid-data-context-menu{
+                padding: 0;
+                margin: 0;
+                list-style: none;
+
+                 & > li {
+                    padding: 5px 20px;
+                    border: 1px solid #4b4b4b;
+                    box-sizing: border-box;
+                    background: -webkit-linear-gradient(#fff, #fefefe);
+                    background: -o-linear-gradient(#fff, #fefefe);
+                    background: -moz-linear-gradient(#fff, #fefefe);
+                    background: linear-gradient(#fff, #fefefe);
+                    box-shadow : 1px 1px 1px #4b4b4b;
+                }
+            }
+
+
+        }
+
+        .sp-grid-header-column{
+            position:relative;
+        }
+
+
+        [class^=sp-grid-order]{
+            position: absolute;
+            right: 5px;
+            font-size: 10px;
+            cursor:pointer;
+        }
+
+        .sp-grid-order-asc{
+            top: 8px;
+        }
+
+        .sp-grid-order-desc{
+            bottom: 8px;
+        }
+
+        .sp-grid-data-active{
+            background:lighten(@background-color,2%);
+        }
+    }
+}
+
+
+
+
+@media( min-width : 501px ){
+    .sp-grid{
+        width:100%;
+        border:1px solid #ababab;
+        min-height:300px;
+        display:table;
+
+        & > .sp-grid-body {
+            overflow-y:scroll;
+            .sp-grid-data-row{
+                display:table-row;
+
+                .sp-grid-data-column{
+                    border-right: 1px solid @border-color;
+                    border-bottom: 1px solid @border-color;
+                    color:#888;
+                    text-align: center;
+                    display : table-cell;
+                    vertical-align:middle;
+                    font-size:13px;
+                    padding:10px;
+
+                    .sp-grid-data-header{
+                        display:none;
+                    }
+
+
+                    .sp-grid-data{
+                        overflow: hidden;
+                        word-break: break-all;
+                        box-sizing:border-box;
+
+                        .sp-grid-data-html{
+                            padding-bottom: 12px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .sp-grid-header {
+
+            & > .sp-grid-header-row{
+                display:table-row;
+
+                .sp-grid-header-column {
+                    border-right: 1px solid @border-color;
+                    text-align: center;
+                    display : table-cell;
+                    vertical-align:middle;
+                    background: @background-color;
+                    color: #333;
+                    border-bottom: 1px solid @border-color;
+                    font-size:14px;
+                    padding:10px;
+                }
+            }
+        }
+    }
+}
+
+
+@media ( max-width : 500px ){
+    .sp-grid-wrap{
+        width:100% !important;
+        overflow:hidden;
+
+        & > .sp-grid{
+            width:100%;
+            border:1px solid #ababab;
+            min-height:300px;
+            display:block;
+
+
+            & > .sp-grid-header {
+                display:none;
+            }
+
+            & > .sp-grid-body {
+                overflow-y:scroll;
+                padding:10px;
+
+                & > .sp-grid-data-row{
+                    display:block;
+                    height:auto;
+                    margin-bottom:30px;
+                    border-top : 1px solid @border-color;
+
+                    .sp-grid-data-column{
+                        padding: 20px 10px;
+                        background: @background-color;
+                        border-left: 1px solid @border-color;
+                        border-right: 1px solid @border-color;
+                        border-bottom: 1px solid @border-color;
+                        text-align: center;
+                        display : block;
+                        vertical-align:middle;
+                        min-width:100% !important;
+                        max-width:100% !important;
+                        box-sizing:border-box;
+                        font-size:13px;
+
+                        .sp-grid-data-header, .sp-grid-data{
+                            display: inline-block;
+                            overflow: hidden;
+                            word-break: break-all;
+                            box-sizing:border-box;
+                        }
+
+                        .sp-grid-data-header{
+                            width:20%;
+                            vertical-align:top;
+                        }
+
+                        .sp-grid-data {
+                            width: 80%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

@@ -10,16 +10,52 @@ function SpGrid( SpGridConstant, $templateCache ){
             dataset   : [],
             createDataset : [],
             registerFunction : [],
+            /**
+             * 그리드 사이즈 옵션
+             */
             gridSize : {
                 width  : "auto",
                 height : "300px"
             },
+            /**
+             * 필터 옵션
+             */
             filterOptions : {
                 query : ""
             },
+            /**
+             * 페이징 옵션
+             */
             pagingOptions : {
                 currentPage : 1,
                 pageSize    : 10
+            },
+            /**
+             * Grid Action 이벤트 콜백
+             */
+            gridAction : {
+                onRowClick : function(){
+
+                },
+                onRowDeleteBefore : function(){
+                    return true;
+                },
+                onRowDeleteAfter : function(){
+
+                },
+                onRowEditBefore : function(){
+                    return true;
+                },
+                onRowEditAfter : function(){
+
+                },
+                onRowCreateBefore : function(){
+                    return true;
+                },
+                onRowCreateAfter : function(){
+
+                }
+
             },
             validateCallback : function( message ){
                 alert(message);
@@ -116,6 +152,11 @@ function SpGrid( SpGridConstant, $templateCache ){
     SpGrid.prototype.getTotalRecordCount = function(){
         return this.getData().length;
     };
+
+    SpGrid.prototype.getGridAction = function(){
+        return this._gridOptions.gridAction;
+    };
+
     /**
      *
      * @returns {SpGrid._defaultOptions.pagingOptions|{currentPage, pageSize}}
@@ -226,6 +267,9 @@ function SpGrid( SpGridConstant, $templateCache ){
         var _columns = this.getColumnDef();
         var _row     = {};
 
+        if ( !this.getGridAction().onRowCreateBefore() ){
+            return ;
+        }
         if( this.isStatusChanged() ){
             return;
         }
