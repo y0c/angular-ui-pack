@@ -1,0 +1,8 @@
+<div class="nb-select nb-2m sp-grid-data-edit">
+    <label>
+        <select ng-model="row[headerColumn.id]">
+            <option ng-repeat="item in selectbox.dataset" value="{{item[selectbox.keyField]}}">{{item[selectbox.valueField]}}</option>
+        </select>
+        <i></i>
+    </label>
+</div>

@@ -81,7 +81,8 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
                 var _gridDataView    = null;
                 var _typeMap = {
                     "text" : $templateCache.get(SpGridConstant.template.EDIT_INPUT),
-                    "checkbox" : $templateCache.get(SpGridConstant.template.EDIT_CHECKBOX)
+                    "checkbox" : $templateCache.get(SpGridConstant.template.EDIT_CHECKBOX),
+                    "selectbox" : $templateCache.get(SpGridConstant.template.EDIT_SELECTBOX)
                 };
                 var _typeName = null;
                 var _editType = null;
@@ -97,15 +98,52 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
 
                         if( _typeName == "checkbox" ){
 
-                            scope.checkbox = {};
-                            scope.checkbox.trueValue    = _editType.trueValue;
-                            scope.checkbox.falseValue   = _editType.falseValue;
-                            scope.checkbox.defaultValue = _editType.defaultValue || "";
-                            scope.checkbox.label        = _editType.label || "";
+                            scope.checkbox = {
+                                defaultValue : "",
+                                label        : ""
+                            };
 
+                            scope.checkbox = angular.extend({}, scope.checkbox, _editType );
 
+                            // CheckBox 일 경우
                             if( !scope.row[_headerColumn.id] ) {
                                 scope.row[_headerColumn.id] = scope.checkbox.defaultValue;
+                            }
+                            // Edit Type CheckBox
+                        } else if( _typeName == "selectbox" ){
+
+                            scope.selectbox = {
+                                dataset : [],
+                                keyField : "key",
+                                valueField : "value",
+                                defaultText : null,
+                                defaultValue : null,
+                                defaultIndex : null
+                            };
+
+                            scope.selectbox = angular.extend({}, scope.selectbox, _editType );
+
+                            // Edit Type SelectBox
+                            if( scope.selectbox.defaultText != null &&
+                                scope.selectbox.defaultValue != null ){
+                                var _defaultObject = {};
+                                _defaultObject[scope.selectbox.keyField]   = scope.selectbox.defaultText;
+                                _defaultObject[scope.selectbox.valueField] = scope.selectbox.defaultValue;
+
+                                scope.selectbox.dataset.unshift(_defaultObject);
+                            }
+
+                            // Create 일 경우
+                            if( !scope.row[_headerColumn.id] ) {
+
+                                //값이 비어있을경우 defaultIndex, defaultValue 우선순위로 기본값이 정해짐
+                                if( scope.selectbox.defaultValue != null ){
+                                    scope.row[_headerColumn.id] = scope.selectbox.defaultValue;
+                                }
+                                if( scope.selectbox.defaultIndex != null){
+                                    scope.row[_headerColumn.id] = scope.selectbox.dataset[scope.selectbox.defaultIndex][scope.selectbox.keyField];
+                                }
+
                             }
                         }
                     }

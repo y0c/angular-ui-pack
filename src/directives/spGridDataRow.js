@@ -96,6 +96,10 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 return false;
             };
 
+            scope.isRowActive = function(){
+                return ( scope.isRowEditting() || scope.isRowAdding() ) && !scope.isTempSave();
+            };
+
             /**
              * Grid Data Row 삭제된 로우인지 체크
              * @returns {boolean}

@@ -28,16 +28,39 @@
                     columnDef: [
                         { id : "__idx", name : "순번", width: "50px", type : "rowno"},
                         { id : "SUBJECT_NO", name : "과목번호", width:"150px", editType : "text"},
-                        { id : "BUNBAN", name : "분반", width : "100px", editType : "text"},
+                        { id : "BUNBAN", name : "분반", width : "100px", editType : {
+                            name : "selectbox",
+                            keyField : "bunbanCd",
+                            valueField : "bunbanNm",
+                            dataset : [
+                                {
+                                    "bunbanCd" : "A",
+                                    "bunbanNm" : "A"
+                                },
+                                {
+                                    "bunbanCd" : "B",
+                                    "bunbanNm" : "B"
+                                },
+                                {
+                                    "bunbanCd" : "C",
+                                    "bunbanNm" : "C"
+                                },
+                                {
+                                    "bunbanCd" : "D",
+                                    "bunbanNm" : "D"
+                                }
+                            ],
+                            defaultIndex : 0
+                        }},
                         { id : "CHASU_SEQ", name : "차수", width : "100px", editType : "text"},
                         { id : "COMPT_UNIT_ELE_NO", name : "능력단위요소번호",  width: "200px", editType : "text"},
                         { id : "LIMIT_SCO", name : "요소별 배점", width:"100px", editType : "text"},
                         { id : "USE_YN" , name :"사용여부", width: "80px", editType : {
                             name : "checkbox",
                             trueValue : "Y",
-                            falseValue : "N"
-                        } }
-
+                            falseValue : "N",
+                            defaultValue : "N"
+                        }}
                     ],
                     registerFunction : [
                         function test(){

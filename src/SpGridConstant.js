@@ -1,10 +1,11 @@
 module.exports = {
     CREATE_FLAG : "C",
-        UPDATE_FLAG : "U",
+    UPDATE_FLAG : "U",
     DELETE_FLAG : "D",
     template : {
         EDIT_INPUT            : "SpGridEditInput.tmpl.html",
         EDIT_CHECKBOX         : "SpGridEditCheckBox.tmpl.html",
+        EDIT_SELECTBOX        : "SpGridEditSelectBox.tmpl.html",
         CONTEXT_MENU          : "SpGridDataContextMenu.tmpl.html",
         DATA_VIEW             : "SpGridDataView.tmpl.html",
         SP_GRID               : "SpGrid.tmpl.html",
