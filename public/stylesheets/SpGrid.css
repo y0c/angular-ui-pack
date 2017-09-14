@@ -44,10 +44,10 @@
     cursor:pointer;
 }
 .sp-grid .sp-grid-order-asc{
-    top: 15px;
+    top: 8px;
 }
 .sp-grid .sp-grid-order-desc{
-    bottom: 15px;
+    bottom: 8px;
 }
 .sp-grid-data-active{
     background:#fafafa;
@@ -61,14 +61,13 @@
     }
 
     .sp-grid > .sp-grid-header {
-        height:50px;
+        /*height:50px;*/
     }
     .sp-grid > .sp-grid-header > .sp-grid-header-row{
         display:table-row;
-        height:50px;
+        /*height:50px;*/
     }
     .sp-grid > .sp-grid-header > .sp-grid-header-row  .sp-grid-header-column {
-        padding: 0 10px;
         border-right: 1px solid #ababab;
         text-align: center;
         display : table-cell;
@@ -77,6 +76,7 @@
         color: #333;
         border-bottom: 1px solid #ababab;
         font-size:14px;
+        padding:10px;
     }
 
     .sp-grid > .sp-grid-body {
@@ -86,11 +86,10 @@
 
     .sp-grid > .sp-grid-body > .sp-grid-data-row{
         display:table-row;
-        height:50px;
+        /*height:50px;*/
     }
 
     .sp-grid > .sp-grid-body > .sp-grid-data-row  .sp-grid-data-column{
-        padding: 0 10px;
         border-right: 1px solid #ababab;
         border-bottom: 1px solid #ababab;
         color:#888;
@@ -98,6 +97,7 @@
         display : table-cell;
         vertical-align:middle;
         font-size:13px;
+        padding:10px;
     }
 
     .sp-grid > .sp-grid-body > .sp-grid-data-row  .sp-grid-data-column > .sp-grid-data{

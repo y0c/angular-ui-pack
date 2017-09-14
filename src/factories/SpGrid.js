@@ -4,7 +4,8 @@ function SpGrid( SpGridConstant, $templateCache ){
         var _self = this;
 
         this._defaultOptions = {
-            editMode  : false,
+            editable  : false,
+            deleteable : false,
             columnDef : [],
             dataset   : [],
             createDataset : [],
@@ -70,7 +71,7 @@ function SpGrid( SpGridConstant, $templateCache ){
         var _columns = this.getColumnDef();
 
 
-        if( this._gridOptions.editMode ){
+        if( this.isEditable() || this.isDeleteable()){
             _columns.push({
                 type : "html",
                 name: "",
@@ -185,21 +186,37 @@ function SpGrid( SpGridConstant, $templateCache ){
     };
 
     /**
-     * Grid EditMode 리턴
+     * Grid Editable 리턴
      * @returns {boolean|*}
      */
-    SpGrid.prototype.isEditMode = function(){
-        return this._gridOptions.editMode;
+    SpGrid.prototype.isEditable = function(){
+        return this._gridOptions.editable;
     };
 
     /**
-     * Grid EditMode 설정
+     * Grid Editable 설정
      * @param editMode
      * @returns {SpGrid}
      */
-    SpGrid.prototype.setEditMode = function( editMode ){
-        this._gridOptions.editMode = editMode;
+    SpGrid.prototype.setEditable = function( editable ){
+        this._gridOptions.editable = editable;
         return this;
+    };
+
+    /**
+     * Grid Deleteable 설정
+     * @returns {boolean|*}
+     */
+    SpGrid.prototype.isDeleteable = function(){
+        return this._gridOptions.deleteable;
+    };
+
+    /**
+     * Grid Deleteable 설정
+     * @param deleteable
+     */
+    SpGrid.prototype.setDeleteable = function( deleteable){
+        this._gridOptions.deleteable = deleteable;
     };
 
     /**

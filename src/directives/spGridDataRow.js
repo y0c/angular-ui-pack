@@ -80,24 +80,34 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 scope.row.cudFlag = SpGridConstant.DELETE_FLAG;
             };
 
+            /**
+             * Gird Row가 수정중 일 경우
+             * @returns {boolean}
+             */
             scope.isRowEditting = function(){
                 if( scope.row.hasOwnProperty("cudFlag")
-                    && scope.row.cudFlag == SpGridConstant.UPDATE_FLAG ){
+                    && scope.row.cudFlag == SpGridConstant.UPDATE_FLAG
+                    && !scope.isTempSave()){
                     return true;
                 }
                 return false;
             };
 
+            /**
+             * Grid Row가 추가 중 일 경우
+             * @returns {boolean}
+             */
             scope.isRowAdding = function(){
                 if( scope.row.hasOwnProperty("cudFlag")
-                    && scope.row.cudFlag == SpGridConstant.CREATE_FLAG ){
+                    && scope.row.cudFlag == SpGridConstant.CREATE_FLAG
+                    && !scope.isTempSave()){
                     return true;
                 }
                 return false;
             };
 
             scope.isRowActive = function(){
-                return ( scope.isRowEditting() || scope.isRowAdding() ) && !scope.isTempSave();
+                return ( scope.isRowEditting() || scope.isRowAdding() );
             };
 
             /**

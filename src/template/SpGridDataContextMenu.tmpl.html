@@ -1,8 +1,8 @@
 <div class="sp-grid-data-context-menu-backdrop"  ng-show="isContextMenuShow" ng-click="isContextMenuShow = !isContextMenuShow" > 
 <div class="sp-grid-data-context-menu-wrap" ng-style="{ 'top' : rightClickPosition.currentY , 'left' : rightClickPosition.currentX }">
 <ul class="sp-grid-data-context-menu">
-    <li ng-show="gridObject.isEditMode() && !rowManager.isRowEditting()" ng-click="rowManager.rowEdit()">Edit</li>
-    <li ng-show="gridObject.isEditMode() && rowManager.isRowEditting()" ng-click="rowManager.rowRevert()">Revert</li> 
+    <li ng-show="gridObject.isEditable() && !rowManager.isRowEditting()" ng-click="rowManager.rowEdit()">Edit</li>
+    <li ng-show="gridObject.isEditable() && rowManager.isRowEditting()" ng-click="rowManager.rowRevert()">Revert</li>
     <li ng-click="rowManager.rowDelete()">Delete</li> 
     </ul> 
 </div> 

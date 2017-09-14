@@ -24,7 +24,8 @@
                 };
                 var variable1  = 'v'
                 $scope.grid = new SpGrid({
-                    editMode : true,
+                    editable : true,
+                    deleteable : true,
                     columnDef: [
                         { id : "__idx", name : "순번", width: "50px", type : "rowno"},
                         { id : "SUBJECT_NO", name : "과목번호", width:"150px", editType : "text"},
