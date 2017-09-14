@@ -28,11 +28,11 @@
                     columnDef: [
                         { id : "__idx", name : "순번", width: "50px", type : "rowno"},
                         { id : "SUBJECT_NO", name : "과목번호", width:"150px", editType : "text"},
-                        { id : "BUNBAN", name : "분반", width : "50px", editType : "text"},
-                        { id : "CHASU_SEQ", name : "차수", width : "50px", editType : "text"},
+                        { id : "BUNBAN", name : "분반", width : "100px", editType : "text"},
+                        { id : "CHASU_SEQ", name : "차수", width : "100px", editType : "text"},
                         { id : "COMPT_UNIT_ELE_NO", name : "능력단위요소번호",  width: "200px", editType : "text"},
-                        { id : "LIMIT_SCO", name : "요소별 배점", width:"70px", editType : "text"},
-                        { id : "USE_YN" , name :"사용여부", width: "50px", editType : {
+                        { id : "LIMIT_SCO", name : "요소별 배점", width:"100px", editType : "text"},
+                        { id : "USE_YN" , name :"사용여부", width: "80px", editType : {
                             name : "checkbox",
                             trueValue : "Y",
                             falseValue : "N"
@@ -75,20 +75,7 @@
   <body ng-app="gridApp" ng-controller="gridController">
   <div class="container">
 
-    <div class="row" style="margin-top:40px;margin-bottom:10px;">
-        <div class="col-md-3">
-           <select ng-model="queryBy" class="form-control">
-             <option value="$">전체</option>
-             <option ng-repeat="col in grid.getColumnDef()" value="{{col.id}}">{{col.name}}</option>
-           </select>
-        </div>
-        <div class="col-md-6">
-          <input type="text" class="form-control search-query" ng-model="query[queryBy]" />
-        </div>
-        <div class="col-md-3">
 
-        </div>
-    </div>
     <div class="row">
       <div class="col-md-12">
         <sp-grid grid-object="grid">
