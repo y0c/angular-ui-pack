@@ -1,0 +1,137 @@
+@charset "utf-8";
+
+/*
+.nb-checkbox input[type="checkbox"]:checked + span {color: #FC3159;}
+.nb-checkbox input[type="checkbox"]:checked + span > i {background-color: #FC3159;}
+.nb-radio input[type="radio"]:checked + span {color: #FC3159;}
+.nb-radio input[type="radio"]:checked + span > i::before {background-color: #FC3159;}
+
+.nb-radio input:focus {border-color: #FC3159;color: #333;}
+.nb-radio input:focus::selection {background-color: #FC3159;color: #fff;}
+.nb-radio input:focus::-moz-selection {background-color: #FC3159;color: #fff;}
+
+.nb-select select:focus {border-color: #FC3159;}
+.nb-select select:focus ~ i::after,
+.nb-select select:focus ~ i::before {background-color: #FC3159;}
+
+.nb-inputText input:focus {border-color: #FC3159;}
+
+.nb-inputText input:focus::selection {background-color: #FC3159;color: #fff;}
+.nb-inputText input:focus::-moz-selection {background-color: #FC3159;color: #fff;}
+
+.nb-inputText.search input ~ a:hover::before {border-color: #FC3159;}
+.nb-inputText.search input ~ a:hover::after {background-color: #FC3159;}
+
+.nb-inputText.calendar input ~ a:hover > em {color: #FC3159;}
+
+.nb-inputText.calendar input ~ a:hover > em::before,
+.nb-inputText.calendar input ~ a:hover > em::after {background-color: #FC3159;}
+
+.nb-headerView dd::selection {background-color: #FC3159;color: #fff;}
+.nb-headerView dd::-moz-selection {background-color: #FC3159;color: #fff;}
+
+.nb-careList-01 > li::selection {background-color: #FC3159;color: #fff;}
+.nb-careList-01 > li::-moz-selection {background-color: #FC3159;color: #fff;}
+
+
+.nb-btns-02 em {background-color: #FC3159;color: #fff;}
+@media screen and (min-width: 960px) {
+	
+}
+
+@media screen and (max-width: 959px) {
+	.nb-tabMenu dd.on {color: #FC3159;}
+	.nb-tabMenu dd.on em::after {background-color: #FC3159;}
+	.nb-form-01-mob .nb-inputText input ~ i::before,
+	.nb-form-01-mob .nb-inputText input ~ i::after {background-color: #FC3159;}
+}
+*/
+
+
+
+.nb-theme-01 .nb-checkbox input[type="checkbox"]:checked + span {color: #5892e6;}
+.nb-theme-01 .nb-checkbox input[type="checkbox"]:checked + span > i {background-color: #5892e6;}
+
+.nb-checkbox input[type="checkbox"]:disabled + span > i,
+.nb-checkbox input[type="checkbox"]:checked:disabled + span > i {background-color: #efefef;}
+.nb-checkbox input[type="checkbox"]:disabled + span {color: #bebebe;}
+
+
+
+.nb-theme-01 .nb-radio input[type="radio"]:checked + span {color: #5892e6;}
+.nb-theme-01 .nb-radio input[type="radio"]:checked + span > i::before {background-color: #5892e6;}
+
+.nb-radio input[type="radio"]:disabled + span,
+.nb-radio input[type="radio"]:checked:disabled + span {color: #bebebe !important;}
+.nb-radio input[type="radio"]:checked:disabled + span > i::before {background-color: #efefef;}
+.nb-radio input[type="radio"]:disabled + span > i {border-color: #efefef;}
+
+.nb-theme-01 .nb-radio input:focus {border-color: #5892e6;color: #333;}
+.nb-theme-01 .nb-radio input:focus::selection {background-color: #5892e6;color: #fff;}
+.nb-theme-01 .nb-radio input:focus::-moz-selection {background-color: #5892e6;color: #fff;}
+
+.nb-theme-01 .nb-select select:focus {border-color: #5892e6;}
+.nb-theme-01 .nb-select select:focus ~ i::after,
+.nb-theme-01 .nb-select select:focus ~ i::before {background-color: #5892e6;}
+
+.nb-theme-01 .nb-inputText input:focus {border-color: #5892e6;}
+
+.nb-theme-01 .nb-inputText input:focus::selection {background-color: #5892e6;color: #fff;}
+.nb-theme-01 .nb-inputText input:focus::-moz-selection {background-color: #5892e6;color: #fff;}
+
+.nb-theme-01 .nb-inputText.search input ~ a:hover::before {border-color: #5892e6;}
+.nb-theme-01 .nb-inputText.search input ~ a:hover::after {background-color: #5892e6;}
+
+.nb-theme-01 .nb-inputText.calendar input ~ a:hover > em {color: #5892e6;}
+
+.nb-theme-01 .nb-inputText.calendar input ~ a:hover > em::before,
+.nb-theme-01 .nb-inputText.calendar input ~ a:hover > em::after {background-color: #5892e6;}
+
+.nb-theme-01 .nb-headerView dd::selection {background-color: #5892e6;color: #fff;}
+.nb-theme-01 .nb-headerView dd::-moz-selection {background-color: #5892e6;color: #fff;}
+
+.nb-theme-01 .nb-careList-01 > li::selection {background-color: #5892e6;color: #fff;}
+.nb-theme-01 .nb-careList-01 > li::-moz-selection {background-color: #5892e6;color: #fff;}
+
+
+.nb-theme-01 .nb-btns-02 em {background-color: #5892e6;color: #fff;}
+
+
+.nb-theme-01 .nb-buttons > div.nb-theme a,
+.nb-theme-01 .nb-buttons > div.nb-theme button {
+	background-color: #5892e6;
+	border-color: #5892e6;
+}
+.nb-theme-01 .nb-buttons > div.nb-theme a:hover,
+.nb-theme-01 .nb-buttons > div.nb-theme a:active,
+.nb-theme-01 .nb-buttons > div.nb-theme button:hover,
+.nb-theme-01 .nb-buttons > div.nb-theme button:active {
+	background-color: rgba(87, 147, 230, 0.8);
+}
+
+.nb-theme-01 .nb-textarea textarea:focus {border-color: #5892e6;}
+	
+@media screen and (min-width: 960px) {
+	.nb-theme-01 .nb-inputText input:focus {border-color: #5892e6;}
+	.nb-theme-01 .nb-inputText input:focus ~ i {border-color: #5892e6;}
+}
+
+@media screen and (max-width: 959px) {
+	.nb-theme-01 .nb-tabMenu dd.on {color: #5892e6;}
+	.nb-theme-01 .nb-tabMenu dd.on em::after {background-color: #5892e6;}
+	.nb-theme-01 .nb-form-01-mob .nb-inputText input ~ i::before,
+	.nb-theme-01 .nb-form-01-mob .nb-inputText input ~ i::after {background-color: #5892e6;}
+	.nb-theme-01 .nb-select.nb-2m select:focus {border-bottom-color: #5892e6;}
+	
+	.nb-theme-01 .nb-inputCalendarMore.nb-2m i::before,
+	.nb-theme-01 .nb-inputCalendarMore.nb-2m i::after,
+	.nb-theme-01 .nb-inputText.nb-2m i::before,
+	.nb-theme-01 .nb-inputText.nb-2m i::after {
+		background-color: #5892e6;
+	}
+
+
+}
+
+
+
