@@ -214,7 +214,11 @@ function SpGrid( SpGridConstant, $templateCache ){
         }
 
         for( var i = 0 ; i < _columns.length ; i ++ ){
-            _row[_columns[i].id] = "";
+            //컬럼타입이 데이터인 애들만 추가해줌
+            if( _columns[i].type == "data" ){
+                _row[_columns[i].id] = "";
+            }
+
         }
         _row.cudFlag = SpGridConstant.CREATE_FLAG;
         this.setStatus("create");

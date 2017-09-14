@@ -56,6 +56,10 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
                 return scope.type == "html";
             }
             function changeModeByCudFlag(){
+                if( !scope.row ){
+                    return ;
+                }
+
                 if( scope.row.hasOwnProperty("cudFlag") && scope.type == "data"){
                     if( scope.row.cudFlag == SpGridConstant.CREATE_FLAG && !scope.isTempSave()){
                         editMode();
@@ -92,10 +96,17 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
                         _typeName = _editType.name;
 
                         if( _typeName == "checkbox" ){
+
                             scope.checkbox = {};
-                            scope.checkbox.trueValue = _editType.trueValue;
-                            scope.checkbox.falseValue = _editType.falseValue;
-                            scope.checkbox.label = "";
+                            scope.checkbox.trueValue    = _editType.trueValue;
+                            scope.checkbox.falseValue   = _editType.falseValue;
+                            scope.checkbox.defaultValue = _editType.defaultValue || "";
+                            scope.checkbox.label        = _editType.label || "";
+
+
+                            if( !scope.row[_headerColumn.id] ) {
+                                scope.row[_headerColumn.id] = scope.checkbox.defaultValue;
+                            }
                         }
                     }
 

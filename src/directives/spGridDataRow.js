@@ -40,10 +40,13 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 if( scope.gridObject.isStatusChanged() ){
                     return ;
                 }
+                scope.row._originalRow = {};
+                //Deep Copy
+                angular.copy(scope.row, scope.row._originalRow);
+
+
                 if( !scope.row.hasOwnProperty("cudFlag")  ){
-                    scope.row._originalRow = {};
-                    //Deep Copy
-                    angular.copy(scope.row, scope.row._originalRow);
+
                     scope.row.cudFlag      = SpGridConstant.UPDATE_FLAG;
                 }
 
@@ -57,7 +60,8 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
              */
             scope.rowRevert = function(){
                 //Deep Copy
-                if( scope.row.cudFlag == SpGridConstant.CREATE_FLAG ){
+                if( scope.row.cudFlag == SpGridConstant.CREATE_FLAG
+                && scope.gridObject.getCreateData().length > 0 ){
                     scope.gridObject.getCreateData().splice(0,1);
                 } else {
                     angular.copy(scope.row._originalRow, scope.row);
@@ -153,11 +157,14 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 } else {
                     if( scope.row.hasOwnProperty("cudFlag") &&
                         scope.row.cudFlag == SpGridConstant.CREATE_FLAG ){
-                        scope.gridObject.getData().unshift(
-                            scope.gridObject.getCreateData().splice(0,1)[0]
-                        );
+                        //처음 생성한 로우의 경우 배열을 옮겨줌
+                        if( scope.gridObject.getCreateData().length > 0 ){
+                            scope.gridObject.getData().unshift(
+                                scope.gridObject.getCreateData().splice(0,1)[0]
+                            );
+                        }
                     }
-                    scope.row.__valid = true;
+                    scope.row.__valid      = true;
                     scope.row.__isTempSave = true;
                 }
 
