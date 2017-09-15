@@ -15,7 +15,7 @@ function SpGrid( SpGridConstant, $templateCache ){
              */
             gridSize : {
                 width  : "auto",
-                height : "300px"
+                height : "auto"
             },
             /**
              * 필터 옵션

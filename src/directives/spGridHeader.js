@@ -9,7 +9,32 @@ function spGridHeader( $compile, SpGridConstant){
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_HEADER,
         link : function( scope, element, attrs, ctrls, transclude ){
-            console.log("spGridHeader");
+            var _headerWidth = element.width();
+
+            var _useageWidth = 0;
+
+            var _headerColumns = scope.gridObject.getColumnDef();
+
+            angular.forEach( _headerColumns, function( column ){
+                if( column.hasOwnProperty("width") ){
+                    _useageWidth += parseInt(column.width);
+                } else {
+                    throw new Error([ column.name + "컬럼의 너비를 지정해주세요"])
+                }
+            });
+
+            var _gapWidth = _headerWidth-5 - _useageWidth;
+
+            if( _gapWidth > 0 ){
+                var _usePercentage = 0;
+                console.log(_gapWidth);
+                angular.forEach( _headerColumns, function( column ){
+                    _usePercentage = parseInt(column.width) / _useageWidth;
+                    column.width = (parseInt(column.width) + parseFloat(( _usePercentage * _gapWidth ).toFixed(1))) + "px";
+                    console.log(parseFloat(( _usePercentage * _gapWidth ).toFixed(1)));
+                });
+            }
+
         }
     }
 }
