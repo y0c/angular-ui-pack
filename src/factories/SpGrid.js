@@ -6,6 +6,7 @@ function SpGrid( SpGridConstant, $templateCache ){
         this._defaultOptions = {
             editable  : false,
             deleteable : false,
+            selectable : false,
             columnDef : [],
             dataset   : [],
             createDataset : [],
@@ -63,7 +64,9 @@ function SpGrid( SpGridConstant, $templateCache ){
 
         };
 
-
+        if( gridOptions.hasOwnProperty("gridAction") ){
+            gridOptions.gridAction = angular.extend(this._defaultOptions.gridAction, gridOptions.gridAction);
+        }
 
         this._gridOptions     = angular.extend( this._defaultOptions, gridOptions );
 
@@ -72,6 +75,8 @@ function SpGrid( SpGridConstant, $templateCache ){
         this.pageDataset      = angular.copy( this._gridOptions.dataset);
 
         this.status = "";
+
+        this.selectedRow = null;
 
         this.init();
     }
@@ -102,6 +107,42 @@ function SpGrid( SpGridConstant, $templateCache ){
     SpGrid.prototype.isStatusChanged = function(){
         return this.status == "edit" || this.status == "create";
     };
+
+    /**
+     * Grid 선택된 로우 지정
+     * @param row
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setSelectedRow = function( row ){
+        row.__isSelected = true;
+        return this;
+    };
+
+    /**
+     * Grid 현재 선택된 로우 리턴
+     * @returns {null}
+     */
+    SpGrid.prototype.getSelectedRow = function(){
+        var _dataset = this.getData();
+        for( var i = 0 ; i < _dataset.length ; i ++ ){
+            if( _dataset[i].hasOwnProperty("_isSelected")
+                && _dataset[i].__isSelected ){
+                return this.selectedRow;
+            }
+        }
+    };
+
+    /**
+     *
+     */
+    SpGrid.prototype.selectCancelAll = function(){
+        angular.forEach( this.getData() , function( row ){
+            if( row.hasOwnProperty("__isSelected") ){
+                delete row.__isSelected;
+            }
+        })
+    };
+
 
     SpGrid.prototype.init = function(){
         var _columns = this.getColumnDef();
@@ -245,6 +286,27 @@ function SpGrid( SpGridConstant, $templateCache ){
     };
 
     /**
+     * Grid Selectable 리턴
+     * @param selectable
+     * @returns {boolean}
+     */
+    SpGrid.prototype.isSelectable = function( ){
+        return this._gridOptions.selectable;
+    };
+
+
+    /**
+     * Grid selectable 설정
+     * @param selectable
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setSelectable = function( selectable ){
+        this._gridOptions.selectable = selectable;
+        return this;
+    };
+
+
+    /**
      * Grid Deleteable 설정
      * @returns {boolean|*}
      */
@@ -255,9 +317,11 @@ function SpGrid( SpGridConstant, $templateCache ){
     /**
      * Grid Deleteable 설정
      * @param deleteable
+     * @returns {SpGrid}
      */
     SpGrid.prototype.setDeleteable = function( deleteable){
         this._gridOptions.deleteable = deleteable;
+        return this;
     };
 
     /**
@@ -302,6 +366,10 @@ function SpGrid( SpGridConstant, $templateCache ){
         }
         return _result;
     };
+
+
+
+
     return SpGrid;
 }
 

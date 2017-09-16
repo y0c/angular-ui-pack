@@ -22,6 +22,8 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
              */
             function onGridDataRowClick( row ){
                 scope.gridObject.getGridAction().onRowClick( row );
+                scope.gridObject.selectCancelAll();
+                scope.gridObject.setSelectedRow( row );
             }
 
             function checkRowValid(){
@@ -130,6 +132,21 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 return false;
             };
 
+            /**
+             * Grid Row 클래스 결정
+             * @returns {*}
+             */
+            scope.getRowClass = function(){
+              if( scope.isRowActive() ){
+                  return SpGridConstant.ROW_ACTIVE_CLASS;
+              }
+
+              if( scope.gridObject.isSelectable() && scope.row.hasOwnProperty("__isSelected") && scope.row.__isSelected ){
+                  return SpGridConstant.ROW_SELECT_CLASS;
+              }
+
+              return ""
+            };
             /**
              *
              * @returns {boolean}

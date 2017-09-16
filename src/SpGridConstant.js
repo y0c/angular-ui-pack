@@ -2,6 +2,8 @@ module.exports = {
     CREATE_FLAG : "C",
     UPDATE_FLAG : "U",
     DELETE_FLAG : "D",
+    ROW_ACTIVE_CLASS : "sp-grid-data-active",
+    ROW_SELECT_CLASS : "sp-grid-data-select",
     template : {
         EDIT_INPUT            : "SpGridEditInput.tmpl.html",
         EDIT_CHECKBOX         : "SpGridEditCheckBox.tmpl.html",
