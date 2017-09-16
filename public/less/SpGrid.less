@@ -105,11 +105,22 @@
         }
 
         .sp-grid-data-active{
-            background:lighten(@background-color,2%);
+            background:lighten(@background-color,1%);
         }
     }
 }
 
+
+.sp-grid.selectable{
+    .sp-grid-data-row:hover{
+        background:lighten(@background-color,1%);
+        cursor:pointer;
+    }
+
+    .sp-grid-data-select{
+      background:lighten(@background-color,1%);
+    }
+}
 
 
 
