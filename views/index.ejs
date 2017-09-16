@@ -25,50 +25,91 @@
                 var variable1  = 'v'
                 $scope.grid = new SpGrid({
                     editable : true,
+                    selectable : true,
                     deleteable : true,
                     columnDef: [
-                        { id : "__idx", name : "순번", width: "50px", type : "rowno"},
-                        { id : "SUBJECT_NO", name : "과목번호", width:"150px", editType : "text"},
-                        { id : "BUNBAN", name : "분반", width : "100px", editType : {
-                            name : "selectbox",
-                            keyField : "bunbanCd",
-                            valueField : "bunbanNm",
-                            dataset : [
-                                {
-                                    "bunbanCd" : "A",
-                                    "bunbanNm" : "A"
-                                },
-                                {
-                                    "bunbanCd" : "B",
-                                    "bunbanNm" : "B"
-                                },
-                                {
-                                    "bunbanCd" : "C",
-                                    "bunbanNm" : "C"
-                                },
-                                {
-                                    "bunbanCd" : "D",
-                                    "bunbanNm" : "D"
-                                }
-                            ],
-                            defaultIndex : 0
-                        }},
-                        { id : "CHASU_SEQ", name : "차수", width : "100px", editType : "text"},
-                        { id : "COMPT_UNIT_ELE_NO", name : "능력단위요소번호",  width: "200px", editType : "text"},
-                        { id : "LIMIT_SCO", name : "요소별 배점", width:"100px", editType : "text"},
-                        { id : "USE_YN" , name :"사용여부", width: "80px", editType : {
-                            name : "checkbox",
-                            trueValue : "Y",
-                            falseValue : "N",
-                            defaultValue : "N"
-                        }}
+                        {
+                            id : "__idx",
+                            name : "순번",
+                            width: "50px",
+                            type : "rowno"
+                        },
+                        {
+                            id : "SUBJECT_NO",
+                            name : "과목번호",
+                            width:"150px",
+                            editType : "text"
+                        },
+                        {
+                            id : "BUNBAN",
+                            name : "분반",
+                            width : "100px",
+                            editType : {
+                                name : "selectbox",
+                                keyField : "bunbanCd",
+                                valueField : "bunbanNm",
+                                dataset : [
+                                    {
+                                        "bunbanCd" : "A",
+                                        "bunbanNm" : "A"
+                                    },
+                                    {
+                                        "bunbanCd" : "B",
+                                        "bunbanNm" : "B"
+                                    },
+                                    {
+                                        "bunbanCd" : "C",
+                                        "bunbanNm" : "C"
+                                    },
+                                    {
+                                        "bunbanCd" : "D",
+                                        "bunbanNm" : "D"
+                                    }
+                                ],
+                                defaultIndex : 0
+                            }
+                          },
+                        {
+                            id : "CHASU_SEQ",
+                            name : "차수",
+                            width : "100px",
+                            editType : "text"
+                        },
+                        {
+                            id : "COMPT_UNIT_ELE_NO",
+                            name : "능력단위요소번호",
+                            width: "200px",
+                            editType : "text"
+                        },
+                        {
+                            id : "LIMIT_SCO",
+                            name : "요소별 배점",
+                            width:"100px",
+                            editType : "text"
+                        },
+                        {
+                            id : "USE_YN" ,
+                            name :"사용여부",
+                            width: "80px",
+                            editType : {
+                                name : "checkbox",
+                                trueValue : "Y",
+                                falseValue : "N",
+                                defaultValue : "N"
+                            }
+                        }
                     ],
                     registerFunction : [
                         function test(){
                             alert("test!!!" + variable1);
                         }
                     ],
-                    pagingOptions : $scope.pagingOptions
+                    pagingOptions : $scope.pagingOptions,
+                    gridAction : {
+                        onRowClick : function( row ){
+                            $scope.row = row;
+                        }
+                    }
                 });
                 $http.get("test.json")
                     .then(function( response ){
@@ -114,6 +155,15 @@
     <div class="row" style="margin-top:30px;">
       <sp-grid-paging paging-options="pagingOptions" style="margin-top:20px;">
       </sp-grid-paging>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2"><label for="">과목번호</label></div>
+        <div class="col-md-2"><input type="text" ng-model="row.SUBJECT_NO" placeholder="과목번호 입력" /></div>
+        <div class="col-md-2"><label for="">분반</label></div>
+        <div class="col-md-2"><input type="text" ng-model="row.BUNBAN" placeholder="분반 입력" /></div>
+        <div class="col-md-2"><label for="">능력단위요소번호</label></div>
+        <div class="col-md-2"><input type="text" ng-model="row.COMPT_UNIT_ELE_NO" placeholder="능력단위요소 번호 입력" /></div>
     </div>
 
 
