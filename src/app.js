@@ -42,17 +42,17 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
 
     require("./factories/SpGrid")(app);
     require("./factories/SpGridUtil")(app)
-    require("./controllers/spGridController")(app);
-    require("./controllers/spGridBodyController")(app);
-    require("./directives/spGrid")(app);
-    require("./directives/spGridHeader")(app);
-    require("./directives/spGridHeaderRow")(app);
-    require("./directives/spGridHeaderColumn")(app);
-    require("./directives/spGridBody")(app);
-    require("./directives/spGridDataRow")(app);
+    require("./controllers/SpGridController")(app);
+    require("./controllers/SpGridBodyController")(app);
+    require("./directives/SpGrid")(app);
+    require("./directives/SpGridHeader")(app);
+    require("./directives/SpGridHeaderRow")(app);
+    require("./directives/SpGridHeaderColumn")(app);
+    require("./directives/SpGridBody")(app);
+    require("./directives/SpGridDataRow")(app);
     // require("./directives/spGridDataContextMenu")(app);
-    require("./directives/spGridDataColumn")(app);
+    require("./directives/SpGridDataColumn")(app);
     require("./directives/util/spUtil")(app);
-    require("./directives/spGridPaging")(app);
+    require("./directives/SpGridPaging")(app);
 
 

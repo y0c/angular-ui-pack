@@ -2,11 +2,11 @@
  * Grid Body Wrap Directive
  */
 
-function spGridBody($compile, SpGridConstant, $templateCache ){
+function SpGridBody($compile, SpGridConstant, $templateCache ){
     return {
         restrict : "E",
-        controller : "spGridBodyController",
-        require : "^spGrid",
+        controller : "SpGridBodyController",
+        require : "^SpGrid",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_BODY,
         link : function( scope, element, attr ){
@@ -45,5 +45,5 @@ function spGridBody($compile, SpGridConstant, $templateCache ){
 }
 
 module.exports = function(app){
-    app.directive("spGridBody", spGridBody);
+    app.directive("SpGridBody", SpGridBody);
 };

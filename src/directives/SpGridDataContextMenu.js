@@ -1,8 +1,8 @@
-function spGridDataContextMenu( SpGridConstant){
+function SpGridDataContextMenu( SpGridConstant){
     return {
         restrict : "E",
-        controller : "spGridController",
-        require : "^spGridBody",
+        controller : "SpGridController",
+        require : "^SpGridBody",
         replace : true,
         templateUrl : SpGridConstant.template.CONTEXT_MENU,
         link : function( scope, element, attr ){
@@ -11,5 +11,5 @@ function spGridDataContextMenu( SpGridConstant){
 }
 
 module.exports = function(app){
-    app.directive("spGridDataContextMenu", spGridDataContextMenu);
+    app.directive("SpGridDataContextMenu", SpGridDataContextMenu);
 };

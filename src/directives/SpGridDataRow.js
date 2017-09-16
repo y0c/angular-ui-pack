@@ -1,11 +1,11 @@
 /**
  * Grid Data Row Directive
  */
-function spGridDataRow( SpGridConstant, SpGridUtil ){
+function SpGridDataRow( SpGridConstant, SpGridUtil ){
     return {
         restrict : "E",
-        controller : "spGridBodyController",
-        require : "^spGridBody",
+        controller : "SpGridBodyController",
+        require : "^SpGridBody",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_DATA_ROW,
         link : function( scope, element, attr){
@@ -228,5 +228,5 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
 
 
 module.exports = function(app){
-    app.directive("spGridDataRow", spGridDataRow);
+    app.directive("SpGridDataRow", SpGridDataRow);
 };

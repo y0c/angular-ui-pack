@@ -1,4 +1,4 @@
-function spGridPaging( SpGridConstant ){
+function SpGridPaging( SpGridConstant ){
     return {
         restrict : "E",
         scope : {
@@ -72,5 +72,5 @@ function spGridPaging( SpGridConstant ){
 }
 
 module.exports = function( app ){
-    app.directive("spGridPaging", spGridPaging );
+    app.directive("SpGridPaging", SpGridPaging );
 };

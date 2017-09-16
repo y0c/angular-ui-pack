@@ -1,11 +1,11 @@
 /**
  * Grid Header Wrap Directive
  */
-function spGridHeader( $compile, SpGridConstant){
+function SpGridHeader( $compile, SpGridConstant){
     return {
         restrict : "E",
-        controller : "spGridController",
-        require : "^spGrid",
+        controller : "SpGridController",
+        require : "^SpGrid",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_HEADER,
         link : function( scope, element, attrs, ctrls, transclude ){
@@ -23,11 +23,10 @@ function spGridHeader( $compile, SpGridConstant){
                 }
             });
 
-            var _gapWidth = _headerWidth-5 - _useageWidth;
+            var _gapWidth = (_headerWidth - _useageWidth)-5;
 
             if( _gapWidth > 0 ){
                 var _usePercentage = 0;
-                console.log(_gapWidth);
                 angular.forEach( _headerColumns, function( column ){
                     _usePercentage = parseInt(column.width) / _useageWidth;
                     column.width = (parseInt(column.width) + parseFloat(( _usePercentage * _gapWidth ).toFixed(1))) + "px";
@@ -40,5 +39,5 @@ function spGridHeader( $compile, SpGridConstant){
 }
 
 module.exports = function(app){
-    app.directive("spGridHeader", spGridHeader);
+    app.directive("SpGridHeader", spGridHeader);
 };

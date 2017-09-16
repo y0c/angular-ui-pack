@@ -1,7 +1,7 @@
 /**
  * Grid Data Column Directive
  */
-function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
+function SpGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
     return {
         restrict : "E",
         controller : "spGridController",
@@ -171,5 +171,5 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
 
 
 module.exports = function( app ){
-    app.directive("spGridDataColumn", spGridDataColumn);
+    app.directive("SpGridDataColumn", SpGridDataColumn);
 };

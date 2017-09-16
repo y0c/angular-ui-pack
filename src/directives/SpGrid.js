@@ -2,13 +2,13 @@
  * Grid 전체 영역 Directive
  */
 
-function spGrid( $compile, SpGridConstant, orderByFilter ){
+function SpGrid( $compile, SpGridConstant, orderByFilter ){
     return {
         restrict : "E",
         scope : {
             "gridObject" : "="
         },
-        controller : "spGridController",
+        controller : "SpGridController",
         templateUrl : SpGridConstant.template.SP_GRID,
         link : function( scope, element, attrs, ctrls, transclude ){
 
@@ -35,5 +35,5 @@ function spGrid( $compile, SpGridConstant, orderByFilter ){
 
 
 module.exports = function(app){
-    app.directive("spGrid", spGrid);
+    app.directive("SpGrid", SpGrid);
 };

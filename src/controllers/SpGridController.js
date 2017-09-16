@@ -1,5 +1,5 @@
 
-function spGridController( $scope, SpGridUtil ){
+function SpGridController( $scope, SpGridUtil ){
     var _gridObject  = $scope.gridObject;
     var _gridColumns = _gridObject.getColumnDef();
 
@@ -76,5 +76,5 @@ function spGridController( $scope, SpGridUtil ){
 
 
 module.exports = function( app ){
-    app.controller("spGridController", spGridController);
+    app.controller("SpGridController", SpGridController);
 };
