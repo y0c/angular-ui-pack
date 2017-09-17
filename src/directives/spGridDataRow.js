@@ -46,9 +46,14 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                     return ;
                 }
 
-                scope.row._originalRow = {};
+
                 //Deep Copy
-                angular.copy(scope.row, scope.row._originalRow);
+                if( !scope.row.hasOwnProperty("_originalRow") ){
+                    var _temp = {};
+                    SpGridUtil.rowCopy(scope.row, _temp);
+                    scope.row["_originalRow"] = _temp;
+                }
+
 
 
                 if( !scope.row.hasOwnProperty("cudFlag")  ){
@@ -186,10 +191,13 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                     }
                 });
 
-              /*  var _form = scope['rowForm' + scope.$index];
-                if( _form.$dirty ){
-                    scope.gridObject.getValidateCallback()("변경된 내용이 없습니다");
-                }*/
+                if( scope.row.cudFlag == SpGridConstant.UPDATE_FLAG ){
+                    if( SpGridUtil.dirtyCheck( scope.row._originalRow, scope.row ) ){
+                        scope.gridObject.getValidateCallback()("변경된 내용이 없습니다.");
+                        return false;
+                    }
+                }
+
 
                 if( _invalidArray.length > 0 ){
                     scope.gridObject.getValidateCallback()(_invalidArray[0]);

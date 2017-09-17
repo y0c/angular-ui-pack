@@ -37,10 +37,30 @@ function spGridFooterColumn( SpGridConstant ){
             function calculateSummary( ){
                 var _currentPage = scope.gridObject.getCurrentPage() || 1;
                 var _pageSize    = scope.gridObject.getPageSize();
+                var _headerColumn = scope.headerColumn;
                 var _pageDataset = scope.gridObject.getData().slice( (_currentPage-1)*_pageSize , ((_currentPage-1)*_pageSize) + _pageSize );
-                if( scope.headerColumn.hasOwnProperty("summary") ){
-                    if( scope.headerColumn.summary)
-                    scope.summary = summaryType[scope.headerColumn.summary]( _pageDataset, scope.headerColumn.id );
+                var _resultFormatter = {
+                    resultFormatter : function( result ){
+                        return result;
+                    }
+                };
+                if( _headerColumn.hasOwnProperty("summary") ){
+                    if( _headerColumn.summary){
+                        _headerColumn.summary = angular.extend({}, _resultFormatter,  _headerColumn.summary );
+                        if( typeof _headerColumn.summary.type  == "string"){
+                            scope.summary =
+                                _headerColumn.summary.resultFormatter
+                                (summaryType[_headerColumn.summary.type]( _pageDataset, _headerColumn.id ));
+                        } else if( typeof _headerColumn.summary.type == "function"){
+                            scope.summary = _headerColumn.summary.resultFormatter(
+                                _headerColumn.summary.type( _pageDataset, _headerColumn.id )
+                            );
+                        } else {
+                            throw new Error(["summary 타입은 string 혹은 function 이어야합니다"]);
+                        }
+
+                    }
+
                 }
             }
 

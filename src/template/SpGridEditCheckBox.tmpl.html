@@ -3,7 +3,7 @@
         <label>
             <input type="checkbox" ng-true-value="'{{checkbox.trueValue}}'"
                    ng-false-value="'{{checkbox.falseValue}}'"
-                   ng-checked="'{{checkbox.trueValue}}'"
+                   ng-checked="row[headerColumn.id] == '{{checkbox.trueValue}}'"
                    ng-model="row[headerColumn.id]" >
             <span>
             <i></i>

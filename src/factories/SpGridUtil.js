@@ -51,6 +51,25 @@ function SpGridUtil(){
                 };
 
             return _validateObject;
+        },
+        dirtyCheck : function( sourceObj, targetObj ){
+            var dirty = true;
+            angular.forEach( sourceObj, function( value, key ){
+                if( key.indexOf("_validate") == -1 ){
+                    if( sourceObj[key] != targetObj[key] ){
+                        dirty = false;
+                    }
+                }
+            });
+            return dirty;
+        },
+        rowCopy : function( sourceObj, targetObj ){
+            var excludeKeys = ['__isSelected', '__isTempSave', '_originalRow'];
+            angular.forEach( sourceObj, function(value, key){
+                if( excludeKeys.indexOf(key) == -1 ){
+                    targetObj[key] = sourceObj[key];
+                }
+            });
         }
     }
 }

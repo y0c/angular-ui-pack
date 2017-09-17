@@ -2,8 +2,7 @@ require("../public/less/SpGrid.less");
 // var angular = require("angular");
 
 
-var app = angular.module("SpGrid", []);
-
+var app = angular.module("SpGrid", [ ]);
 
 app.constant("SpGridConstant", require("./SpGridConstant"));
 
