@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
       <script src="/javascripts/jquery-1.12.1.js"></script>
-      <script src="/javascripts/angular.min.js"></script>
+      <script src="/javascripts/angular.js"></script>
     <link rel="stylesheet" href="/stylesheets/reset.css">
     <link rel="stylesheet" href="/stylesheets/page.css">
     <link rel="stylesheet" href="/stylesheets/animation.css">
@@ -16,17 +16,19 @@
 
       <script type="text/javascript">
 
-        angular.module("gridApp", [ "spGrid"] )
+        angular.module("gridApp", [ "SpGrid"] )
             .controller("gridController", ['$scope','SpGrid','$http', function( $scope, SpGrid, $http ){
                 $scope.pagingOptions = {
                     pageSize : 10,
                     pageBlockSize : 10
                 };
                 var variable1  = 'v'
+
                 $scope.grid = new SpGrid({
                     editable : true,
                     selectable : true,
                     deleteable : true,
+                    useFooterSummary : true,
                     columnDef: [
                         {
                             id : "__idx",
@@ -38,7 +40,12 @@
                             id : "SUBJECT_NO",
                             name : "과목번호",
                             width:"150px",
-                            editType : "text"
+                            editType : "text",
+                            validate : {
+                                required : {
+                                    message : "과목번호는 필수 입력값입니다."
+                                }
+                            }
                         },
                         {
                             id : "BUNBAN",
@@ -85,7 +92,8 @@
                             id : "LIMIT_SCO",
                             name : "요소별 배점",
                             width:"100px",
-                            editType : "text"
+                            editType : "text",
+                            summary : "avg"
                         },
                         {
                             id : "USE_YN" ,
@@ -107,7 +115,7 @@
                     pagingOptions : $scope.pagingOptions,
                     gridAction : {
                         onRowClick : function( row ){
-                            $scope.row = row;
+                            $scope.row = row
                         }
                     }
                 });
@@ -135,6 +143,10 @@
                     $scope.grid.setData($scope.grid.getData().slice(1));
 
                 }
+
+                $scope.customvalidate = function(){
+                    $scope.row.__validate();
+                }
             }]);
     </script>
 
@@ -157,7 +169,7 @@
       </sp-grid-paging>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-top:30">
         <div class="col-md-2"><label for="">과목번호</label></div>
         <div class="col-md-2"><input type="text" ng-model="row.SUBJECT_NO" placeholder="과목번호 입력" /></div>
         <div class="col-md-2"><label for="">분반</label></div>
@@ -171,6 +183,7 @@
       <button class="btn btn-default" ng-click="showChangedData();">변화된 데이터 찍어보기</button>
       <button class="btn btn-primary" ng-click="addRow()">추가하기</button>
       <button class="btn btn-danger" ng-click="deleteRow()">삭제</button>
+      <button class="btn btn-danger" ng-click="customvalidate()">검증</button>
     </p>
   </div>
 
