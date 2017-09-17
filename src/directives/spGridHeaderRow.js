@@ -1,11 +1,11 @@
 /**
  * Grid Header Row Directive
  */
-function SpGridHeaderRow( $compile, SpGridConstant ){
+function spGridHeaderRow( $compile, SpGridConstant ){
     return {
         restrict : "E",
-        controller : "SpGridController",
-        require : "^SpGridHeader",
+        controller : "spGridController",
+        require : "^spGridHeader",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_HEADER_ROW,
         link : function( scope, element, attrs ){
@@ -14,5 +14,5 @@ function SpGridHeaderRow( $compile, SpGridConstant ){
 }
 
 module.exports = function(app){
-    app.directive("SpGridHeaderRow", SpGridHeaderRow);
-}
+    app.directive("spGridHeaderRow", spGridHeaderRow);
+};

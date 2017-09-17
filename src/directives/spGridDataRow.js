@@ -1,11 +1,11 @@
 /**
  * Grid Data Row Directive
  */
-function SpGridDataRow( SpGridConstant, SpGridUtil ){
+function spGridDataRow( SpGridConstant, SpGridUtil ){
     return {
         restrict : "E",
-        controller : "SpGridBodyController",
-        require : "^SpGridBody",
+        controller : "spGridBodyController",
+        require : "^spGridBody",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_DATA_ROW,
         link : function( scope, element, attr){
@@ -151,7 +151,7 @@ function SpGridDataRow( SpGridConstant, SpGridUtil ){
              *
              * @returns {boolean}
              */
-            scope.validate = function(){
+            scope.row.__validate = function(){
                 var _headerColumns   = scope.gridObject.getColumnDef();
                 var _validateObject  = SpGridUtil.getValidateObject();
                 var _invalidArray  = [];
@@ -224,9 +224,9 @@ function SpGridDataRow( SpGridConstant, SpGridUtil ){
 
         }
     }
-};
+}
 
 
 module.exports = function(app){
-    app.directive("SpGridDataRow", SpGridDataRow);
+    app.directive("spGridDataRow", spGridDataRow);
 };

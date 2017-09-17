@@ -2,13 +2,13 @@
  * Grid 전체 영역 Directive
  */
 
-function SpGrid( $compile, SpGridConstant, orderByFilter ){
+function spGrid( $compile, SpGridConstant, orderByFilter ){
     return {
         restrict : "E",
         scope : {
             "gridObject" : "="
         },
-        controller : "SpGridController",
+        controller : "spGridController",
         templateUrl : SpGridConstant.template.SP_GRID,
         link : function( scope, element, attrs, ctrls, transclude ){
 
@@ -29,11 +29,15 @@ function SpGrid( $compile, SpGridConstant, orderByFilter ){
                     scope.gridObject.setData(orderByFilter(scope.gridObject.getData(),"-" + columnId, false));
                 }
             }
+
+
+
+
         }
     }
 }
 
 
 module.exports = function(app){
-    app.directive("SpGrid", SpGrid);
+    app.directive("spGrid", spGrid);
 };

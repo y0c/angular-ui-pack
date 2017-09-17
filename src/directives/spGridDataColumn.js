@@ -1,7 +1,7 @@
 /**
  * Grid Data Column Directive
  */
-function SpGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
+function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
     return {
         restrict : "E",
         controller : "spGridController",
@@ -20,18 +20,9 @@ function SpGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
 
             scope.isTypeRowno = isTypeRowno;
 
+            scope.getRowno    = getRowno;
 
-            var _pageSize = scope.gridObject.getPageSize();
-            var _currentPage = scope.gridObject.getCurrentPage() || 1;
-            if( scope.isTypeRowno() ){
-                    scope.displayData = (_pageSize * (_currentPage-1)) + (scope.$parent.$index + 1);
-            }
 
-            if( scope.isTypeData() ){
-                //data인지 순수 html 바인딩인지 구분해서 처리
-                scope.displayData = scope.row[_headerColumn.id];
-
-            }
 
             if( scope.isTypeHtml() ) {
                 scope.bindHtml    = _headerColumn.bindHtml;
@@ -74,7 +65,12 @@ function SpGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
                 viewMode();
             }
 
+            function getRowno(){
+                var _pageSize = scope.gridObject.getPageSize();
+                var _currentPage = scope.gridObject.getCurrentPage() || 1;
 
+                return  (_pageSize * (_currentPage-1)) + (scope.$parent.$index + 1);
+            }
 
 
             function editMode(){
@@ -171,5 +167,5 @@ function SpGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
 
 
 module.exports = function( app ){
-    app.directive("SpGridDataColumn", SpGridDataColumn);
+    app.directive("spGridDataColumn", spGridDataColumn);
 };

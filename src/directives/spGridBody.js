@@ -2,11 +2,11 @@
  * Grid Body Wrap Directive
  */
 
-function SpGridBody($compile, SpGridConstant, $templateCache ){
+function spGridBody($compile, SpGridConstant, $templateCache ){
     return {
         restrict : "E",
-        controller : "SpGridBodyController",
-        require : "^SpGrid",
+        controller : "spGridBodyController",
+        require : "^spGrid",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_BODY,
         link : function( scope, element, attr ){
@@ -17,8 +17,7 @@ function SpGridBody($compile, SpGridConstant, $templateCache ){
 
             scope.scrollTop = scrollTop;
 
-
-
+            scope.$rows = null;
 
             scope.$watch("gridObject.getPagingOptions()", function(){
                 var _currentPage = scope.gridObject.getCurrentPage() || 1;
@@ -26,7 +25,9 @@ function SpGridBody($compile, SpGridConstant, $templateCache ){
                 scope.start    = (_currentPage-1) * _pageSize;
                 scope.pageSize = _pageSize;
                 // scope.$rows               = range( scope.gridObject.getData(), scope.start, scope.start + scope.pageSize );
+                scope.$parent.$broadcast("pageChange");
             }, true);
+
 
 
             function openContextMenu( event, index, rowManager ){
@@ -45,5 +46,5 @@ function SpGridBody($compile, SpGridConstant, $templateCache ){
 }
 
 module.exports = function(app){
-    app.directive("SpGridBody", SpGridBody);
+    app.directive("spGridBody", spGridBody);
 };

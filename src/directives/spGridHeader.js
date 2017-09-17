@@ -1,11 +1,11 @@
 /**
  * Grid Header Wrap Directive
  */
-function SpGridHeader( $compile, SpGridConstant){
+function spGridHeader( $compile, SpGridConstant){
     return {
         restrict : "E",
-        controller : "SpGridController",
-        require : "^SpGrid",
+        controller : "spGridController",
+        require : "^spGrid",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_HEADER,
         link : function( scope, element, attrs, ctrls, transclude ){
@@ -39,5 +39,5 @@ function SpGridHeader( $compile, SpGridConstant){
 }
 
 module.exports = function(app){
-    app.directive("SpGridHeader", spGridHeader);
+    app.directive("spGridHeader", spGridHeader);
 };
