@@ -17,6 +17,8 @@ function spGridBody($compile, SpGridConstant, $templateCache ){
 
             scope.scrollTop = scrollTop;
 
+            scope.range  = range;
+
             scope.$rows = null;
 
             scope.$watch("gridObject.getPagingOptions()", function(){
@@ -37,6 +39,12 @@ function spGridBody($compile, SpGridConstant, $templateCache ){
                 scope.isContextMenuShow = true;
             }
 
+            function range( start, end ){
+                if( scope.gridObject.isEnablePaging() ){
+                    return scope.gridObject.getData().slice( start, end );
+                }
+                return scope.gridObject.getData();
+            }
 
             function scrollTop(){
                 element.scrollTop(0);

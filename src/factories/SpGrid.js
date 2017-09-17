@@ -12,6 +12,7 @@ function SpGrid( SpGridConstant, $templateCache ){
             createDataset : [],
             registerFunction : [],
             useFooterSummary : false,
+            enablePaging : false,
             /**
              * 그리드 사이즈 옵션
              */
@@ -30,7 +31,8 @@ function SpGrid( SpGridConstant, $templateCache ){
              */
             pagingOptions : {
                 currentPage : 1,
-                pageSize    : 10
+                pageSize    : 10,
+                pageBlockSize : 10
             },
             /**
              * Grid Action 이벤트 콜백
@@ -209,6 +211,13 @@ function SpGrid( SpGridConstant, $templateCache ){
 
     /**
      *
+     * @returns {boolean}
+     */
+    SpGrid.prototype.isEnablePaging = function(){
+        return this._gridOptions.enablePaging;
+    };
+    /**
+     *
      * @returns {SpGrid._defaultOptions.pagingOptions|{currentPage, pageSize}}
      */
     SpGrid.prototype.getPagingOptions = function(){
@@ -254,6 +263,10 @@ function SpGrid( SpGridConstant, $templateCache ){
         // this.generateIdx( dataset );
         angular.copy(dataset,this._gridOptions.dataset);
         angular.copy(this._gridOptions.dataset,this._originalDataset );
+
+        if( this._gridOptions.enablePaging ){
+            this._gridOptions.pagingOptions.totalRecordCount = dataset.length;
+        }
         // this._gridOptions.dataset = dataset;
         // this._originalDataset = angular.copy( this._gridOptions.dataset );
         return this;

@@ -4,7 +4,9 @@
     <title><%= title %></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
+      <link rel="stylesheet" href="/stylesheets/jquery.mCustomScrollbar.css" />
       <script src="/javascripts/jquery-1.12.1.js"></script>
+      <script src="/javascripts/jquery.mCustomScrollbar.concat.min.js"></script>
       <script src="/javascripts/angular.js"></script>
     <link rel="stylesheet" href="/stylesheets/reset.css">
     <link rel="stylesheet" href="/stylesheets/page.css">
@@ -78,12 +80,18 @@
                                 ],
                                 defaultIndex : 0
                             }
-                          },
+                        },
                         {
                             id : "CHASU_SEQ",
                             name : "차수",
                             width : "100px",
-                            editType : "text"
+                            editType : "text",
+                            summary : {
+                                type : "sum",
+                                resultFormatter : function(result){
+                                    return "총 차수 : " + result;
+                                }
+                            }
                         },
                         {
                             id : "COMPT_UNIT_ELE_NO",
@@ -96,7 +104,12 @@
                             name : "요소별 배점",
                             width:"100px",
                             editType : "text",
-                            summary : "avg"
+                            summary : {
+                                type : "avg",
+                                resultFormatter : function( result ){
+                                    return "평균 배점 : " + Math.ceil(result);
+                                }
+                            }
                         },
                         {
                             id : "USE_YN" ,
@@ -115,6 +128,7 @@
                             alert("test!!!" + variable1);
                         }
                     ],
+                    enablePaging : true,
                     pagingOptions : $scope.pagingOptions,
                     gridAction : {
                         onRowClick : function( row ){
@@ -126,7 +140,6 @@
                     .then(function( response ){
                         console.log(response.data);
                         $scope.grid.setData(response.data);
-                        $scope.pagingOptions.totalRecordCount = response.data.length;
                     });
 
                 $scope.showChangedData = function(){
@@ -172,7 +185,7 @@
       </sp-grid-paging>
     </div>
 
-    <div class="row" style="margin-top:30">
+    <div class="row" style="margin-top:30px">
         <div class="col-md-2"><label for="">과목번호</label></div>
         <div class="col-md-2"><input type="text" ng-model="row.SUBJECT_NO" placeholder="과목번호 입력" /></div>
         <div class="col-md-2"><label for="">분반</label></div>
