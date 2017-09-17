@@ -23,7 +23,7 @@ function spGridHeader( $compile, SpGridConstant){
                 }
             });
 
-            var _gapWidth = (_headerWidth - _useageWidth)-5;
+            var _gapWidth = (_headerWidth - _useageWidth)-25;
 
             if( _gapWidth > 0 ){
                 var _usePercentage = 0;
