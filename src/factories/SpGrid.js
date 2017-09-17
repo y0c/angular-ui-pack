@@ -11,6 +11,7 @@ function SpGrid( SpGridConstant, $templateCache ){
             dataset   : [],
             createDataset : [],
             registerFunction : [],
+            useFooterSummary : false,
             /**
              * 그리드 사이즈 옵션
              */
@@ -108,6 +109,14 @@ function SpGrid( SpGridConstant, $templateCache ){
         return this.status == "edit" || this.status == "create";
     };
 
+    /**
+     * Grid Footer Summary 사용여부
+     * @param useFooterSummary
+     * @returns {*}
+     */
+    SpGrid.prototype.isUseFooterSummary = function(){
+        return this._gridOptions.useFooterSummary;
+    };
     /**
      * Grid 선택된 로우 지정
      * @param row
@@ -227,6 +236,7 @@ function SpGrid( SpGridConstant, $templateCache ){
     SpGrid.prototype.getOriginalData = function(){
         return this._originalDataset;
     };
+
     /**
      * Grid Dataset 리턴
      * @returns {DOMStringMap|Array|*}

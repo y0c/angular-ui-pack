@@ -1,7 +1,8 @@
 <div class="sp-grid-data-column" ng-style="{ 'max-width' : columnWidth , 'min-width' : columnWidth }">
     <div class="sp-grid-data-header">{{columnHeader}}</div>
     <div class="sp-grid-data">
-        <span class="sp-grid-data-view" ng-show="isTypeData() || isTypeRowno()">{{displayData}}</span>
+        <span class="sp-grid-data-view" ng-if="isTypeRowno()">{{ getRowno() }}</span>
+        <span class="sp-grid-data-view" ng-if="isTypeData()">{{row[headerColumn.id]}}</span>
         <div class="sp-grid-data-html" ng-show="isTypeHtml()"></div>
     </div>
 </div>

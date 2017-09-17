@@ -1,6 +1,7 @@
 <div class="sp-grid-wrap" ng-style="{ 'width' : gridObject.getSize().width }">
-<div class="sp-grid" ng-class="gridObject.isSelectable() ? 'selectable' : ''">
-    <sp-grid-header></sp-grid-header>
-    <sp-grid-body></sp-grid-body>
+    <div class="sp-grid" ng-class="gridObject.isSelectable() ? 'selectable' : ''">
+        <sp-grid-header></sp-grid-header>
+        <sp-grid-body></sp-grid-body>
+        <sp-grid-footer ng-if="gridObject.isUseFooterSummary()"></sp-grid-footer>
     </div>
 </div>
