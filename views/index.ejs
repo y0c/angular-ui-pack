@@ -124,11 +124,12 @@
                             }
                         }
                     ],
-                    registerFunction : [
-                        function test(){
-                            alert("test!!!" + variable1);
+                    registerFunction : {
+                        test : function(){
+                            alert("test!");
                         }
-                    ],
+                    }
+                    ,
                     enablePaging : true,
                     pagingOptions : $scope.pagingOptions,
                     gridAction : {
@@ -141,6 +142,7 @@
                     .then(function( response ){
                         console.log(response.data);
                         $scope.grid.setData(response.data);
+                        $scope.grid.setSelectedRow($scope.grid.getData()[0]);
                     });
 
                 $scope.showChangedData = function(){
