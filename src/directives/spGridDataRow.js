@@ -21,9 +21,9 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
              * Grid Data Row 클릭시 기본 Action 과 커스텀 Action 동작
              */
             function onGridDataRowClick( row ){
-                scope.gridObject.getGridAction().onRowClick( row );
                 scope.gridObject.selectCancelAll();
                 scope.gridObject.setSelectedRow( row );
+                scope.gridObject.getGridAction().onRowClick( row );
             }
 
             function checkRowValid(){
@@ -71,11 +71,15 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
              */
             scope.rowRevert = function(){
                 //Deep Copy
+
+                //로우생성후 바로 캔슬시에는 로우 삭제
                 if( scope.row.cudFlag == SpGridConstant.CREATE_FLAG
                 && scope.gridObject.getCreateData().length > 0 ){
                     scope.gridObject.getCreateData().splice(0,1);
                 } else {
+                    //임시저장후 캔슬시에는 원복한후 임시저장
                     angular.copy(scope.row._originalRow, scope.row);
+                    scope.row.__isTempSave = true;
                     scope.$broadcast("changeMode");
                 }
                 scope.gridObject.setStatus("");
@@ -92,7 +96,14 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 if( !scope.gridObject.getGridAction().onRowDeleteBefore( scope.row ) ){
                    return ;
                 }
-                scope.row.cudFlag = SpGridConstant.DELETE_FLAG;
+
+                // Row Delete시 생성된데이터는 배열에서 완전삭제
+                if( scope.row.cudFlag != SpGridConstant.CREATE_FLAG ){
+                    scope.row.cudFlag = SpGridConstant.DELETE_FLAG;
+                } else {
+                    scope.gridObject.getData().splice(scope.$index, 1 );
+                }
+
                 scope.gridObject.getGridAction().onRowDeleteAfter( scope.row );
             };
 
