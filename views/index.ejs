@@ -46,6 +46,10 @@
                             name : "과목번호",
                             width:"150px",
                             editType : "text",
+                            align : "left",
+                            resultFormatter : function( columnValue ){
+                                return columnValue + "!!";
+                            },
                             validate : {
                                 required : {
                                     message : "과목번호는 필수 입력값입니다."
@@ -97,6 +101,7 @@
                             id : "COMPT_UNIT_ELE_NO",
                             name : "능력단위요소번호",
                             width: "200px",
+                            align : "left",
                             fillRemainWidth : true,
                             editType : "text"
                         },
@@ -104,6 +109,7 @@
                             id : "LIMIT_SCO",
                             name : "요소별 배점",
                             width:"100px",
+                            align:"right",
                             editType : "text",
                             summary : {
                                 type : "avg",
@@ -141,8 +147,8 @@
                 $http.get("test.json")
                     .then(function( response ){
                         console.log(response.data);
-                        $scope.grid.setData(response.data);
-                        $scope.grid.setSelectedRow($scope.grid.getData()[0]);
+//                        $scope.grid.setData(response.data);
+//                        $scope.grid.setSelectedRow($scope.grid.getData()[0]);
                     });
 
                 $scope.showChangedData = function(){
