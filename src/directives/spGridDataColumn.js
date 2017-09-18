@@ -144,12 +144,13 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
                         }
                     }
 
-                }
-                _gridDataView.replaceWith(
-                    $compile(_typeMap[_typeName] )(scope)
-                );
+                    _gridDataView.replaceWith(
+                        $compile(_typeMap[_typeName] )(scope)
+                    );
 
-                element.focus();
+                    element.focus();
+                }
+
             }
 
             function viewMode(){
