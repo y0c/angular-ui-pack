@@ -10,7 +10,16 @@
     .sp-grid {
         .sp-grid-body{
             position : relative;
-
+            .sp-grid-notice-message{
+                height: 150px;
+                text-align: center;
+                vertical-align: bottom;
+                margin: 50px auto;
+                padding-top: 60px;
+                border-radius: 5px;
+                background: @background-color;
+                border: 1px solid @strong-border-color;
+            }
             .sp-grid-data{
 
 
@@ -132,6 +141,10 @@
 
         & > .sp-grid-body {
             overflow-y:auto;
+
+            .sp-grid-notice-message{
+                width : 500px;
+            }
             .sp-grid-data-row{
                 display:table-row;
 
@@ -154,9 +167,12 @@
 
                     .sp-grid-data{
                         overflow: hidden;
+                        white-space:nowrap;
+                        text-overflow:ellipsis;
                         word-break: break-all;
                         box-sizing:border-box;
-
+                        padding-left: 5px;
+                        padding-right: 5px;
                         .nb-buttons{
                             vertical-align: middle;
                             button{
