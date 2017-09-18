@@ -2,4 +2,7 @@
     <sp-grid-data-row ng-repeat="row in gridObject.getCreateData()"></sp-grid-data-row>
     <sp-grid-data-row
             ng-repeat="row in range(start,start+pageSize)"></sp-grid-data-row>
+    <div class="sp-grid-notice-message" ng-if="range(start,start+pageSize).length == 0 && gridObject.getCreateData().length == 0">
+        현재 조회된 데이터가 없습니다.
+    </div>
 </div>
