@@ -46,6 +46,8 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
             function isTypeHtml(){
                 return scope.type == "html";
             }
+
+
             function changeModeByCudFlag(){
                 if( !scope.row ){
                     return ;
@@ -76,8 +78,8 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
             function editMode(){
                 var _gridDataView    = null;
                 var _typeMap = {
-                    "text" : $templateCache.get(SpGridConstant.template.EDIT_INPUT),
-                    "checkbox" : $templateCache.get(SpGridConstant.template.EDIT_CHECKBOX),
+                    "text"      : $templateCache.get(SpGridConstant.template.EDIT_INPUT),
+                    "checkbox"  : $templateCache.get(SpGridConstant.template.EDIT_CHECKBOX),
                     "selectbox" : $templateCache.get(SpGridConstant.template.EDIT_SELECTBOX)
                 };
                 var _typeName = null;

@@ -67,6 +67,14 @@ function SpGrid( SpGridConstant, $templateCache ){
 
         };
 
+        this.defaultColumnOptions = {
+            type : "data",
+            align : "center",
+            resultFormatter : function( columnValue ){
+                return columnValue;
+            }
+        };
+
         if( gridOptions.hasOwnProperty("gridAction") ){
             gridOptions.gridAction = angular.extend(this._defaultOptions.gridAction, gridOptions.gridAction);
         }
@@ -156,6 +164,7 @@ function SpGrid( SpGridConstant, $templateCache ){
 
 
     SpGrid.prototype.init = function(){
+        var _self    = this;
         var _columns = this.getColumnDef();
 
 
@@ -174,11 +183,9 @@ function SpGrid( SpGridConstant, $templateCache ){
 
         //Column Type 초기화
         if( _columns && _columns.length > 0 ){
-            angular.forEach( _columns, function( _column){
-                if( !_column.hasOwnProperty("type") ){
-                    _column.type = "data";
-                }
-            });
+            for( var i = 0 ; i < _columns.length ; i ++ ){
+                _columns[i] = angular.extend( {}, this.defaultColumnOptions, _columns[i]);
+            }
         }
 
     };

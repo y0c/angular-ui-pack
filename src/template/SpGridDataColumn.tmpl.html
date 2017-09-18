@@ -1,9 +1,9 @@
 <div class="sp-grid-data-column" ng-style="{ 'max-width' : columnWidth , 'min-width' : columnWidth }">
     <div class="sp-grid-data-header">{{columnHeader}}</div>
-    <div class="sp-grid-data">
+    <div class="sp-grid-data" ng-class="'text-{{headerColumn.align}}'">
         <span class="sp-grid-data-view">
             <span ng-if="isTypeRowno()">{{ getRowno() }}</span>
-            <span ng-if="isTypeData()"> {{row[headerColumn.id]}}</span>
+            <span ng-if="isTypeData()"> {{ headerColumn.resultFormatter(row[headerColumn.id],row)}}</span>
         </span>
 
         <div class="sp-grid-data-html" ng-show="isTypeHtml()"></div>
