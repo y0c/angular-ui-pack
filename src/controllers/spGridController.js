@@ -63,9 +63,10 @@ function spGridController( $scope, SpGridUtil ){
 
     function registerFunction(){
         var _functions = _gridObject.getRegisterFunction();
-        for( var i = 0 ; i < _functions.length ; i ++ ){
-            $scope[SpGridUtil.getFunctionName(_functions[i])] = _functions[i]
-        }
+
+        angular.forEach( _functions, function( fn, key ){
+            $scope[key] = fn;
+        });
     }
 
 
