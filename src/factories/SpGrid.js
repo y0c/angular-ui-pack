@@ -10,7 +10,7 @@ function SpGrid( SpGridConstant, $templateCache ){
             columnDef : [],
             dataset   : [],
             createDataset : [],
-            registerFunction : [],
+            registerFunction : {},
             useFooterSummary : false,
             enablePaging : false,
             /**
@@ -136,9 +136,9 @@ function SpGrid( SpGridConstant, $templateCache ){
     SpGrid.prototype.getSelectedRow = function(){
         var _dataset = this.getData();
         for( var i = 0 ; i < _dataset.length ; i ++ ){
-            if( _dataset[i].hasOwnProperty("_isSelected")
+            if( _dataset[i].hasOwnProperty("__isSelected")
                 && _dataset[i].__isSelected ){
-                return this.selectedRow;
+                return _dataset[i];
             }
         }
     };
@@ -372,7 +372,6 @@ function SpGrid( SpGridConstant, $templateCache ){
         this.setStatus("create");
         this.getCreateData().push(_row);
     };
-
 
     /**
      * Grid 변경된 로우 리턴
