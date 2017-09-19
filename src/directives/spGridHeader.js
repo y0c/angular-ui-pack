@@ -11,6 +11,7 @@ function spGridHeader( $compile, SpGridConstant){
         link : function( scope, element, attrs, ctrls, transclude ){
             calculateWidth();
 
+
             function calculateWidth(){
                 var _headerWidth = getWidth();
 
@@ -58,6 +59,9 @@ function spGridHeader( $compile, SpGridConstant){
                 element.css({ position : "", visibility : "", display : "" });
                 return _resultWidth;
             }
+
+
+
 
         }
     }

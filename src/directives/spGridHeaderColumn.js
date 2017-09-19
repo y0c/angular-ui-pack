@@ -9,7 +9,16 @@ function spGridHeaderColumn( SpGridConstant){
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_HEADER_COLUMN,
         link : function( scope, element, attr){
-            console.log( scope.column.name + " : " + scope.column.width );
+
+            scope.getWidth = getWidth;
+
+
+            function getWidth(){
+                if( scope.column.hasOwnProperty("spanWidth") ){
+                    return scope.column.spanWidth;
+                }
+                return scope.column.width;
+            }
         }
     }
 }

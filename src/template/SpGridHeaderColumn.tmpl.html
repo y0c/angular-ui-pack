@@ -1,4 +1,4 @@
-<div class="sp-grid-header-column" ng-style="{ 'min-width' : column.width, 'max-width' : column.width }">
+<div class="sp-grid-header-column" ng-style="{ 'min-width' : getWidth(), 'max-width' : getWidth() }">
     <span>{{column.name}}
         <span class="sp-grid-order-wrap">
             <span class="sp-grid-order-desc" ng-show="column.type=='data'" ng-click="orderChange(column.id,'desc')">
@@ -9,5 +9,4 @@
             </span>
         </span>
     </span>
-
 </div>
