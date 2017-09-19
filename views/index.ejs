@@ -66,30 +66,19 @@
                                 name : "selectbox",
                                 keyField : "bunbanCd",
                                 valueField : "bunbanNm",
-                                dataset : [
-                                    {
-                                        "bunbanCd" : "A",
-                                        "bunbanNm" : "A"
-                                    },
-                                    {
-                                        "bunbanCd" : "B",
-                                        "bunbanNm" : "B"
-                                    },
-                                    {
-                                        "bunbanCd" : "C",
-                                        "bunbanNm" : "C"
-                                    },
-                                    {
-                                        "bunbanCd" : "D",
-                                        "bunbanNm" : "D"
-                                    }
-                                ],
+                                dataset : function(){
+                                    return $http.get("selectbox.json")
+                                        .then(function(response){
+                                            return response.data;
+                                        });
+                                },
                                 defaultIndex : 0
-                            }
+                            },
+                            colSpan : 2
                         },
                         {
                             id : "CHASU_SEQ",
-                            name : "차수",
+//                            name : "차수",
                             width : "100px",
                             editType : "text",
                             summary : {
@@ -118,7 +107,8 @@
                                 resultFormatter : function( result ){
                                     return "평균 배점 : " + Math.ceil(result);
                                 }
-                            }
+                            },
+                            colSpan : 2
                         },
                         {
                             id : "USE_YN" ,
@@ -151,6 +141,7 @@
                         console.log(response.data);
                         $scope.grid.setData(response.data);
 //                        $scope.grid.setSelectedRow($scope.grid.getData()[0]);
+//                        $scope.grid.getColumnDef()[0].name="테스트로";
                     });
 
                 $scope.showChangedData = function(){

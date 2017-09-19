@@ -127,6 +127,15 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
 
                             scope.selectbox = angular.extend({}, scope.selectbox, _editType );
 
+                            //Promise 객체일경우 비동기로 한번셋팅후 그후로는 배열로 사용
+                            if( typeof _editType.dataset == "function"){
+                                scope.selectbox.dataset = [];
+                                _editType.dataset().then(function( dataset ){
+                                    scope.selectbox.dataset = dataset;
+                                    _editType.dataset       = dataset;
+                                });
+                            }
+
                             // Edit Type SelectBox
                             if( scope.selectbox.defaultText != null &&
                                 scope.selectbox.defaultValue != null ){
