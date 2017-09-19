@@ -177,6 +177,8 @@ function SpGrid( SpGridConstant, $templateCache ){
             });
         }
 
+
+
         // if( this.getData() && this.getData.length > 0 ){
         //     this.generateIdx( this.getData());
         // }
@@ -376,8 +378,21 @@ function SpGrid( SpGridConstant, $templateCache ){
 
         }
         _row.cudFlag = SpGridConstant.CREATE_FLAG;
+        _row.__isTempSave = false;
+        _row.__valid      = false;
         this.setStatus("create");
         this.getCreateData().push(_row);
+    };
+
+    /**
+     * UI를 통한 insert가 아닌 직접적인 로우 삽입
+     * @param row
+     */
+    SpGrid.prototype.addRow = function( row ){
+        row.cudFlag = SpGridConstant.CREATE_FLAG;
+        row.__isTempSave = true;
+        row.__valid      = true;
+        this.getData().push(row);
     };
 
     /**

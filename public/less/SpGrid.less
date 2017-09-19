@@ -10,15 +10,14 @@
     .sp-grid {
         .sp-grid-body{
             position : relative;
+            overflow-x:hidden;
             .sp-grid-notice-message{
                 height: 150px;
                 text-align: center;
                 vertical-align: bottom;
-                margin: 50px auto;
                 padding-top: 60px;
-                border-radius: 5px;
-                background: @background-color;
-                border: 1px solid @strong-border-color;
+                border-bottom: 1px solid @border-color;
+                font-size: 13px;
             }
             .sp-grid-data{
 
@@ -142,9 +141,6 @@
         & > .sp-grid-body {
             overflow-y:auto;
 
-            .sp-grid-notice-message{
-                width : 500px;
-            }
             .sp-grid-data-row{
                 display:table-row;
 

@@ -53,16 +53,22 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
                     return ;
                 }
 
+                //생성 후 미검증 & 임시저장 X 상태
+                var isCreate = scope.row.cudFlag == SpGridConstant.CREATE_FLAG
+                                        && !scope.isTempSave() && !scope.row.__valid;
+                //수정 & 임시저장 X상태
+                var isUpdate = scope.row.cudFlag == SpGridConstant.UPDATE_FLAG &&
+                                _headerColumn.hasOwnProperty("editType") && !scope.isTempSave();
+
                 if( scope.row.hasOwnProperty("cudFlag") && scope.type == "data"){
-                    if( scope.row.cudFlag == SpGridConstant.CREATE_FLAG && !scope.isTempSave()){
+                    if( isCreate || isUpdate ){
+                        // if( isCreate ){
+                        //     scope.scrollTop();
+                        // }
                         editMode();
-                        scope.scrollTop();
-                        return;
-                    } else if ( scope.row.cudFlag == SpGridConstant.UPDATE_FLAG &&
-                            _headerColumn.hasOwnProperty("editType") && !scope.isTempSave() ){
-                        editMode();
-                        return;
+                        return ;
                     }
+
                 }
                 viewMode();
             }
@@ -150,7 +156,7 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
                         $compile(_typeMap[_typeName] )(scope)
                     );
 
-                    element.focus();
+                    // element.focus();
                 }
 
             }

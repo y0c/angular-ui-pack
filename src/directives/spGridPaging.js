@@ -13,11 +13,10 @@ function spGridPaging( SpGridConstant ){
 
             scope.$watch("pagingOptions", function( newObj ){
                 scope.totalRecordCount =  newObj.totalRecordCount;
-                scope.totalPage        = Math.ceil( scope.totalRecordCount / scope.pageSize );
+                scope.totalPage        = Math.ceil( scope.totalRecordCount / newObj.pageSize );
             },true);
 
 
-            scope.currentPage      = 1;
             scope.totalPgaeBlock   = Math.floor( scope.totalRecordCount / scope.pageBlockSize );
             calculateCurrentPageBlock();
 

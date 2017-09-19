@@ -61,6 +61,7 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                     scope.row.cudFlag      = SpGridConstant.UPDATE_FLAG;
                 }
 
+                scope.row.__valid      = false;
                 scope.row.__isTempSave = false;
                 scope.gridObject.setStatus("edit");
                 scope.$broadcast("changeMode");
@@ -100,10 +101,11 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 // Row Delete시 생성된데이터는 배열에서 완전삭제
                 if( scope.row.cudFlag != SpGridConstant.CREATE_FLAG ){
                     scope.row.cudFlag = SpGridConstant.DELETE_FLAG;
+                    scope.row.__valid = true;
                 } else {
                     scope.gridObject.getData().splice(scope.$index, 1 );
                 }
-
+                scope.$parent.$broadcast("rowDelete");
                 scope.gridObject.getGridAction().onRowDeleteAfter( scope.row );
             };
 

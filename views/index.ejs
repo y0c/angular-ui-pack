@@ -20,7 +20,9 @@
 
         angular.module("gridApp", [ "SpGrid"] )
             .controller("gridController", ['$scope','SpGrid','$http', function( $scope, SpGrid, $http ){
+                $scope.pSize = 10;
                 $scope.pagingOptions = {
+                    currentPage : 3,
                     pageSize : 10,
                     pageBlockSize : 10
                 };
@@ -147,7 +149,7 @@
                 $http.get("test.json")
                     .then(function( response ){
                         console.log(response.data);
-//                        $scope.grid.setData(response.data);
+                        $scope.grid.setData(response.data);
 //                        $scope.grid.setSelectedRow($scope.grid.getData()[0]);
                     });
 
@@ -171,6 +173,10 @@
 
                 $scope.customvalidate = function(){
                     $scope.row.__validate();
+                }
+
+                $scope.pageSizeChange = function(){
+                    $scope.pagingOptions.pageSize = $scope.pagingOptions.pageSize+10;
                 }
             }]);
     </script>
@@ -205,6 +211,7 @@
 
 
     <p class="text-center" style="margin-top:30px;">
+      <button class="btn btn-default" ng-click="pageSizeChange()">페이징 변경</button>
       <button class="btn btn-default" ng-click="showChangedData();">변화된 데이터 찍어보기</button>
       <button class="btn btn-primary" ng-click="addRow()">추가하기</button>
       <button class="btn btn-danger" ng-click="deleteRow()">삭제</button>

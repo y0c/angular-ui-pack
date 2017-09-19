@@ -17,7 +17,12 @@ function spGridFooterColumn( SpGridConstant ){
                     var result = 0;
                     angular.forEach( dataset, function( row ){
                         if( row.hasOwnProperty(columnId) ){
-                            result += parseFloat(row[columnId]);
+                            //임시삭제도 합계에서 배제한다.
+                            if( row.hasOwnProperty("cudFlag") && row.cudFlag == SpGridConstant.DELETE_FLAG ){
+
+                            } else {
+                                result += parseFloat(row[columnId]);
+                            }
                         }
                     });
                     return result;
@@ -32,18 +37,27 @@ function spGridFooterColumn( SpGridConstant ){
                 calculateSummary();
             });
 
+
+            scope.$on("rowDelete", calculateSummary);
             scope.$on("pageChange", calculateSummary);
 
             function calculateSummary( ){
                 var _currentPage = scope.gridObject.getCurrentPage() || 1;
                 var _pageSize    = scope.gridObject.getPageSize();
                 var _headerColumn = scope.headerColumn;
-                var _pageDataset = scope.gridObject.getData().slice( (_currentPage-1)*_pageSize , ((_currentPage-1)*_pageSize) + _pageSize );
+                var _pageDataset = null;
                 var _resultFormatter = {
                     resultFormatter : function( result ){
                         return result;
                     }
                 };
+
+                if( scope.gridObject.isEnablePaging() ){
+                    _pageDataset = scope.gridObject.getData().slice( (_currentPage-1)*_pageSize , ((_currentPage-1)*_pageSize) + _pageSize );
+                } else {
+                    _pageDataset = scope.gridObject.getData();
+                }
+
                 if( _headerColumn.hasOwnProperty("summary") ){
                     if( _headerColumn.summary){
                         _headerColumn.summary = angular.extend({}, _resultFormatter,  _headerColumn.summary );
