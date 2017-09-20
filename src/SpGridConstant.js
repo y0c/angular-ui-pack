@@ -6,6 +6,7 @@ module.exports = {
     ROW_SELECT_CLASS : "sp-grid-data-select",
     template : {
         EDIT_INPUT            : "SpGridEditInput.tmpl.html",
+        EDIT_TEXTAREA         : "SpGridEditTextArea.tmpl.html",
         EDIT_CHECKBOX         : "SpGridEditCheckBox.tmpl.html",
         EDIT_SELECTBOX        : "SpGridEditSelectBox.tmpl.html",
         CONTEXT_MENU          : "SpGridDataContextMenu.tmpl.html",

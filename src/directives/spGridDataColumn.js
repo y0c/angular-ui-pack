@@ -86,7 +86,8 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
                 var _typeMap = {
                     "text"      : $templateCache.get(SpGridConstant.template.EDIT_INPUT),
                     "checkbox"  : $templateCache.get(SpGridConstant.template.EDIT_CHECKBOX),
-                    "selectbox" : $templateCache.get(SpGridConstant.template.EDIT_SELECTBOX)
+                    "selectbox" : $templateCache.get(SpGridConstant.template.EDIT_SELECTBOX),
+                    "textarea"  : $templateCache.get(SpGridConstant.template.EDIT_TEXTAREA)
                 };
                 var _typeName = null;
                 var _editType = null;
