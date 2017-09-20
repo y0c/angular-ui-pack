@@ -2,7 +2,5 @@
     ng-click="onGridDataRowClick(row)"
     ng-hide="isRowDeleted()"
     ng-class="getRowClass()">
-    <form class="sp-grid-row-form" novalidate name="rowForm">
-        <sp-grid-data-column ng-repeat="headerColumn in gridObject.getColumnDef() track by $index" ></sp-grid-data-column>
-    </form>
+    <sp-grid-data-column ng-repeat="headerColumn in gridObject.getColumnDef()"></sp-grid-data-column>
 </div>

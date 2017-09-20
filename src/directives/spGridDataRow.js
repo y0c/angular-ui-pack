@@ -243,6 +243,14 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 return true;
             };
 
+            function setRowStyle(paramMap){
+                if( paramMap.rowIdx == scope.$index ){
+                    element.css(paramMap.style);
+                }
+            }
+
+            scope.$on("rowStyleChange", setRowStyle);
+
         }
     }
 }

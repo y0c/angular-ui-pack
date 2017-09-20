@@ -70,6 +70,13 @@ function SpGridUtil(){
                     targetObj[key] = sourceObj[key];
                 }
             });
+        },
+        getColumnIdx : function( arr, column ){
+            for( var i = 0 ; i < arr.length ; i ++ ){
+                if( column.id == arr[i].id )
+                    return i;
+            }
+            return -1;
         }
     }
 }

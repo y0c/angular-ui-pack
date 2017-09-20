@@ -1,4 +1,4 @@
-function SpGrid( SpGridConstant, $templateCache ){
+function SpGrid( SpGridConstant, $templateCache, $rootScope ){
 
     function SpGrid( gridOptions ){
         var _self = this;
@@ -413,6 +413,31 @@ function SpGrid( SpGridConstant, $templateCache ){
         return _result;
     };
 
+    /**
+     * cell 스타일 변경
+     * @param rowIdx
+     * @param colIdx
+     * @param style
+     */
+    SpGrid.prototype.setCellStyle = function( rowIdx, colIdx, style ){
+        $rootScope.$broadcast("cellStyleChange", {
+            rowIdx : rowIdx,
+            colIdx : colIdx,
+            style : style
+        });
+    };
+
+    /**
+     * 로우 스타일 변경
+     * @param rowIdx
+     * @param style
+     */
+    SpGrid.prototype.setRowStyle = function( rowIdx, style ){
+        $rootScope.$broadcast("rowStyleChange", {
+            rowIdx : rowIdx,
+            style : style
+        });
+    };
 
 
 
