@@ -382,6 +382,7 @@ function SpGrid( SpGridConstant, $templateCache ){
         _row.__valid      = false;
         this.setStatus("create");
         this.getCreateData().push(_row);
+        return _row;
     };
 
     /**
@@ -393,6 +394,7 @@ function SpGrid( SpGridConstant, $templateCache ){
         row.__isTempSave = true;
         row.__valid      = true;
         this.getData().push(row);
+        return row;
     };
 
     /**
