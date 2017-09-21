@@ -93,8 +93,8 @@
                                 "<div class=\"sp-grid-data-context-menu-wrap\" " +
                                       "ng-style=\"{ 'top' : rightClickPosition.currentY, 'left' : rightClickPosition.currentX }\">" +
                                     "<ul class=\"sp-grid-data-context-menu\">" +
-                                        "<li ng-show=\"gridObject.isEditMode() && !rowManager.isRowEditting()\" ng-click=\"rowManager.rowEdit()\">Edit</li>" +
-                                        "<li ng-show=\"gridObject.isEditMode() && rowManager.isRowEditting()\" ng-click=\"rowManager.rowRevert()\">Revert</li>" +
+                                        "<li ng-show=\"gridObject.isEditable() && !rowManager.isRowEditting()\" ng-click=\"rowManager.rowEdit()\">Edit</li>" +
+                                        "<li ng-show=\"gridObject.isEditable() && rowManager.isRowEditting()\" ng-click=\"rowManager.rowRevert()\">Revert</li>" +
                                         "<li ng-click=\"rowManager.rowDelete()\">Delete</li>" +
                                     "</ul>" +
                                 "</div>" +
@@ -186,8 +186,8 @@
          * Grid EditMode 리턴
          * @returns {boolean|*}
          */
-        SpGrid.prototype.isEditMode = function(){
-            return this._gridOptions.editMode;
+        SpGrid.prototype.isEditable = function(){
+            return this._gridOptions.editable;
         };
 
         /**
@@ -195,8 +195,8 @@
          * @param editMode
          * @returns {SpGrid}
          */
-        SpGrid.prototype.setEditMode = function( editMode ){
-            this._gridOptions.editMode = editMode;
+        SpGrid.prototype.setEditable = function( editable ){
+            this._gridOptions.editable = editable;
             return this;
         };
 
