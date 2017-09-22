@@ -169,6 +169,17 @@
                 $scope.pageSizeChange = function(){
                     $scope.pagingOptions.pageSize = $scope.pagingOptions.pageSize+10;
                 }
+
+                $scope.cellStyleChange = function(){
+                    for( var i =0 ; i < 4; i ++ ){
+                        for( var j = 0; j < 4; j ++ ){
+                            $scope.grid.setCellStyle(i,j,{
+                                background: "red",
+                                color:"white"
+                            });
+                        }
+                    }
+                }
             }]);
     </script>
 
@@ -207,6 +218,7 @@
       <button class="btn btn-primary" ng-click="addRow()">추가하기</button>
       <button class="btn btn-danger" ng-click="deleteRow()">삭제</button>
       <button class="btn btn-danger" ng-click="customvalidate()">검증</button>
+        <button class="btn btn-default" ng-click="cellStyleChange();">테스트</button>
     </p>
   </div>
 

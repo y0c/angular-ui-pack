@@ -24,7 +24,10 @@ const config = {
                 }
             }]
         },
-
+            {
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader' ]
+            },
             { test: /\.scss$/, loaders: ['style', 'css', 'postcss', 'sass'] },
             { test: /\.(woff2?|ttf|eot|svg)$/, loader: 'url?limit=10000' },
             {
@@ -37,6 +40,7 @@ const config = {
                     loader: "less-loader" // compiles Less to CSS
                 }]
             }
+
         ]
     },
     devtool: '#inline-source-map'

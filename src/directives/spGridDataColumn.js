@@ -1,7 +1,7 @@
 /**
  * Grid Data Column Directive
  */
-function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
+function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,  $timeout ){
     return {
         restrict : "E",
         controller : "spGridController",
@@ -9,6 +9,7 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_DATA_COLUMN,
         link : function( scope, element, attr ){
+            var _headerColumns = scope.gridObject.getColumnDef();
             var _headerColumn = scope.headerColumn;
             scope.columnWidth = _headerColumn.width;
             scope.columnHeader= _headerColumn.name;
@@ -179,6 +180,14 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, $timeout ){
                 );
             }
 
+            function setCellStyle( $scope, paramMap ){
+                if( paramMap.rowIdx == scope.rowidx &&
+                    paramMap.colIdx == scope.$index ){
+                    element.css(paramMap.style);
+                }
+            }
+
+            scope.$on("cellStyleChange", setCellStyle );
             scope.$on("changeMode", changeModeByCudFlag );
         }
     }

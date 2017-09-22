@@ -7,8 +7,8 @@ function spGridPaging( SpGridConstant ){
         },
         templateUrl : SpGridConstant.template.SP_GRID_PAGING,
         link : function( scope, element, attrs ){
-            scope.currentPage = scope.pagingOptions.currentPage || 1;
-            scope.pageSize    = scope.pagingOptions.pageSize;
+            scope.currentPage   = scope.pagingOptions.currentPage || 1;
+            scope.pageSize      = scope.pagingOptions.pageSize;
             scope.pageBlockSize = scope.pagingOptions.pageBlockSize;
 
             scope.$watch("pagingOptions", function( newObj ){

@@ -18,6 +18,10 @@ function spGridHeaderRow( $compile, SpGridConstant ){
                 scope.headerColumns = getColumns();
             },true );
 
+            /**
+             * colSpan 으로 기능을 나누고 리턴
+             * @returns {Array}
+             */
             function getColumns(){
                 var _columns = [];
                 var _colSpan       = 0;
@@ -32,6 +36,10 @@ function spGridHeaderRow( $compile, SpGridConstant ){
                 return _columns;
             }
 
+            /**
+             * colSpan 그룹을 나누고 그룹별 첫번째 인덱스를 배열에 담아 리턴
+             * @returns {Array}
+             */
             function getColGroup(){
                 var _column        = null;
                 var _spanWidth     = 0;
