@@ -1,4 +1,5 @@
 module.exports = {
+    INSTANCE_ID_PREFIX : "SP_GRID_",
     CREATE_FLAG : "C",
     UPDATE_FLAG : "U",
     DELETE_FLAG : "D",

@@ -70,8 +70,6 @@ function spGridController( $scope, SpGridUtil ){
     }
 
 
-
-
     init();
 }
 

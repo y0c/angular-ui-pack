@@ -1,4 +1,5 @@
 function SpGrid( SpGridConstant, $templateCache, $rootScope ){
+    var id = 0;
 
     function SpGrid( gridOptions ){
         var _self = this;
@@ -38,6 +39,9 @@ function SpGrid( SpGridConstant, $templateCache, $rootScope ){
              * Grid Action 이벤트 콜백
              */
             gridAction : {
+                onCellClick : function(){
+
+                },
                 onRowClick : function(){
 
                 },
@@ -58,6 +62,9 @@ function SpGrid( SpGridConstant, $templateCache, $rootScope ){
                 },
                 onRowCreateAfter : function(){
 
+                },
+                onRowRenderFinished : function(){
+                    console.log("rowRenderFinised");
                 }
 
             },
@@ -90,8 +97,13 @@ function SpGrid( SpGridConstant, $templateCache, $rootScope ){
         this.selectedRow = null;
 
         this.init();
+
+        this.id = SpGridConstant.INSTANCE_ID_PREFIX + id++;
     }
 
+    SpGrid.prototype.getId = function(){
+        return this.id;
+    };
     SpGrid.prototype.getCreateData = function(){
         return this._gridOptions.createDataset;
     };
@@ -239,6 +251,7 @@ function SpGrid( SpGridConstant, $templateCache, $rootScope ){
     SpGrid.prototype.getRegisterFunction = function(){
         return this._gridOptions.registerFunction;
     };
+
     /**
      * Grid 컬럼 Define 목록 리턴
      * @returns {Array}
@@ -420,7 +433,7 @@ function SpGrid( SpGridConstant, $templateCache, $rootScope ){
      * @param style
      */
     SpGrid.prototype.setCellStyle = function( rowIdx, colIdx, style ){
-        $rootScope.$broadcast("cellStyleChange", {
+        $rootScope.$broadcast( this.getId() + "cellStyleChange", {
             rowIdx : rowIdx,
             colIdx : colIdx,
             style : style
@@ -433,7 +446,7 @@ function SpGrid( SpGridConstant, $templateCache, $rootScope ){
      * @param style
      */
     SpGrid.prototype.setRowStyle = function( rowIdx, style ){
-        $rootScope.$broadcast("rowStyleChange", {
+        $rootScope.$broadcast( this.getId() + "rowStyleChange", {
             rowIdx : rowIdx,
             style : style
         });

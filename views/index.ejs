@@ -133,6 +133,12 @@
                     gridAction : {
                         onRowClick : function( row ){
                             $scope.row = row
+                        },
+                        onRowRenderFinished : function(){
+//                            alert("test");
+                            $scope.grid.setCellStyle(1,1,{
+                                background:"red"
+                            });
                         }
                     }
                 });
@@ -173,7 +179,7 @@
                 $scope.cellStyleChange = function(){
                     for( var i =0 ; i < 4; i ++ ){
                         for( var j = 0; j < 4; j ++ ){
-                            $scope.grid.setCellStyle(i,j,{
+                            $scope.grid.setRowStyle(i,{
                                 background: "red",
                                 color:"white"
                             });

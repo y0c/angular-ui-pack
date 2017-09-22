@@ -23,6 +23,7 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,
 
             scope.getRowno    = getRowno;
 
+            scope.onCellClick = scope.gridObject.getGridAction().onCellClick;
 
 
             if( scope.isTypeHtml() ) {
@@ -187,7 +188,7 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,
                 }
             }
 
-            scope.$on("cellStyleChange", setCellStyle );
+            scope.$on( scope.gridObject.getId() + "cellStyleChange", setCellStyle );
             scope.$on("changeMode", changeModeByCudFlag );
         }
     }
