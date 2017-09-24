@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
+    <script src="/javascripts/jquery-1.12.1.js"></script>
+    <script src="/javascripts/angular.js"></script>
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <link rel="stylesheet" href="/stylesheets/page.css">
+    <link rel="stylesheet" href="/stylesheets/animation.css">
+    <link rel="stylesheet" href="/stylesheets/theme.css">
+
+    <!--<link rel="stylesheet" href="/stylesheets/SpGrid.css">-->
+    <script type="text/javascript" src="/javascripts/dist/SpUi.js"></script>
+    <script type="text/javascript">
+        function testController( SpModal){
+            var modal = new SpModal({
+                template : "testModal",
+                modalAction : {
+                    onResult : function( modal ){
+                        console.log(modal);
+                    }
+                },
+                controller : function( $scope, instance ){
+                    this.init = function(){
+                        console.log("TEst!!!");
+                    }
+                    this.close = function(){
+                        instance.close();
+                    }
+                    this.result = function(){
+                        instance.result(this);
+                        instance.close();
+                    }
+                }
+            });
+
+            modal.open();
+        }
+
+        function modalController( $scope, instance ){
+            this.init = function(){
+                console.log("TEst!!!");
+            }
+            this.close = function(){
+                instance.close();
+            }
+        }
+        angular.module("modalApp", ["SpUi"])
+            .controller("testController", testController)
+            .controller("modalController", modalController)
+            .service("testService", function(){
+                this.test = function(){
+                    console.log("#####");
+                }
+            });
+    </script>
+</head>
+<body ng-app="modalApp" ng-controller="testController">
+<script type="text/ng-template" id="testModal">
+<div class="sp-modal-header" ng-init="init();"></div>
+<div class="sp-mdoal-body" ng-click="modal.init();">Test Modal</div>
+<div class="sp-modal-footer">
+    <button class="btn btn-primary" ng-click="modal.close();">취소</button>
+    <button class="btn btn-primary" ng-click="modal.result();">결과</button>
+</div>
+</script>
+</body>
