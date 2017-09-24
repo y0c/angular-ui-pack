@@ -5,7 +5,7 @@ const config = {
     entry: './src/app.js',
     output: {
         path: path.resolve(__dirname) + '/public/javascripts/dist',
-        filename: 'SpGrid.js'
+        filename: 'SpUi.js'
     },
     plugins: [
         new webpack.ProvidePlugin({
