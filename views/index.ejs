@@ -78,6 +78,7 @@
                             id : "CHASU_SEQ",
 //                            name : "차수",
                             width : "100px",
+//                            hidden : true,
                             editType : "text",
                             summary : {
                                 type : "sum",
@@ -175,14 +176,21 @@
                 }
 
                 $scope.cellStyleChange = function(){
-                    for( var i =0 ; i < 4; i ++ ){
-                        for( var j = 0; j < 4; j ++ ){
-                            $scope.grid.setRowStyle(i,{
-                                background: "red",
-                                color:"white"
-                            });
-                        }
-                    }
+//                    for( var i =0 ; i < 4; i ++ ){
+//                        for( var j = 0; j < 4; j ++ ){
+//                            $scope.grid.setRowStyle(i,{
+//                                background: "red",
+//                                color:"white"
+//                            });
+//                        }
+//                    }
+//                    $scope.grid.setColumnPropertyById("BUNBAN",{hidden:true});
+                    $scope.grid.setColumnPropertyById("SUBJECT_NO",{hidden:false});
+
+                }
+
+                $scope.testColumn = function(){
+                    $scope.grid.setColumnPropertyById("SUBJECT_NO",{hidden:true});
                 }
             }]);
     </script>
@@ -223,6 +231,7 @@
       <button class="btn btn-danger" ng-click="deleteRow()">삭제</button>
       <button class="btn btn-danger" ng-click="customvalidate()">검증</button>
         <button class="btn btn-default" ng-click="cellStyleChange();">테스트</button>
+      <button class="btn btn-default" ng-click="testColumn();">테스트</button>
     </p>
   </div>
 

@@ -16,6 +16,10 @@
         function testController( SpModal){
             var modal = new SpModal({
                 template : "testModal",
+                params : {
+                    test :"33333$",
+                    ccc : "222"
+                },
                 modalAction : {
                     onResult : function( modal ){
                         console.log(modal);
@@ -24,10 +28,13 @@
                 controller : function( $scope, instance ){
                     this.init = function(){
                         console.log("TEst!!!");
+                        console.log(this.params);
                     }
+
                     this.close = function(){
                         instance.close();
                     }
+
                     this.result = function(){
                         instance.result(this);
                         instance.close();
@@ -59,7 +66,7 @@
 <body ng-app="modalApp" ng-controller="testController">
 <script type="text/ng-template" id="testModal">
 <div class="sp-modal-header" ng-init="init();"></div>
-<div class="sp-mdoal-body" ng-click="modal.init();">Test Modal</div>
+<div class="sp-modal-body" ng-click="modal.init();">Test Modal</div>
 <div class="sp-modal-footer">
     <button class="btn btn-primary" ng-click="modal.close();">취소</button>
     <button class="btn btn-primary" ng-click="modal.result();">결과</button>
