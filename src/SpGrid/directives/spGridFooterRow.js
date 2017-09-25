@@ -7,6 +7,11 @@ function spGridFooterRow( SpGridConstant ){
         templateUrl : SpGridConstant.template.SP_GRID_FOOTER_ROW,
         link : function ( scope, element, attrs ){
 
+            scope.$columns = scope.gridObject.getVisibleColumn();
+
+            scope.$on("gridColumnChange", function(){
+                scope.$columns = scope.gridObject.getVisibleColumn();
+            });
         }
     }
 }

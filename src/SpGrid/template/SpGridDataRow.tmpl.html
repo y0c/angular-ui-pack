@@ -2,5 +2,5 @@
     ng-click="onGridDataRowClick(row)"
     ng-hide="isRowDeleted()"
     ng-class="getRowClass()">
-    <sp-grid-data-column ng-repeat="headerColumn in gridObject.getColumnDef()"></sp-grid-data-column>
+    <sp-grid-data-column ng-repeat="headerColumn in $columns"></sp-grid-data-column>
 </div>
