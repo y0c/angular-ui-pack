@@ -1,4 +1,4 @@
-function SpGrid( SpGridConstant, $templateCache, $rootScope ){
+function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
     var id = 0;
 
     function SpGrid( gridOptions ){
@@ -244,6 +244,23 @@ function SpGrid( SpGridConstant, $templateCache, $rootScope ){
     SpGrid.prototype.getPagingOptions = function(){
         return this._gridOptions.pagingOptions;
     };
+
+    /**
+     * 엑셀 내보내기용 컬럼리턴
+     */
+    SpGrid.prototype.getExcelColumn = function(){
+        var columnArr = [];
+        angular.forEach(this.getColumnDef() , function( column ){
+            if( column.type == "data" || (column.type =="html" && column.hasOwnProperty("id"))){
+                columnArr.push({
+                    columnid : column.id,
+                    title    : SpGridUtil.removeTags(column.name)
+                });
+            }
+        });
+
+        return columnArr;
+    };
     /**
      * 등록할 Function List
      * @returns {Array}
@@ -452,11 +469,74 @@ function SpGrid( SpGridConstant, $templateCache, $rootScope ){
         });
     };
 
+    /**
+     * hidden 처리된 컬럼을 제외하고 리턴
+     * @returns {Array}
+     */
+    SpGrid.prototype.getVisibleColumn = function(){
+        var _columns = [];
+
+        angular.copy( this.getColumnDef(), _columns);
+        //히든처리
+        for( var j = _columns.length - 1 ; j > - 1 ; j -- ){
+            if( _columns[j].hasOwnProperty("hidden") &&
+                _columns[j].hidden === true ){
+                _columns.splice( j, 1 );
+            }
+        }
+        return _columns;
+    };
+
+    /**
+     * column Property 셋팅 ID이용
+     * @param id
+     * @param propObj
+     */
+    SpGrid.prototype.setColumnPropertyById = function( id, propObj ){
+        var _columns = this.getColumnDef();
+
+        for( var i = 0 ; i < _columns.length ; i ++ ){
+            if( _columns[i].hasOwnProperty("id") && _columns[i].id == id ){
+                this.setColumnProperty( i, propObj );
+                break;
+            }
+        }
+    };
+
+    /**
+     * column property 셋팅
+     * @param colIdx
+     * @param propObj
+     * @param overwrite
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setColumnProperty = function( colIdx, propObj, overwrite ){
+        overwrite = overwrite || true;
+        var column = this.getColumnDef()[colIdx];
+
+        if( overwrite ){
+            this.getColumnDef()[colIdx] = angular.extend({}, column, propObj );
+        } else {
+            this.getColumnDef()[colIdx] = angular.extend({}, propObj );
+        }
+
+        $rootScope.$broadcast("gridColumnChange");
+
+        return this;
+    };
+
+    /**
+     * colIdx 로 컬럼 객체를 찾아 리턴
+     * @param colIdx
+     * @returns {*}
+     */
+    SpGrid.prototype.getColumnProperty = function( colIdx ){
+        return this.getColumnDef()[colIdx];
+    };
 
 
     return SpGrid;
 }
-
 module.exports = function(app){
     app.factory("SpGrid", SpGrid);
 };
