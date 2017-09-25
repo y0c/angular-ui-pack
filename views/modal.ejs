@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
+    <!--<link rel="stylesheet" href="/stylesheets/font-awesome.css" />-->
     <script src="/javascripts/jquery-1.12.1.js"></script>
     <script src="/javascripts/angular.js"></script>
-    <link rel="stylesheet" href="/stylesheets/reset.css">
-    <link rel="stylesheet" href="/stylesheets/page.css">
-    <link rel="stylesheet" href="/stylesheets/animation.css">
-    <link rel="stylesheet" href="/stylesheets/theme.css">
+
+    <link rel="stylesheet" href="//nana.band/template/style/reset.css">
+    <link rel="stylesheet" href="//nana.band/template/style/page.css">
+    <link rel="stylesheet" href="//nana.band/template/style/animation.css">
+    <link rel="stylesheet" href="//nana.band/template/style/theme.css">
 
     <!--<link rel="stylesheet" href="/stylesheets/SpGrid.css">-->
     <script type="text/javascript" src="/javascripts/dist/SpUi.js"></script>
     <script type="text/javascript">
-        function testController( SpModal){
-            var modal = new SpModal({
+        function testController( $scope, SpModal){
+            $scope.row = {};
+
+            $scope.init = function(){
+                $scope.modal2.open();
+            };
+
+            $scope.modal3 = new SpModal({
                 template : "testModal",
                 params : {
                     test :"33333$",
@@ -42,7 +49,133 @@
                 }
             });
 
-            modal.open();
+            $scope.modal = new SpModal({
+                template : "testModal2",
+                params : {
+                    test :"33333$",
+                    ccc : "222"
+                },
+                modalAction : {
+                    onResult : function( modal ){
+                        console.log(modal);
+                    }
+                },
+                controller : function( instance ){
+                    this.init = function(){
+                        console.log("TEst!!!");
+                        console.log(this.params);
+                    }
+
+                    this.close = function(){
+                        instance.close();
+                    }
+
+                    this.result = function(){
+                        $scope.modal3.open();
+//                        instance.result(this);
+//                        instance.close();
+                    }
+                }
+            });
+
+            $scope.modal3 = new SpModal({
+                template : "testModal",
+                params : {
+                    test :"33333$",
+                    ccc : "222"
+                },
+                modalAction : {
+                    onResult : function( modal ){
+                        console.log(modal);
+                    }
+                },
+                controller : function( $scope, instance ){
+                    this.init = function(){
+                        console.log("TEst!!!");
+                        console.log(this.params);
+                    }
+
+                    this.close = function(){
+                        instance.close();
+                    }
+
+                    this.result = function(){
+                        instance.result(this);
+                        instance.close();
+                    }
+                }
+            });
+
+            $scope.modal2 = new SpModal({
+                template : "test2Modal",
+                size : "lg",
+                realHeight: 400,
+                controller : function( instance, SpGrid, $http ){
+                    var vm = this;
+
+                    vm.grid1 = new SpGrid({
+                        selectable : true,
+                        gridSize : {
+                            height : '300px'
+                        },
+                        columnDef : [
+                            {
+                                id : "no",
+                                type : "rowno",
+                                name : "순번",
+                                width : "50px"
+                            },
+                            {
+                                id : "name",
+                                name : "이름",
+                                width : "200px"
+                            },
+                            {
+                                id : "username",
+                                name : "유저이름",
+                                width : "300px"
+                            },
+                            {
+                                id : "email",
+                                name : "이메일",
+                                width : "200px"
+                            }
+                        ]
+                    });
+
+                    vm.init = function(){
+
+
+                        $http.get("users.json",{})
+                            .success(function( data ){
+//                                instance.setTopPosition();
+                                vm.grid1.setData(data);
+
+                            });
+                    };
+
+                    vm.ok = function(){
+                        instance.result(vm.grid1.getSelectedRow());
+                        instance.close();
+                    };
+
+                    vm.showModal = function(){
+                        $scope.modal.open();
+                    }
+                },
+                modalAction : {
+                    onOpen : function( modal ){
+                        modal.init();
+                    },
+                    onResult : function( row ){
+                        $scope.row = row;
+                    }
+                }
+            })
+
+
+
+
         }
 
         function modalController( $scope, instance ){
@@ -63,13 +196,46 @@
             });
     </script>
 </head>
-<body ng-app="modalApp" ng-controller="testController">
-<script type="text/ng-template" id="testModal">
+<body ng-app="modalApp" ng-controller="testController" ng-init="init();">
+{{row}}
+<script type="text/ng-template" id="testModal2">
 <div class="sp-modal-header" ng-init="init();"></div>
 <div class="sp-modal-body" ng-click="modal.init();">Test Modal</div>
 <div class="sp-modal-footer">
-    <button class="btn btn-primary" ng-click="modal.close();">취소</button>
-    <button class="btn btn-primary" ng-click="modal.result();">결과</button>
+    <div class="nb-buttons right">
+        <div class="nb-btn-cancel"><button ng-click="modal.close();">취소</button></div>
+        <div class="nb-btn-save nb-theme"><button ng-click="modal.result()">확인</button></div>
+    </div>
+</div>
+</script>
+<script type="text/ng-template" id="testModal">
+    <div class="sp-modal-header" ng-init="init();"></div>
+    <div class="sp-modal-body" ng-click="modal.init();">Test Modal<br>Test Modal<br>Test Modal<br>Test Modal<br>Test Modal<br>Test Modal<br>Test Modal<br></div>
+    <div class="sp-modal-footer">
+        <div class="nb-buttons right">
+            <div class="nb-btn-cancel"><button ng-click="modal.close();">취소</button></div>
+            <div class="nb-btn-save nb-theme"><button ng-click="modal.result()">확인</button></div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="test2Modal">
+<div class="sp-modal-header">
+    <section class="nb-title page">
+        <h2><em>Modal 안에 그리드</em></h2>
+    </section>
+</div>
+<div class="sp-modal-body">
+    <sp-grid grid-object="modal.grid1">
+    </sp-grid>
+</div>
+<div class="sp-modal-footer">
+    <p>
+    <div class="nb-buttons right">
+        <div class="nb-btn-cancel"><button ng-click="modal.close();">취소</button></div>
+        <div class="nb-btn-save nb-theme"><button ng-click="modal.ok()">확인</button></div>
+        <div class="nb-btn-save nb-theme"><button ng-click="modal.showModal()">이중모달</button></div>
+    </div>
+    </p>
 </div>
 </script>
 </body>

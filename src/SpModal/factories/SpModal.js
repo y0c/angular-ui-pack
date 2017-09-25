@@ -1,9 +1,11 @@
-function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templateRequest, $compile, $window, SpModalConstant ){
+function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templateRequest, $compile, $window, SpModalConstant, $timeout){
 
     var body = angular.element($document[0].body);
 
     var backdropTemplate     = "<div class='sp-modal-backdrop out'></div>";
-    var modalWrapperTemplate = "<div class='sp-modal-wrap out'><div class='sp-modal'></div></div>";
+    var modalWrapperTemplate = "<div class='sp-modal-wrap out' ng-click='modal.close();'>" +
+                                    "<div class='sp-modal' ng-click='modal.stopPropagation($event);'></div>" +
+                               "</div>";
 
     var modalStack = [];
 
@@ -17,6 +19,7 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
             params : {},
             controller : null,
             size : "sm",
+            realHeight : null,
             modalAction : {
                 onOpen : function(){
 
@@ -70,7 +73,7 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
 
         this.$modalWrapper.find(".sp-modal").append($templateCache.get(options.template));
 
-
+        this.scope.close = _self.close.bind(_self);
         var linkFn        = $compile( this.$modalWrapper );
         var modalTemplate = linkFn( this.scope );
 
@@ -81,11 +84,20 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
             $scope : _self.scope,
             instance : {
                 close  : _self.close.bind(_self),
-                result : _self.getModalAction().onResult.bind(_self)
+                result : _self.getModalAction().onResult.bind(_self),
+                setTopPosition : _self.setTopPosition.bind(_self)
             }
         };
 
         this.controller = $controller( options.controller, ctrlInput, false,  options.controllerAs || SpModalConstant.DEFAULT_MODAL_CONTROLLER_AS );
+
+        if( this.controller.hasOwnProperty("init") ){
+            this.controller.init();
+        }
+        this.controller.close = _self.close.bind(_self);
+        this.controller.stopPropagation = function( $event ){
+            $event.stopPropagation();
+        };
 
         this.controller.params = options.params;
 
@@ -138,10 +150,20 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
         modalIn(this.$modalWrapper);
         modalIn(this.$backdrop);
         this.$modalWrapper.css("zIndex", SpModalConstant.MODAL_WRAPPER_ZINDEX + (modalStack.length*10) );
-        this.$backdrop.css("zIndex" , SpModalConstant.BACKDROP_ZINDEX + (modalStack.length*10) );
-        $spModal.css("top", ( $window.innerHeight / 2 ) - ( $spModal.height() / 2 ));
+        this.$backdrop.css("zIndex" , SpModalConstant.BACKDROP_ZINDEX + (modalStack.length*11) );
+        this.setTopPosition();
+        $spModal.addClass("sp-modal-" + this.getSize());
         modalStack.push(this);
         return this;
+    };
+
+    SpModal.prototype.setTopPosition = function(){
+        var _self = this;
+        var $spModal = _self.$modalWrapper.find(".sp-modal");
+        var height   = this.options.realHeight || $spModal.height();
+        // $timeout(function(){
+            $spModal.css("top", ( $window.innerHeight / 2 ) - ( height / 2 ));
+        // });
     };
 
     /**
