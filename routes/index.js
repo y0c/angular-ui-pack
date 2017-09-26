@@ -6,6 +6,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get("/tab", function(req,res,next){
+  res.render("tab");
+});
+
+
 router.get("/modal",function(req,res,next){
   res.render("modal");
 });
