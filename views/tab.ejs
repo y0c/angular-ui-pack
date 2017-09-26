@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <% include include/headerTag.ejs%>
+        <script type="text/javascript">
+            function tabintroController( SpTab ){
+                var vm = this;
+                vm.tab = new SpTab();
+                vm.test = function(){
+                    vm.tab.hideTab(1);
+                }
+            }
+
+            angular.module("tabApp", ["SpUi"])
+                .controller("tabintroController", tabintroController);
+        </script>
+    </head>
+    <body ng-app="tabApp">
+        <div class="wrap" ng-controller="tabintroController as vm">
+            <sp-tabset tab-object="vm.tab">
+                <sp-tab header="test1"><button ng-click="vm.test()">Test!!</button></sp-tab>
+                <sp-tab header="test2">!!!!!!!</sp-tab>
+            </sp-tabset>
+        </div>
+    </body>
+</html>
