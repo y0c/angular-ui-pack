@@ -1,0 +1,16 @@
+<section class="nb-tab">
+    <div class="nb-tabMenu">
+        <dl>
+            <dd ng-repeat="tab in tabset.tabObject.getTabs()"
+                ng-click="tabset.active($index)"
+                ng-class="tab.active && 'on'"
+                ng-hide="tab.hidden">
+                <label>
+                    <em ng-bind-html="tab.header | to_trusted"></em>
+                </label>
+            </dd>
+        </dl>
+    </div>
+    <ul class="nb-tabContents" ng-transclude>
+    </ul>
+</section>
