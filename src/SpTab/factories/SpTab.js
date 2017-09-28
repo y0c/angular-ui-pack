@@ -80,8 +80,8 @@ function SpTab(){
      */
     SpTab.prototype.addTab = function( tab ){
         this.tabs.push(tab);
-        if( this.tabs.length == 1 ){
-            tab.active = true;
+        if( this.tabs.length === 1 ){
+            this.activeTab(0);
         }
     };
 
@@ -114,9 +114,24 @@ function SpTab(){
      * @param idx
      */
     SpTab.prototype.activeTab = function( idx ){
-        this.tabs[this.currentIdx].active = false;
-        this.tabs[idx].active = true;
-        this.currentIdx = idx;
+        var _self = this;
+        var valid = this.getTabAction().onActiveBefore(idx);
+
+        var active = function(){
+            _self.tabs[_self.currentIdx].active = false;
+            _self.tabs[idx].active = true;
+            _self.currentIdx = idx;
+        };
+
+        //Promise 리턴시
+        if( typeof valid === "function" ){
+            valid.then(active);
+        //Boolean 리턴시
+        } else if ( typeof valid === "boolean" && valid ){
+            active();
+        }
+
+        this.getTabAction().onActiveAfter(idx);
     };
 
     /**

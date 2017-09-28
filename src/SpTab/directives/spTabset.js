@@ -15,10 +15,7 @@ function spTabset( SpTabConstant ){
             var vm = this;
 
             vm.active = function( $index ){
-                if ( vm.tabObject.getTabAction().onActiveBefore( $index ) ){
-                    vm.tabObject.activeTab( $index );
-                    vm.tabObject.getTabAction().onActiveAfter();
-                }
+                vm.tabObject.activeTab( $index );
             }
         }
     };
