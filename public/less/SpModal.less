@@ -29,6 +29,9 @@
   .sp-modal{
     position:relative;
     margin:0 auto;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid #808080;
     //width:500px;
     //height:300px;
 
@@ -50,18 +53,29 @@
       //height:50px;
       padding : 15px;
       box-sizing:border-box;
-      border-bottom:1px solid #ddd;
+      position: relative;
+      border-bottom: 1px solid #808080;
+
+      i.fa.fa-close{
+        position: absolute;
+        top: 20px;
+        right: 15px;
+        cursor: pointer;
+        font-size: 25px;
+      }
     }
     .sp-modal-body{
       padding:30px 15px;
-      max-height:300px;
+      //max-height:300px;
       overflow:auto;
+      color: #333;
+
     }
     .sp-modal-footer{
       //height:50px;
       padding : 15px;
       box-sizing:border-box;
-      border-top:1px solid #ddd;
+      border-top: 1px solid #808080;
     }
   }
 }
