@@ -3,8 +3,8 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
     var body = angular.element($document[0].body);
 
     var backdropTemplate     = "<div class='sp-modal-backdrop out'></div>";
-    var modalWrapperTemplate = "<div class='sp-modal-wrap out' ng-click='modal.close();'>" +
-                                    "<div class='sp-modal' ng-click='modal.stopPropagation($event);'></div>" +
+    var modalWrapperTemplate = "<div class='sp-modal-wrap out'>" +
+                                    "<div class='sp-modal' ></div>" +
                                "</div>";
 
     var modalStack = [];
@@ -61,6 +61,16 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
     }
 
     /**
+     * 사이즈 클래스 제거 함수
+     */
+    function sizeClassRemove( $spModal){
+        $spModal.removeClass("sp-modal-lg");
+        $spModal.removeClass("sp-modal-md");
+        $spModal.removeClass("sp-modal-sm");
+        $spModal.removeClass("sp-modal-xs");
+    }
+
+    /**
      * Modal 초기화 함수 인스턴스 생성될때 호출
      */
     SpModal.prototype.init = function(){
@@ -84,7 +94,9 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
             $scope : _self.scope,
             instance : {
                 close  : _self.close.bind(_self),
-                result : _self.getModalAction().onResult.bind(_self),
+                result : function(){
+                    _self.getModalAction().onResult( arguments[0] );
+                },
                 setTopPosition : _self.setTopPosition.bind(_self)
             }
         };
@@ -104,12 +116,34 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
     };
 
     /**
+     * Modal Params 리턴
+     * @return params
+     */
+    SpModal.prototype.getParams = function(){
+        return this.options.params;
+    };
+
+    /**
+     * Modal Component Params 설정
+     * @param params
+     */
+    SpModal.prototype.setParams = function( params ){
+        this.options.params = params;
+        this.controller.params = params;
+    };
+    /**
      * modalAction 설정
      * @param modalAction
      * @returns {SpModal}
      */
-    SpModal.prototype.setModalAction = function( modalAction ){
-        this.options.modalAction = modalAction;
+    SpModal.prototype.setModalAction = function( modalAction, overwrite ){
+        overwrite = overwrite || true;
+        if( overwrite ){
+            this.options.modalAction = angular.extend({}, this.options.modalAction, modalAction);
+        } else {
+            this.options.modalAction = modalAction;
+        }
+
         return this;
     };
 
@@ -152,6 +186,7 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
         this.$modalWrapper.css("zIndex", SpModalConstant.MODAL_WRAPPER_ZINDEX + (modalStack.length*10) );
         this.$backdrop.css("zIndex" , SpModalConstant.BACKDROP_ZINDEX + (modalStack.length*11) );
         this.setTopPosition();
+        sizeClassRemove($spModal);
         $spModal.addClass("sp-modal-" + this.getSize());
         modalStack.push(this);
         return this;
