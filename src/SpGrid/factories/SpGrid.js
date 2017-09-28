@@ -45,6 +45,9 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
                 onRowClick : function(){
 
                 },
+                onRowDblClick : function(){
+
+                },
                 onRowDeleteBefore : function(){
                     return true;
                 },
@@ -145,22 +148,35 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      * @returns {SpGrid}
      */
     SpGrid.prototype.setSelectedRow = function( row ){
+        angular.forEach( this.getData() , function( _row ){
+            if( _row.hasOwnProperty("__isSelected")){
+                delete _row.__isSelected;
+            }
+        });
         row.__isSelected = true;
         return this;
     };
 
     /**
-     * Grid 현재 선택된 로우 리턴
-     * @returns {null}
+     * Grid 현재 선택된 로우 인덱스 리턴
+     * @returns Number
      */
-    SpGrid.prototype.getSelectedRow = function(){
+    SpGrid.prototype.getSelectedIndex = function(){
         var _dataset = this.getData();
         for( var i = 0 ; i < _dataset.length ; i ++ ){
             if( _dataset[i].hasOwnProperty("__isSelected")
                 && _dataset[i].__isSelected ){
-                return _dataset[i];
+                return i;
             }
         }
+    };
+
+    /**
+     * Grid 현재 선택된 로우  리턴
+     * @returns Number
+     */
+    SpGrid.prototype.getSelectedRow = function(){
+        return this.getData()[this.getSelectedIndex()];
     };
 
     /**
@@ -427,6 +443,19 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         return row;
     };
 
+    /**
+     * UI를 통한 update가아닌 직접적인 로우 수정
+     * @param rowIdx
+     * @param obj - 수정할 프로퍼티가 포함된객체
+     * @returns {*}
+     */
+    SpGrid.prototype.updateRow = function( rowIdx, obj ){
+        this.getData()[rowIdx].cudFlag = SpGridConstant.UPDATE_FLAG;
+        this.getData()[rowIdx].__isTempSave = true;
+        this.getData()[rowIdx].__valid      = true;
+        this.getData()[rowIdx] = angular.extend( {}, this.getData()[rowIdx], obj);
+        return this.getData()[rowIdx];
+    };
     /**
      * Grid 변경된 로우 리턴
      * @returns {Array}

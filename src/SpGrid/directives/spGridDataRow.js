@@ -13,6 +13,8 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
 
             scope.onGridDataRowClick = onGridDataRowClick;
 
+            scope.onGridDataRowDblClick = onGridDataRowDblClick;
+
             scope.checkRowValid      = checkRowValid;
 
             scope.isTempSave         = isTempSave;
@@ -30,6 +32,10 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                 scope.gridObject.selectCancelAll();
                 scope.gridObject.setSelectedRow( row );
                 scope.gridObject.getGridAction().onRowClick( row );
+            }
+
+            function onGridDataRowDblClick( row ){
+                scope.gridObject.getGridAction().onRowDblClick( row );
             }
 
             function checkRowValid(){
