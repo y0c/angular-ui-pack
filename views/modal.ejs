@@ -14,11 +14,34 @@
     <!--<link rel="stylesheet" href="/stylesheets/SpGrid.css">-->
     <script type="text/javascript" src="/javascripts/dist/SpUi.js"></script>
     <script type="text/javascript">
-        function testController( $scope, SpModal){
+        function testController( $scope, SpModal, Toast){
             $scope.row = {};
 
+            $scope.ngChange = function(){
+                console.log($scope.inputTest);
+            }
+
+            $scope.spChange = function( $event){
+                console.log($event);
+                console.log("change");
+            }
             $scope.init = function(){
-                $scope.modal2.open();
+                Toast.alert("test")
+                    .then(function(){
+                        
+                        return Toast.confirm("수정하시겠습니까?");
+                    })
+                    .then( function(){
+                        Toast.alert("수정되었습니다."); 
+                    }, function(){
+                        Toast.alert("취소되었습니다.");
+                    });
+                
+                
+            };
+
+            $scope.showAlert = function(){
+                Toast.alert("Test!!!");    
             };
 
             $scope.modal3 = new SpModal({
@@ -198,6 +221,8 @@
 </head>
 <body ng-app="modalApp" ng-controller="testController" ng-init="init();">
 {{row}}
+<input type="text" ng-model="inputTest" ng-change="ngChange()" sp-change="spChange($event)" />
+<button class="btn btn-default" ng-click="showAlert();">Alert</button>
 <script type="text/ng-template" id="testModal2">
 <div class="sp-modal-header" ng-init="init();"></div>
 <div class="sp-modal-body" ng-click="modal.init();">Test Modal</div>
@@ -209,7 +234,11 @@
 </div>
 </script>
 <script type="text/ng-template" id="testModal">
-    <div class="sp-modal-header" ng-init="init();"></div>
+    <div class="sp-modal-header">
+        <section class="nb-title page">
+            <h2><em>Modal 안에 그리드</em></h2>
+        </section>
+    </div>
     <div class="sp-modal-body" ng-click="modal.init();">Test Modal<br>Test Modal<br>Test Modal<br>Test Modal<br>Test Modal<br>Test Modal<br>Test Modal<br></div>
     <div class="sp-modal-footer">
         <div class="nb-buttons right">

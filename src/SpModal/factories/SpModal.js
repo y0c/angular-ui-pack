@@ -1,4 +1,4 @@
-function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templateRequest, $compile, $window, SpModalConstant, $timeout){
+function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache, $templateRequest, $compile, $window, SpModalConstant, $timeout){
 
     var body = angular.element($document[0].body);
 
@@ -227,7 +227,7 @@ function SpModal( $rootScope, $controller, $document, $q, $templateCache, $templ
 }
 
 module.exports = function( app ){
-    app.factory("SpModal", SpModal)
+    app.factory("SpModal", SpModalFactory)
         .constant("SpModalConstant", {
             MODAL_WRAPPER_ZINDEX : 1050,
             BACKDROP_ZINDEX : 1040,
