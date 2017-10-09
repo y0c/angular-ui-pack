@@ -134,59 +134,77 @@
 }
 
 
+//default
+.sp-grid{
+    width:100%;
+    //min-height:300px;
+    display:table;
 
-@media( min-width : 501px ){
-    .sp-grid{
-        width:100%;
-        //min-height:300px;
-        display:table;
+    & > .sp-grid-body {
+        overflow-y:auto;
 
-        & > .sp-grid-body {
-            overflow-y:auto;
+        .sp-grid-data-row{
+            display:table-row;
 
-            .sp-grid-data-row{
-                display:table-row;
+            .sp-grid-data-column{
+                border-bottom: 1px solid @border-color;
+                box-sizing:border-box;
+                color:@data-column-font-color;
+                text-align: center;
+                display : table-cell;
+                vertical-align:middle;
+                font-weight:lighter;
+                font-size:13px;
+                padding:5px;
+                height:51px;
 
-                .sp-grid-data-column{
-                    border-bottom: 1px solid @border-color;
+                .sp-grid-data-header{
+                    display:none;
+                }
+
+
+                .sp-grid-data{
+                    overflow: hidden;
+                    white-space:nowrap;
+                    text-overflow:ellipsis;
+                    word-break: break-all;
                     box-sizing:border-box;
-                    color:@data-column-font-color;
-                    text-align: center;
-                    display : table-cell;
-                    vertical-align:middle;
-                    font-weight:lighter;
-                    font-size:13px;
-                    padding:5px;
-                    height:51px;
-
-                    .sp-grid-data-header{
-                        display:none;
-                    }
-
-
-                    .sp-grid-data{
-                        overflow: hidden;
-                        white-space:nowrap;
-                        text-overflow:ellipsis;
-                        word-break: break-all;
-                        box-sizing:border-box;
-                        padding-left: 5px;
-                        padding-right: 5px;
-                        .nb-buttons{
-                            vertical-align: middle;
-                            button{
-                                padding : 0 10px;
-                            }
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    .nb-buttons{
+                        vertical-align: middle;
+                        button{
+                            padding : 0 10px;
                         }
                     }
                 }
             }
         }
+    }
 
-        .sp-grid-footer {
-            .sp-grid-footer-column{
+    .sp-grid-footer {
+        .sp-grid-footer-column{
+            border-top: 1px solid @strong-border-color;
+            border-bottom: 1px solid @strong-border-color;
+            text-align: center;
+            display : table-cell;
+            vertical-align:middle;
+            background: @background-color;
+            color: @header-column-font-color;
+            font-size:13px;
+            font-weight:lighter;
+            padding:10px;
+            height:51px;
+        }
+    }
+    .sp-grid-header {
+
+        & > .sp-grid-header-row{
+            display:table-row;
+
+            .sp-grid-header-column {
                 border-top: 1px solid @strong-border-color;
-                border-bottom: 1px solid @strong-border-color;
+                border-bottom: 1px solid @border-color;
                 text-align: center;
                 display : table-cell;
                 vertical-align:middle;
@@ -198,38 +216,18 @@
                 height:51px;
             }
         }
-        .sp-grid-header {
-
-            & > .sp-grid-header-row{
-                display:table-row;
-
-                .sp-grid-header-column {
-                    border-top: 1px solid @strong-border-color;
-                    border-bottom: 1px solid @border-color;
-                    text-align: center;
-                    display : table-cell;
-                    vertical-align:middle;
-                    background: @background-color;
-                    color: @header-column-font-color;
-                    font-size:13px;
-                    font-weight:lighter;
-                    padding:10px;
-                    height:51px;
-                }
-            }
-        }
     }
 }
 
 
 @media ( max-width : 500px ){
-    .sp-grid-wrap{
+    .sp-grid-wrap.mb-vertical{
         width:100% !important;
         overflow:hidden;
 
         & > .sp-grid{
             width:100%;
-            border:1px solid #ababab;
+            // border:1px solid #ababab;
             //min-height:300px;
             display:block;
 
@@ -239,7 +237,8 @@
             }
 
             & > .sp-grid-body {
-                overflow-y:auto;
+                // overflow-y:auto;
+                height:auto !important;
                 padding:10px;
 
                 & > .sp-grid-data-row{
@@ -249,7 +248,6 @@
                     border-top : 1px solid @border-color;
 
                     .sp-grid-data-column{
-                        padding: 10px;
                         //background: @background-color;
                         border-left: 1px solid @border-color;
                         border-right: 1px solid @border-color;
@@ -261,6 +259,7 @@
                         max-width:100% !important;
                         box-sizing:border-box;
                         font-size:13px;
+                        padding:0px;
 
 
                         .sp-grid-data-header, .sp-grid-data{
@@ -268,16 +267,20 @@
                             overflow: hidden;
                             word-break: break-all;
                             box-sizing:border-box;
+                            display: inline-block;
+                            padding: 10px;
+                            height:100%;
                         }
 
                         .sp-grid-data-header{
                             width:20%;
-                            vertical-align:top;
+                            display: inline-block;
+                            background: @background-color;
                         }
 
                         .sp-grid-data {
                             width: 79%;
-
+                            text-align:left !important;
                             .nb-buttons{
                                 vertical-align: middle;
                                 button{
@@ -287,6 +290,9 @@
                         }
                     }
                 }
+            }
+            .sp-grid-footer{
+                display:none;
             }
         }
     }

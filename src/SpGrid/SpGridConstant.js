@@ -5,6 +5,8 @@ module.exports = {
     DELETE_FLAG : "D",
     ROW_ACTIVE_CLASS : "sp-grid-data-active",
     ROW_SELECT_CLASS : "sp-grid-data-select",
+    HORIZONTAL_CLASS : "mb-horizontal",
+    VERTICAL_CLASS   : "mb-vertical",
     template : {
         EDIT_INPUT            : "SpGridEditInput.tmpl.html",
         EDIT_TEXTAREA         : "SpGridEditTextArea.tmpl.html",

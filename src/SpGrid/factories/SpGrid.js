@@ -14,6 +14,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
             registerFunction : {},
             useFooterSummary : false,
             enablePaging : false,
+            mobileStyle : "mb-horizontal",
             /**
              * 그리드 사이즈 옵션
              */
@@ -120,6 +121,32 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         return this;
     };
 
+    /**
+     * 현재 그리드 모바일 스타일 리턴 
+     */
+    SpGrid.prototype.getMobileStyle = function(){
+        return this._gridOptions.mobileStyle;
+    }
+
+    /**
+     * 모바일에서의 스타일 지정 
+     * 가로 스크롤 그대로 유지
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setMobileScrollHorizontal = function(){
+        this._gridOptions.mobileStyle = SpGridConstant.HORIZONTAL_CLASS;
+        return this;
+    }
+
+    /**
+     * 모바일에서의 스타일 지정 
+     * 세로 스크롤로 변경 사용
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setMobileScrollVertical = function(){
+        this._gridOptions.mobileStyle = SpGridConstant.VERTICAL_CLASS;
+        return this;
+    }
 
     SpGrid.prototype.setStatus = function( status ){
         this.status = status;
