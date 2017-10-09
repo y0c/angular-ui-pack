@@ -2,6 +2,7 @@
 <html>
   <head>
     <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
       <script src="/javascripts/jquery-1.12.1.js"></script>
@@ -16,7 +17,7 @@
 
       <script type="text/javascript">
 
-        angular.module("gridApp", [ "SpGrid"] )
+        angular.module("gridApp", [ "SpUi"] )
             .controller("gridController", ['$scope','SpGrid','$http', function( $scope, SpGrid, $http ){
                 $scope.pSize = 10;
                 $scope.pagingOptions = {
@@ -232,6 +233,10 @@
       <button class="btn btn-danger" ng-click="customvalidate()">검증</button>
         <button class="btn btn-default" ng-click="cellStyleChange();">테스트</button>
       <button class="btn btn-default" ng-click="testColumn();">테스트</button>
+    </p>
+    <p class="text-center">
+        <button class="btn btn-default" ng-click="grid.setMobileScrollVertical()">Vertical</button>
+        <button class="btn btn-default" ng-click="grid.setMobileScrollHorizontal()">Horizontal</button>
     </p>
   </div>
 

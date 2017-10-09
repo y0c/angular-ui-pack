@@ -14,7 +14,7 @@
     <!--<link rel="stylesheet" href="/stylesheets/SpGrid.css">-->
     <script type="text/javascript" src="/javascripts/dist/SpUi.js"></script>
     <script type="text/javascript">
-        function testController( $scope, SpModal, Toast){
+        function testController( $scope, SpModal, Toast, spStatus, $rootScope, $timeout ){
             $scope.row = {};
 
             $scope.ngChange = function(){
@@ -26,22 +26,30 @@
                 console.log("change");
             }
             $scope.init = function(){
-                Toast.alert("test")
-                    .then(function(){
+                $timeout(function(){
+                    spStatus("hide","test");
+                    spStatus("!readonly","test.sub");
+                    spStatus("readonly","test.sub.val4");
+                });
+ 
+                // Toast.alert("test")
+                //     .then(function(){
                         
-                        return Toast.confirm("수정하시겠습니까?");
-                    })
-                    .then( function(){
-                        Toast.alert("수정되었습니다."); 
-                    }, function(){
-                        Toast.alert("취소되었습니다.");
-                    });
-                
+                //         return Toast.confirm("수정하시겠습니까?");
+                //     })
+                //     .then( function(){
+                //         Toast.alert("수정되었습니다."); 
+                //     }, function(){
+                //         Toast.alert("취소되었습니다.");
+                //     });
+               
                 
             };
 
             $scope.showAlert = function(){
-                Toast.alert("Test!!!");    
+                // Toast.alert("Test!!!");    
+                spStatus("show", "test.sub");
+                // spStatus("hide","test");
             };
 
             $scope.modal3 = new SpModal({
@@ -221,7 +229,12 @@
 </head>
 <body ng-app="modalApp" ng-controller="testController" ng-init="init();">
 {{row}}
-<input type="text" ng-model="inputTest" ng-change="ngChange()" sp-change="spChange($event)" />
+<input type="text" ng-model="inputTest" ng-change="ngChange()" sp-change="spChange($event)" sp-status-on="test.val"/>
+<input type="text" sp-status-on="test.sub.val2"/>
+<input type="text" sp-status-on="test.sub.val3"/>
+<input type="text" sp-status-on="test.sub.val4"/>
+<input type="text" sp-status-on="test.val5"/>
+<input type="text" sp-status-on="test.val6"/>
 <button class="btn btn-default" ng-click="showAlert();">Alert</button>
 <script type="text/ng-template" id="testModal2">
 <div class="sp-modal-header" ng-init="init();"></div>

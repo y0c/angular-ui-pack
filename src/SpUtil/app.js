@@ -10,3 +10,5 @@ app.run( ['$templateCache', 'SpUtilConstant', function( $templateCache, SpUtilCo
 
 
 require("./directives/spChange")(app);
+require("./directives/spStatusOn")(app);
+require("./factories/spStatus")(app);
