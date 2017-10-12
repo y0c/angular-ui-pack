@@ -126,7 +126,15 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      */
     SpGrid.prototype.getMobileStyle = function(){
         return this._gridOptions.mobileStyle;
-    }
+    };
+
+    SpGrid.prototype.isMobileHorizontal = function(){
+        return this.getMobileStyle() == SpGridConstant.HORIZONTAL_CLASS;
+    };
+
+    SpGrid.prototype.isMobileVertical = function(){
+        return this.getMobileStyle() == SpGridConstant.VERTICAL_CLASS;
+    };
 
     /**
      * 모바일에서의 스타일 지정 
@@ -136,7 +144,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
     SpGrid.prototype.setMobileScrollHorizontal = function(){
         this._gridOptions.mobileStyle = SpGridConstant.HORIZONTAL_CLASS;
         return this;
-    }
+    };
 
     /**
      * 모바일에서의 스타일 지정 
@@ -146,7 +154,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
     SpGrid.prototype.setMobileScrollVertical = function(){
         this._gridOptions.mobileStyle = SpGridConstant.VERTICAL_CLASS;
         return this;
-    }
+    };
 
     SpGrid.prototype.setStatus = function( status ){
         this.status = status;
@@ -483,6 +491,17 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         this.getData()[rowIdx] = angular.extend( {}, this.getData()[rowIdx], obj);
         return this.getData()[rowIdx];
     };
+
+    /**
+     * SpGrid Delete Row
+     * @param rowIdx
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.deleteRow = function( rowIdx ){
+        this.getData()[rowIdx].cudFlag = SpGridConstant.DELETE_FLAG;
+        return this;
+    };
+
     /**
      * Grid 변경된 로우 리턴
      * @returns {Array}

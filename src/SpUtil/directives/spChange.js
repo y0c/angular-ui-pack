@@ -6,7 +6,9 @@ function SpChangeDirective( $parse ){
             element.on("change", function( event ){
                 scope.$apply(function(){
                     var target = angular.element(event.currentTarget);
-                    fn(scope, {$event:event, $value : target.val()});
+                    if( !fn(scope, {$event:event, $value : target.val()}) ){
+                        event.preventDefault();
+                    }
                 });
             });
         }

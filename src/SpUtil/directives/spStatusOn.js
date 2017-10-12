@@ -40,7 +40,7 @@ function SpStatusOnDirective(){
                             element.attr("disabled", true);
                             break;
                         case "!disabled" :
-                            element.attr("readonly",false);
+                            element.attr("disabled",false);
                             break;
                     }
                 }
