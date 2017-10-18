@@ -1,0 +1,21 @@
+<div class="nb-portlet-contents">
+    <div>
+        <header class="nb-p-headers">
+            <h2 class="nb-p-title nb-left">{{tabset.tabObject.getTitle()}}</h2>
+            <div class="nb-right nb-t-right">
+                <!-- tab nav -->
+                <ol class="nb-p-tab">
+                    <li ng-repeat="tab in tabset.tabObject.getTabs()"
+                        ng-click="tabset.active($index)"
+                        ng-class="tab.active && 'on'"
+                        ng-hide="tab.hidden"
+                        ng-bind-html="tab.header | to_trusted"></li>
+                </ol>
+                <!-- //tab nav -->
+            </div>
+        </header>
+        <!-- tab contents -->
+        <ol class="nb-p-tab-sections"  ng-transclude>
+        </ol><!-- //tab contents -->
+    </div>
+</div>

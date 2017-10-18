@@ -6,6 +6,7 @@ function SpTab(){
         this.currentIdx = 0;
 
         var _defaultOptions = {
+            title : "",
             tabAction : {
                 onActiveBefore : function(){
                     return true;
@@ -24,7 +25,14 @@ function SpTab(){
 
 
     }
+    SpTab.prototype.getTitle = function(){
+        return this.options.title;
+    };
 
+    SpTab.prototype.setTitle = function( title ){
+        this.options.title = title;
+        return this;
+    };
     /**
      * tab
      * @returns {Array|*}

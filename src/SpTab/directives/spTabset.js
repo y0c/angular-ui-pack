@@ -8,7 +8,14 @@ function spTabset( SpTabConstant ){
         bindToController : true,
         controllerAs : "tabset",
         replace : true,
-        templateUrl : SpTabConstant.template.SP_TAB_SET,
+        templateUrl : function( element, attrs ){
+            var type = attrs.type || "normal";
+            if( type == "portlet" ){
+                return SpTabConstant.template.SP_PORTLET_TAB_SET;
+            } else {
+                return SpTabConstant.template.SP_TAB_SET;
+            }
+        },
         link : function(){
         },
         controller : function( $scope ){

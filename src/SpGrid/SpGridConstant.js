@@ -12,6 +12,7 @@ module.exports = {
         EDIT_TEXTAREA         : "SpGridEditTextArea.tmpl.html",
         EDIT_CHECKBOX         : "SpGridEditCheckBox.tmpl.html",
         EDIT_SELECTBOX        : "SpGridEditSelectBox.tmpl.html",
+        EDIT_DATEPICKER        : "SpGridEditDatePicker.tmpl.html",
         CONTEXT_MENU          : "SpGridDataContextMenu.tmpl.html",
         DATA_VIEW             : "SpGridDataView.tmpl.html",
         SP_GRID               : "SpGrid.tmpl.html",

@@ -170,6 +170,24 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
     };
 
     /**
+     * 변경된로우 배열 리턴
+     * @returns {Array}
+     */
+    SpGrid.prototype.getModifiedRows = function(){
+        var sourceRows = this.getOriginalData();
+        var targetRows = this.getData();
+        var returnRows = [];
+
+        for( var i = 0 ; i < sourceRows.length ; i ++ ){
+            if( !SpGridUtil.dirtyCheck(sourceRows[i], targetRows[i])){
+                returnRows.push(targetRows[i]);
+            }
+        }
+
+        return returnRows;
+    };
+
+    /**
      * Grid Footer Summary 사용여부
      * @param useFooterSummary
      * @returns {*}

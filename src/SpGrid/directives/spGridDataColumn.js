@@ -89,7 +89,8 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,
                     "text"      : $templateCache.get(SpGridConstant.template.EDIT_INPUT),
                     "checkbox"  : $templateCache.get(SpGridConstant.template.EDIT_CHECKBOX),
                     "selectbox" : $templateCache.get(SpGridConstant.template.EDIT_SELECTBOX),
-                    "textarea"  : $templateCache.get(SpGridConstant.template.EDIT_TEXTAREA)
+                    "textarea"  : $templateCache.get(SpGridConstant.template.EDIT_TEXTAREA),
+                    "datepicker" : $templateCache.get(SpGridConstant.template.EDIT_DATEPICKER)
                 };
                 var _typeName = null;
                 var _editType = null;

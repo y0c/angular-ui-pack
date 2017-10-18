@@ -38,6 +38,7 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
     $templateCache.put( SpGridConstant.template.EDIT_TEXTAREA  , require("./template/SpGridEditTextArea.tmpl.html"));
     $templateCache.put( SpGridConstant.template.EDIT_CHECKBOX, require("./template/SpGridEditCheckBox.tmpl.html"));
     $templateCache.put( SpGridConstant.template.EDIT_SELECTBOX, require("./template/SpGridEditSelectBox.tmpl.html"));
+    $templateCache.put( SpGridConstant.template.EDIT_DATEPICKER, require("./template/SpGridEditDatePicker.tmpl.html"));
     $templateCache.put( SpGridConstant.template.CONTEXT_MENU, require("./template/SpGridDataContextMenu.tmpl.html"));
     $templateCache.put( SpGridConstant.template.DATA_VIEW   , require("./template/SpGridDataView.tmpl.html"));
 
