@@ -21,7 +21,9 @@ function spGridFooterColumn( SpGridConstant ){
                             if( row.hasOwnProperty("cudFlag") && row.cudFlag == SpGridConstant.DELETE_FLAG ){
 
                             } else {
-                                result += parseFloat(row[columnId]);
+                                //Null Undefined 는 합계에 포함시키지 않는다.
+                                if( row[columnId] != null && typeof row[columnId] != "undefined")
+                                    result += parseFloat(row[columnId]);
                             }
                         }
                     });

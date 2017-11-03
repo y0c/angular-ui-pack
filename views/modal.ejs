@@ -26,11 +26,12 @@
                 console.log("change");
             }
             $scope.init = function(){
-                $timeout(function(){
-                    spStatus("hide","test");
-                    spStatus("!readonly","test.sub");
-                    spStatus("readonly","test.sub.val4");
-                });
+//                $timeout(function(){
+//                    spStatus("hide","test");
+//                    spStatus("!readonly","test.sub");
+//                    spStatus("readonly","test.sub.val4");
+//                });
+                $scope.modal3.open();
  
                 // Toast.alert("test")
                 //     .then(function(){
@@ -47,9 +48,14 @@
             };
 
             $scope.showAlert = function(){
-                // Toast.alert("Test!!!");    
-                spStatus("show", "test.sub");
+//                 Toast.alert("Test!!!");
+//                spStatus("show", "test.sub");
                 // spStatus("hide","test");
+
+                spStatus("disabled","form");
+                spStatus("!disabled","form.sub");
+                spStatus("disabled","form.sub.test3");
+
             };
 
             $scope.modal3 = new SpModal({
@@ -183,6 +189,8 @@
                                 vm.grid1.setData(data);
 
                             });
+
+
                     };
 
                     vm.ok = function(){
@@ -203,6 +211,7 @@
                     }
                 }
             })
+
 
 
 
@@ -230,11 +239,15 @@
 <body ng-app="modalApp" ng-controller="testController" ng-init="init();">
 {{row}}
 <input type="text" ng-model="inputTest" ng-change="ngChange()" sp-change="spChange($event)" sp-status-on="test.val"/>
-<input type="text" sp-status-on="test.sub.val2"/>
-<input type="text" sp-status-on="test.sub.val3"/>
-<input type="text" sp-status-on="test.sub.val4"/>
-<input type="text" sp-status-on="test.val5"/>
-<input type="text" sp-status-on="test.val6"/>
+<!--<input type="text" sp-status-on="test.sub.val2"/>-->
+<!--<input type="text" sp-status-on="test.sub.val3"/>-->
+<!--<input type="text" sp-status-on="test.sub.val4"/>-->
+<!--<input type="text" sp-status-on="test.val5"/>-->
+<!--<input type="text" sp-status-on="test.val6"/>-->
+<input type="text" sp-status-on="form.test1"/>
+<input type="text" sp-status-on="form.test2"/>
+<input type="text" sp-status-on="form.sub.test3"/>
+<input type="text" sp-status-on="form.sub.test4"/>
 <button class="btn btn-default" ng-click="showAlert();">Alert</button>
 <script type="text/ng-template" id="testModal2">
 <div class="sp-modal-header" ng-init="init();"></div>
@@ -248,6 +261,7 @@
 </script>
 <script type="text/ng-template" id="testModal">
     <div class="sp-modal-header">
+        <span class="sp-modal-close"></span>
         <section class="nb-title page">
             <h2><em>Modal 안에 그리드</em></h2>
         </section>

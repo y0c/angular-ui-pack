@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
+    <script src="/javascripts/jquery-1.12.1.js"></script>
+    <script src="/javascripts/angular.js"></script>
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <link rel="stylesheet" href="/stylesheets/page.css">
+    <link rel="stylesheet" href="/stylesheets/animation.css">
+    <link rel="stylesheet" href="/stylesheets/theme.css">
+
+    <!--<link rel="stylesheet" href="/stylesheets/SpGrid.css">-->
+    <script type="text/javascript" src="/javascripts/dist/SpUi.js"></script>
+
+    <script type="text/javascript">
+
+        angular.module("gridApp", [ "SpUi"] )
+            .controller("gridController", [ '$templateCache', '$scope','SpGrid','$http', function( $templateCache, $scope, SpGrid, $http ){
+                var vm = this;
+
+                vm.grid = new SpGrid({
+                    columnDef : [
+                        {id:"corsgb",name:"과정구분",width:"80px"}
+                        ,{id:"colgnm",name:"대학(원)",width:"180px"}
+                        ,{id:"sustnm",name:"학과(부)",width:"250px"}
+                        ,{id:"jaem",name:"남",width:"50px"}
+                        ,{id:"jaef",name:"여",width:"50px"}
+                        ,{id:"jae",name:"계",width:"50px"}
+                        ,{id:"huem",name:"남",width:"50px"}
+                        ,{id:"huef",name:"여",width:"50px"}
+                        ,{id:"hue",name:"계",width:"50px"}
+                        ,{id:"totalm",name:"남",width:"50px"}
+                        ,{id:"totalf",name:"여",width:"50px"}
+                        ,{id:"total",name:"계",width:"50px"}
+                    ],
+                    groupable : true, //부분합여부
+                    totalize : true,  //총합여부
+                    gridSize : {
+                        height : "300px"
+                    },
+                    grouping : {
+                        aggregate : {
+                            jaem : {
+                                method: ["sum", "avg"],
+                                resultFormatter: function (method, val) {
+                                    if (method == "sum") {
+                                        return val;
+                                    } else if (method == "avg") {
+                                        return val;
+                                    }
+                                }
+                            },
+                            jaef : ["sum", "avg"],
+                            jae : "sum",
+                            huem : "sum",
+                            huef : "sum",
+                            hue : "sum",
+                            totalm : "sum",
+                            totalf : "sum",
+                            total : "sum"
+                        },
+
+                        groupingColumn : [ "corsgb", "colg" ],
+                        groupingRowTemplate : $templateCache.get("gridGroupingRowTemplate"),
+                        totalRowTemplate : $templateCache.get("gridGroupingRowTemplate")
+                    }
+                });
+
+                vm.init = function(){
+                    $http.get("summarytest.json", {} )
+                        .then(function( response ){
+                            vm.grid.setData( response.data );
+                        });
+                }
+
+            }])
+
+    </script>
+
+    <style>
+
+    </style>
+</head>
+<body ng-app="gridApp" ng-controller="gridController as vm" ng-init="vm.init()">
+<script type="text/ng-template" id="gridGroupingRowTemplate">
+    <div sp-grid-cell-sizer='1..3' class="sp-grid-data-column">
+        <span ng-if="groupingType == 'total'">총계</span>
+        <span ng-if="groupingType == 'group'">합계</span>
+    </div>
+    <div sp-grid-cell-sizer="4" class="sp-grid-data-column">{{group.jaem.sum}}</div>
+    <div sp-grid-cell-sizer="5" class="sp-grid-data-column">{{group.jaef.sum}}</div>
+    <div sp-grid-cell-sizer="6" class="sp-grid-data-column">{{group.jae.sum}}</div>
+    <div sp-grid-cell-sizer="7" class="sp-grid-data-column">{{group.huem.sum}}</div>
+    <div sp-grid-cell-sizer="8" class="sp-grid-data-column">{{group.huef.sum}}</div>
+    <div sp-grid-cell-sizer="9" class="sp-grid-data-column">{{group.hue.sum}}</div>
+    <div sp-grid-cell-sizer="10" class="sp-grid-data-column">{{group.totalm.sum}}</div>
+    <div sp-grid-cell-sizer="11" class="sp-grid-data-column">{{group.totalf.sum}}</div>
+    <div sp-grid-cell-sizer="12" class="sp-grid-data-column">{{group.total.sum}}</div>
+</script>
+<div class="container">
+
+
+    <div class="row" style="margin-top:40px;">
+        <div class="col-md-12">
+            <sp-grid grid-object="vm.grid">
+            </sp-grid>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

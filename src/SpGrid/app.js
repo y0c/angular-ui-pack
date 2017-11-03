@@ -61,6 +61,8 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
     require("./directives/spGridFooterColumn")(app);
     require("./directives/spGridFooterRow")(app);
     require("./directives/spGridDataRow")(app);
+    require("./directives/spGridGroupingRow")(app);
+    require("./directives/spGridCellSizier")(app);
     // require("./directives/spGridDataContextMenu")(app);
     require("./directives/spGridDataColumn")(app);
     require("./directives/util/spUtil")(app);

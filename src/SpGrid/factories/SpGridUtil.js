@@ -1,4 +1,4 @@
-function SpGridUtil(){
+function SpGridUtil( $filter ){
     return  {
         /**
          * 배열안에 객체를 탐색해서 원하는 필드값을 리턴
@@ -37,12 +37,14 @@ function SpGridUtil(){
                         return value != "" && value != null && value !== undefined
                     },
                     minLength : function( data, obj ){
+                        data = data || "";
                         if( obj.value == "" || obj.value == null || obj.value === undefined ){
                             throw new Error(["MinLength 조건은 value값을 넣어주셔야 합니다."]);
                         }
                         return data.length > obj.value;
                     },
                     maxLength : function( data, obj ){
+                        data = data || "";
                         if( obj.value == "" || obj.value == null || obj.value === undefined ){
                             throw new Error(["MaxLength 조건은 value값을 넣어주셔야 합니다."]);
                         }
@@ -51,6 +53,9 @@ function SpGridUtil(){
                 };
 
             return _validateObject;
+        },
+        isValidDataset : function( grid, dataset ){
+
         },
         dirtyCheck : function( sourceObj, targetObj ){
             var dirty = true;
@@ -84,6 +89,124 @@ function SpGridUtil(){
                 commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
                 return input.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {        return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
             });
+        },
+        aggregate : function( dataset, method, columnId ){
+            var defineMethods = {
+                sum : function( dataset, columnId ){
+                    var result = 0;
+                    angular.forEach( dataset, function( row ){
+                        if( row.hasOwnProperty(columnId) ){
+                            //임시삭제도 합계에서 배제한다.
+                            if( row.hasOwnProperty("cudFlag") && row.cudFlag == SpGridConstant.DELETE_FLAG ){
+
+                            } else {
+                                //Null Undefined 는 합계에 포함시키지 않는다.
+                                if( row[columnId] != null && typeof row[columnId] != "undefined")
+                                    result += parseFloat(row[columnId]);
+                            }
+                        }
+                    });
+                    return result;
+                },
+                avg : function( dataset, columnId ){
+                    var sum = this.sum(dataset,columnId);
+                    return sum / dataset.length;
+                }
+            };
+
+            if( typeof method == "function" ){
+                return method(dataset, columnId);
+            }
+
+            return defineMethods[method]( dataset, columnId );
+        },
+        groupByList : function( arr, columns, aggregates ){
+            var result    = [];
+            var groupList = this.getGroupList( arr, columns );
+            for( var i = 0 ; i < groupList.length ; i ++ ){
+                result[i] = { list : [] };
+                for( var j = 0 ; j < arr.length ; j ++ ){
+                    if( this.objectEquals( groupList[i], arr[j], columns ) ){
+                        result[i].list.push(arr[j]);
+                    }
+                }
+            }
+
+            return result;
+        },
+        aggregateGroupList : function( groupList, aggregates ){
+
+            for( var k = 0 ; k < groupList.length ; k ++ ){
+                // call by reference
+                this.aggregateGroup( groupList[k], aggregates );
+            }
+
+            return groupList;
+        },
+        aggregateGroup : function( group, aggregates ){
+            for( var key in aggregates ){
+                var method          = null;
+                var resultFormatter = function( method, value ){
+                    return value;
+                };
+                var column          = aggregates[key];
+
+                if( typeof column == "string" || typeof column == "function" || column.constructor.name == "Array" ){
+                    method = column;
+                } else if ( typeof column == "object"){
+                    method          = column.method;
+                    resultFormatter = column.resultFormatter;
+                }
+
+                group[key] = {};
+
+                method = [].concat( method );
+
+                for( var l = 0 ; l < method.length ; l ++ ){
+                    group[key][method[l]] = resultFormatter( method[l], this.aggregate( group.list, method[l], key ) );
+                }
+            }
+
+            return group;
+        },
+        getGroupList : function( arr, columns ){
+            var groupList = [];
+            groupList.push(this.extractObject(arr[0],columns));
+            for( var i = 0 ; i < arr.length ; i ++ ){
+                var isContainList = false;
+                for( var j = 0 ; j < groupList.length ; j ++ ){
+                    if( this.objectEquals( arr[i], groupList[j], columns ) ){
+                        isContainList = true;
+                    }
+                }
+    
+                if( !isContainList ){
+                    groupList.push( this.extractObject(arr[i],columns));
+                }
+    
+            }
+            return groupList;
+        },
+    
+        extractObject : function( obj, columns ){
+            var result = {};
+            for( var k = 0 ; k < columns.length ; k ++ ){
+                result[columns[k]] = obj[columns[k]];
+            }
+            return result;
+        },
+    
+        objectEquals : function( sourceObj, targetObj, columns ){
+            try {
+                for( var i = 0 ; i < columns.length ; i ++ ){
+                    if( sourceObj[columns[i]] != targetObj[columns[i]] ){
+                        return false;
+                    }
+                }
+            } catch ( e ) {
+                return false;
+            }
+            return true;
         }
     }
 }

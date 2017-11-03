@@ -1,4 +1,4 @@
-function spGridFooter( SpGridConstant ){
+function spGridFooter( SpGridConstant, SpGridUtil ){
     return {
         restrict : "E",
         controller : "spGridFooterController",
@@ -7,6 +7,9 @@ function spGridFooter( SpGridConstant ){
         templateUrl : SpGridConstant.template.SP_GRID_FOOTER,
         link : function ( scope, element, attrs ){
 
+            scope.$on( scope.gridObject.getId() +  "gridDataReset", function(){
+                scope.group = SpGridUtil.aggregateGroup({ list : scope.gridObject.getData() }, scope.gridObject.getGrouping().aggregate );
+            });
         }
     }
 }

@@ -2,7 +2,7 @@
  * Grid Body Wrap Directive
  */
 
-function spGridBody($compile, SpGridConstant, $templateCache ){
+function spGridBody($compile, SpGridConstant, $templateCache, SpGridUtil ){
     return {
         restrict : "E",
         controller : "spGridBodyController",
@@ -20,6 +20,13 @@ function spGridBody($compile, SpGridConstant, $templateCache ){
             scope.range  = range;
 
             scope.$rows = null;
+
+            scope.$on( scope.gridObject.getId() +  "gridDataReset", function(){
+                if( scope.gridObject.isGroupable() && scope.gridObject.getTotalRecordCount() > 0 ){
+                    var groupList = SpGridUtil.groupByList(scope.gridObject.getData(), scope.gridObject.getGrouping().groupingColumn );
+                    scope.$groups = SpGridUtil.aggregateGroupList(groupList,scope.gridObject.getGrouping().aggregate);
+                }
+            });
 
             scope.$on("onRowRenderFinished", scope.gridObject.getGridAction().onRowRenderFinished );
 

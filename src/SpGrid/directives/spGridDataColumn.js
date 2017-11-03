@@ -1,7 +1,7 @@
 /**
  * Grid Data Column Directive
  */
-function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,  $timeout ){
+function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,  $timeout, $q ){
     return {
         restrict : "E",
         controller : "spGridController",
@@ -132,36 +132,44 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,
                             scope.selectbox = angular.extend({}, scope.selectbox, _editType );
 
                             //Promise 객체일경우 비동기로 한번셋팅후 그후로는 배열로 사용
-                            if( typeof _editType.dataset == "function"){
-                                scope.selectbox.dataset = [];
-                                _editType.dataset().then(function( dataset ){
-                                    scope.selectbox.dataset = dataset;
-                                    _editType.dataset       = dataset;
+                            (function(){
+                                var defer = $q.defer();
+
+                                if( typeof scope.gridObject.getColumnDef()[scope.$index].editType.dataset == "function"){
+                                    scope.selectbox.dataset = [];
+                                    _editType.dataset().then(function( dataset ){
+                                        scope.selectbox.dataset = dataset;
+                                        scope.gridObject.getColumnDef()[scope.$index].editType.dataset       = dataset;
+                                        defer.resolve();
+                                    },defer.reject);
+                                }
+                                return defer.promise;
+                            })()
+                                .then(function(){
+                                    // Edit Type SelectBox
+                                    if( scope.selectbox.defaultText != null &&
+                                        scope.selectbox.defaultValue != null ){
+                                        var _defaultObject = {};
+                                        _defaultObject[scope.selectbox.keyField]   = scope.selectbox.defaultText;
+                                        _defaultObject[scope.selectbox.valueField] = scope.selectbox.defaultValue;
+
+                                        scope.selectbox.dataset.unshift(_defaultObject);
+                                    }
+
+                                    // Create 일 경우
+                                    if( !scope.row[_headerColumn.id] ) {
+
+                                        //값이 비어있을경우 defaultIndex, defaultValue 우선순위로 기본값이 정해짐
+                                        if( scope.selectbox.defaultValue != null ){
+                                            scope.row[_headerColumn.id] = scope.selectbox.defaultValue;
+                                        }
+                                        if( scope.selectbox.defaultIndex != null){
+                                            scope.row[_headerColumn.id] = scope.selectbox.dataset[scope.selectbox.defaultIndex][scope.selectbox.keyField];
+                                        }
+
+                                    }
                                 });
-                            }
 
-                            // Edit Type SelectBox
-                            if( scope.selectbox.defaultText != null &&
-                                scope.selectbox.defaultValue != null ){
-                                var _defaultObject = {};
-                                _defaultObject[scope.selectbox.keyField]   = scope.selectbox.defaultText;
-                                _defaultObject[scope.selectbox.valueField] = scope.selectbox.defaultValue;
-
-                                scope.selectbox.dataset.unshift(_defaultObject);
-                            }
-
-                            // Create 일 경우
-                            if( !scope.row[_headerColumn.id] ) {
-
-                                //값이 비어있을경우 defaultIndex, defaultValue 우선순위로 기본값이 정해짐
-                                if( scope.selectbox.defaultValue != null ){
-                                    scope.row[_headerColumn.id] = scope.selectbox.defaultValue;
-                                }
-                                if( scope.selectbox.defaultIndex != null){
-                                    scope.row[_headerColumn.id] = scope.selectbox.dataset[scope.selectbox.defaultIndex][scope.selectbox.keyField];
-                                }
-
-                            }
                         }
                     }
 

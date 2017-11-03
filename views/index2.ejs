@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
+      <script src="/javascripts/jquery-1.12.1.js"></script>
+      <script src="/javascripts/angular.js"></script>
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <link rel="stylesheet" href="/stylesheets/page.css">
+    <link rel="stylesheet" href="/stylesheets/animation.css">
+    <link rel="stylesheet" href="/stylesheets/theme.css">
+
+    <!--<link rel="stylesheet" href="/stylesheets/SpGrid.css">-->
+    <script type="text/javascript" src="/javascripts/dist/SpUi.js"></script>
+
+      <script type="text/javascript">
+
+        angular.module("gridApp", [ "SpUi"] )
+            .controller("gridController", ['$scope','SpGrid','$http', function( $scope, SpGrid, $http ){
+                $scope.pSize = 10;
+                $scope.pagingOptions = {
+                    currentPage : 3,
+                    pageSize : 10,
+                    pageBlockSize : 10
+                };
+                var variable1  = 'v'
+
+                $scope.grid = new SpGrid({
+                    editable : true,
+                    selectable : true,
+                    deleteable : true,
+                    useFooterSummary : true,
+                    gridSize : {
+                        height : '300px'
+                    },
+                    columnDef: [
+                        {
+                            id : "__idx",
+                            name : "순번",
+                            width: "50px",
+                            type : "rowno"
+                        },
+                        {
+                            id : "SUBJECT_NO",
+                            name : "과목번호",
+                            width:"150px",
+                            editType : "text",
+                            align : "left",
+                            resultFormatter : function( columnValue ){
+                                return columnValue + "!!";
+                            },
+                            validate : {
+                                required : {
+                                    message : "과목번호는 필수 입력값입니다."
+                                }
+                            }
+                        },
+                        {
+                            id : "BUNBAN",
+                            name : "분반<br>분반2",
+                            width : "100px",
+                            editType : {
+                                name : "selectbox",
+                                keyField : "bunbanCd",
+                                valueField : "bunbanNm",
+                                dataset : function(){
+                                    return $http.get("selectbox.json")
+                                        .then(function(response){
+                                            return response.data;
+                                        });
+                                },
+                                defaultIndex : 0
+                            },
+                            colSpan : 2
+                        },
+                        {
+                            id : "CHASU_SEQ",
+//                            name : "차수",
+                            width : "100px",
+//                            hidden : true,
+                            editType : "text",
+                            summary : {
+                                type : "sum",
+                                resultFormatter : function(result){
+                                    return "총 차수 : " + result;
+                                }
+                            }
+                        },
+                        {
+                            id : "COMPT_UNIT_ELE_NO",
+                            name : "능력단위요소번호",
+                            width: "200px",
+                            align : "left",
+                            fillRemainWidth : true,
+                            editType : "textarea"
+                        },
+                        {
+                            id : "LIMIT_SCO",
+                            name : "요소별 배점",
+                            width:"100px",
+                            align:"right",
+                            editType : "text",
+                            summary : {
+                                type : "avg",
+                                resultFormatter : function( result ){
+                                    return "평균 배점 : " + Math.ceil(result);
+                                }
+                            },
+                            colSpan : 2
+                        },
+                        {
+                            id : "USE_YN" ,
+                            name :"사용여부",
+                            width: "80px",
+                            editType : {
+                                name : "checkbox",
+                                trueValue : "Y",
+                                falseValue : "N",
+                                defaultValue : "N"
+                            }
+                        }
+                    ],
+                    registerFunction : {
+                        test : function(){
+                            alert("test!");
+                        }
+                    }
+                    ,
+                    enablePaging : true,
+                    pagingOptions : $scope.pagingOptions,
+                    gridAction : {
+                        onRowClick : function( row ){
+                            $scope.row = row
+                        },
+                        onRowRenderFinished : function(){
+//                            alert("test");
+                            $scope.grid.setCellStyle(1,1,{
+                                background:"red"
+                            });
+                        }
+                    }
+                });
+                $http.get("test.json")
+                    .then(function( response ){
+                        console.log(response.data);
+                        $scope.grid.setData(response.data);
+//                        $scope.grid.setSelectedRow($scope.grid.getData()[0]);
+//                        $scope.grid.getColumnDef()[0].name="테스트로";
+                    });
+
+                $scope.showChangedData = function(){
+                    console.log($scope.grid.getChangedRow());
+                };
+
+                $scope.addRow = function(){
+                    $scope.grid.addEmptyRow();
+                };
+
+                $scope.test = function(){
+                    alert("test");
+                }
+
+
+                $scope.deleteRow = function(){
+                    $scope.grid.setData($scope.grid.getData().slice(1));
+
+                }
+
+                $scope.customvalidate = function(){
+                    $scope.row.__validate();
+                }
+
+                $scope.pageSizeChange = function(){
+                    $scope.pagingOptions.pageSize = $scope.pagingOptions.pageSize+10;
+                }
+
+                $scope.cellStyleChange = function(){
+//                    for( var i =0 ; i < 4; i ++ ){
+//                        for( var j = 0; j < 4; j ++ ){
+//                            $scope.grid.setRowStyle(i,{
+//                                background: "red",
+//                                color:"white"
+//                            });
+//                        }
+//                    }
+//                    $scope.grid.setColumnPropertyById("BUNBAN",{hidden:true});
+                    $scope.grid.setColumnPropertyById("SUBJECT_NO",{name:"Test"});
+
+                }
+
+                $scope.testColumn = function(){
+                    $scope.grid.setColumnPropertyById("SUBJECT_NO",{hidden:true});
+                }
+            }]);
+    </script>
+
+    <style>
+
+    </style>
+  </head>
+  <body ng-app="gridApp" ng-controller="gridController">
+  <div class="container">
+
+
+    <div class="row" style="margin-top:40px;">
+      <div class="col-md-12">
+        <sp-grid grid-object="grid">
+        </sp-grid>
+      </div>
+    </div>
+    <div class="row" style="margin-top:30px;">
+      <sp-grid-paging paging-options="pagingOptions" style="margin-top:20px;">
+      </sp-grid-paging>
+    </div>
+
+    <div class="row" style="margin-top:30px">
+        <div class="col-md-2"><label for="">과목번호</label></div>
+        <div class="col-md-2"><input type="text" ng-model="row.SUBJECT_NO" placeholder="과목번호 입력" /></div>
+        <div class="col-md-2"><label for="">분반</label></div>
+        <div class="col-md-2"><input type="text" ng-model="row.BUNBAN" placeholder="분반 입력" /></div>
+        <div class="col-md-2"><label for="">능력단위요소번호</label></div>
+        <div class="col-md-2"><input type="text" ng-model="row.COMPT_UNIT_ELE_NO" placeholder="능력단위요소 번호 입력" /></div>
+    </div>
+
+
+    <p class="text-center" style="margin-top:30px;">
+      <button class="btn btn-default" ng-click="pageSizeChange()">페이징 변경</button>
+      <button class="btn btn-default" ng-click="showChangedData();">변화된 데이터 찍어보기</button>
+      <button class="btn btn-primary" ng-click="addRow()">추가하기</button>
+      <button class="btn btn-danger" ng-click="deleteRow()">삭제</button>
+      <button class="btn btn-danger" ng-click="customvalidate()">검증</button>
+        <button class="btn btn-default" ng-click="cellStyleChange();">테스트</button>
+      <button class="btn btn-default" ng-click="testColumn();">테스트</button>
+    </p>
+    <p class="text-center">
+        <button class="btn btn-default" ng-click="grid.setMobileScrollVertical()">Vertical</button>
+        <button class="btn btn-default" ng-click="grid.setMobileScrollHorizontal()">Horizontal</button>
+    </p>
+  </div>
+
+  </body>
+
+</html>

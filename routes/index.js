@@ -6,6 +6,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+/* GET home page. */
+router.get('/grid', function(req, res, next) {
+    res.render('grid');
+});
+
 router.get("/tab", function(req,res,next){
   res.render("tab");
 });
@@ -14,4 +19,7 @@ router.get("/tab", function(req,res,next){
 router.get("/modal",function(req,res,next){
   res.render("modal");
 });
+
+
+
 module.exports = router;

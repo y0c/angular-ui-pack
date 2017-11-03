@@ -14,6 +14,11 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
             registerFunction : {},
             useFooterSummary : false,
             enablePaging : false,
+            groupable : false,
+            totalize  : false,
+            grouping : {
+
+            },
             mobileStyle : "mb-horizontal",
             /**
              * 그리드 사이즈 옵션
@@ -377,6 +382,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         }
         // this._gridOptions.dataset = dataset;
         // this._originalDataset = angular.copy( this._gridOptions.dataset );
+        $rootScope.$broadcast( this.getId() + "gridDataReset" );
         return this;
     };
 
@@ -433,6 +439,60 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      */
     SpGrid.prototype.setSelectable = function( selectable ){
         this._gridOptions.selectable = selectable;
+        return this;
+    };
+
+    /**
+     * Grid 총계 상태 리턴
+     * @returns {boolean}
+     */
+    SpGrid.prototype.isTotalize = function(){
+        return this._gridOptions.totalize;
+    };
+
+
+    /**
+     * Grid 총계 설정
+     */
+    SpGrid.prototype.setTotalize = function( totalize ){
+        this._gridOptions.totalize = totalize;
+        return this;
+    };
+
+
+    /**
+     * Grid groupable 상태 리턴
+     * @param groupable
+     */
+    SpGrid.prototype.isGroupable = function(){
+        return this._gridOptions.groupable;
+    };
+
+    /**
+     * Grid groupable 설정
+     * @param groupable
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setGroupable = function( groupable ){
+        this._gridOptions.groupable = groupable;
+        return this;
+    };
+
+    /**
+     * Grid grouping 객체 리턴
+     * @returns {SpGrid._defaultOptions.grouping|{}|grouping|{column, aggregate, groupingRowTemplate}}
+     */
+    SpGrid.prototype.getGrouping = function(){
+        return this._gridOptions.grouping;
+    };
+
+    /**
+     * Grid grouping 옵션 설정
+     * @param grouping
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setGrouping = function(grouping){
+        this._gridOptions.grouping = grouping;
         return this;
     };
 
