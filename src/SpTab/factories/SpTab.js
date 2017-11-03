@@ -110,6 +110,14 @@ function SpTab(){
     };
 
     /**
+     * Tab Show
+     * @param idx
+     */
+    SpTab.prototype.showTab = function( idx ){
+        this.tabs[idx].hidden = false;
+    };
+
+    /**
      * Tab Deactive All
      */
     SpTab.prototype.deactiveAll = function(){
