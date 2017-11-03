@@ -3,12 +3,13 @@ function ToastService( SpModal, $rootScope, $q, $templateCache  ){
     $templateCache.put( "alertTemplate",
         [
             "<div class=\"sp-modal-header\">",
+                "<span class=\"sp-modal-close\" ng-click='modal.close()'></span>",
                 "<section class=\"nb-title page\">",
                     "<h2><em>{{ modal.params.title }}</em></h2>",
                 "</section>",
             "</div>",
             "<div class=\"sp-modal-body\">",
-                "<div ng-bind-html='modal.params.message'></div>",
+                "<div ng-bind-html='modal.params.message | to_trusted'></div>",
             "</div>",
             "<div class=\"sp-modal-footer\">",
                 "<div class=\"nb-buttons center\">",
@@ -21,12 +22,13 @@ function ToastService( SpModal, $rootScope, $q, $templateCache  ){
     $templateCache.put("confirmTemplate", 
         [
             "<div class=\"sp-modal-header\">",
+                "<span class=\"sp-modal-close\" ng-click='modal.close()'></span>",
                 "<section class=\"nb-title page\">",
                     "<h2><em>{{ modal.params.title }}</em></h2>",
                 "</section>",
             "</div>",
             "<div class=\"sp-modal-body\">",
-                "<div ng-bind-html='modal.params.message'></div>",
+                "<div ng-bind-html='modal.params.message | to_trusted'></div>",
             "</div>",
             "<div class=\"sp-modal-footer\">",
                 "<div class=\"nb-buttons center\">",
@@ -42,6 +44,9 @@ function ToastService( SpModal, $rootScope, $q, $templateCache  ){
      */
     this.alertModal = new SpModal({
         template : "alertTemplate",
+        attr : {
+            "class" : "sp-message-modal"
+        },
         controller : function( instance ){
 
         }
@@ -52,6 +57,9 @@ function ToastService( SpModal, $rootScope, $q, $templateCache  ){
      */
     this.confirmModal = new SpModal({
         template : "confirmTemplate",
+        attr : {
+            "class" : "sp-message-modal"
+        },
         controller : function( instance ){
             var vm = this;
 
@@ -66,7 +74,7 @@ function ToastService( SpModal, $rootScope, $q, $templateCache  ){
             };
             
         }
-    })
+    });
 
     /**
      * Toast alert 메소드 -  모달 형태의 alert을 띄움

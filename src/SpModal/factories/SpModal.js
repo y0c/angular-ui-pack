@@ -4,7 +4,7 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
 
     var backdropTemplate     = "<div class='sp-modal-backdrop out'></div>";
     var modalWrapperTemplate = "<div class='sp-modal-wrap out'>" +
-                                    "<div class='sp-modal' ></div>" +
+                                    "<div class='sp-modal' ng-class='modal.getModalAttr().class' ></div>" +
                                "</div>";
 
     var modalStack = [];
@@ -19,6 +19,10 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
             params : {},
             controller : null,
             size : "sm",
+            attr : {
+                "class" : "",
+                "id" : "",
+            },
             realHeight : null,
             modalAction : {
                 onOpen : function(){
@@ -106,6 +110,9 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
         if( this.controller.hasOwnProperty("init") ){
             this.controller.init();
         }
+        this.controller.getModalAttr = function(){
+            return options.attr;
+        };
         this.controller.close = _self.close.bind(_self);
         this.controller.stopPropagation = function( $event ){
             $event.stopPropagation();
