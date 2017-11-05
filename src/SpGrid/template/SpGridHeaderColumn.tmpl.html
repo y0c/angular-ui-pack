@@ -1,7 +1,8 @@
-<div class="sp-grid-header-column" ng-style="{ 'min-width' : getWidth(), 'max-width' : getWidth() }">
-    <div>
-        <span ng-bind-html="column.name | to_trusted"></span>
-        <span class="sp-grid-order-wrap">
+<div class="sp-grid-header-category">
+    <div class="sp-grid-header-column" ng-style="{ 'min-width' : getWidth(), 'max-width' : getWidth() }">
+        <div>
+            <span ng-bind-html="column.name | to_trusted"></span>
+            <span class="sp-grid-order-wrap">
             <span class="sp-grid-order-desc" ng-show="column.type=='data'" ng-click="orderChange(column.id,'desc')">
                 <i class="fa fa-caret-down" aria-hidden="true"></i>
             </span>
@@ -9,5 +10,6 @@
                 <i class="fa fa-caret-up" aria-hidden="true"></i>
             </span>
         </span>
+        </div>
     </div>
 </div>
