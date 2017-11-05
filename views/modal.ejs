@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <!--<link rel="stylesheet" href="/stylesheets/font-awesome.css" />-->
     <script src="/javascripts/jquery-1.12.1.js"></script>
     <script src="/javascripts/angular.js"></script>
-
+    <script src="/javascripts/angular-strap.min.js"></script>
+    <script src="/javascripts/angular-strap.tpl.min.js"></script>
     <link rel="stylesheet" href="//nana.band/template/style/reset.css">
     <link rel="stylesheet" href="//nana.band/template/style/page.css">
     <link rel="stylesheet" href="//nana.band/template/style/animation.css">
@@ -31,7 +32,7 @@
 //                    spStatus("!readonly","test.sub");
 //                    spStatus("readonly","test.sub.val4");
 //                });
-                $scope.modal3.open();
+                // $scope.modal3.open();
  
                 // Toast.alert("test")
                 //     .then(function(){
@@ -51,166 +52,172 @@
 //                 Toast.alert("Test!!!");
 //                spStatus("show", "test.sub");
                 // spStatus("hide","test");
-
-                spStatus("disabled","form");
-                spStatus("!disabled","form.sub");
-                spStatus("disabled","form.sub.test3");
+                Toast.datepicker().then(function( date ){
+                    console.log(date);
+                });
+                // spStatus("disabled","form");
+                // spStatus("!disabled","form.sub");
+                // spStatus("disabled","form.sub.test3");
 
             };
 
-            $scope.modal3 = new SpModal({
-                template : "testModal",
-                params : {
-                    test :"33333$",
-                    ccc : "222"
-                },
-                modalAction : {
-                    onResult : function( modal ){
-                        console.log(modal);
-                    }
-                },
-                controller : function( $scope, instance ){
-                    this.init = function(){
-                        console.log("TEst!!!");
-                        console.log(this.params);
-                    }
+//             $scope.modal3 = new SpModal({
+//                 template : "testModal",
+//                 params : {
+//                     test :"33333$",
+//                     ccc : "222"
+//                 },
+//                 modalAction : {
+//                     onResult : function( modal ){
+//                         console.log(modal);
+//                     }
+//                 },
+//                 controller : function( $scope, instance ){
+//                     this.init = function(){
+//                         console.log("TEst!!!");
+//                         console.log(this.params);
+//                     }
 
-                    this.close = function(){
-                        instance.close();
-                    }
+//                     this.close = function(){
+//                         instance.close();
+//                     }
 
-                    this.result = function(){
-                        instance.result(this);
-                        instance.close();
-                    }
-                }
-            });
+//                     this.result = function(){
+//                         instance.result(this);
+//                         instance.close();
+//                     }
+//                 }
+//             });
 
-            $scope.modal = new SpModal({
-                template : "testModal2",
-                params : {
-                    test :"33333$",
-                    ccc : "222"
-                },
-                modalAction : {
-                    onResult : function( modal ){
-                        console.log(modal);
-                    }
-                },
-                controller : function( instance ){
-                    this.init = function(){
-                        console.log("TEst!!!");
-                        console.log(this.params);
-                    }
+//             $scope.modal = new SpModal({
+//                 template : "testModal2",
+//                 params : {
+//                     test :"33333$",
+//                     ccc : "222"
+//                 },
+//                 modalAction : {
+//                     onResult : function( modal ){
+//                         console.log(modal);
+//                     }
+//                 },
+//                 controller : function( instance ){
+//                     this.init = function(){
+//                         console.log("TEst!!!");
+//                         console.log(this.params);
+//                     }
 
-                    this.close = function(){
-                        instance.close();
-                    }
+//                     this.close = function(){
+//                         instance.close();
+//                     }
 
-                    this.result = function(){
-                        $scope.modal3.open();
-//                        instance.result(this);
-//                        instance.close();
-                    }
-                }
-            });
+//                     this.result = function(){
+//                         $scope.modal3.open();
+// //                        instance.result(this);
+// //                        instance.close();
+//                     }
+//                 }
+//             });
 
-            $scope.modal3 = new SpModal({
-                template : "testModal",
-                params : {
-                    test :"33333$",
-                    ccc : "222"
-                },
-                modalAction : {
-                    onResult : function( modal ){
-                        console.log(modal);
-                    }
-                },
-                controller : function( $scope, instance ){
-                    this.init = function(){
-                        console.log("TEst!!!");
-                        console.log(this.params);
-                    }
+//             $scope.modal3 = new SpModal({
+//                 template : "testModal",
+//                 params : {
+//                     test :"33333$",
+//                     ccc : "222"
+//                 },
+//                 modalAction : {
+//                     onResult : function( modal ){
+//                         console.log(modal);
+//                     }
+//                 },
+//                 controller : function( $scope, instance ){
+//                     this.init = function(){
+//                         console.log("TEst!!!");
+//                         console.log(this.params);
+//                     }
 
-                    this.close = function(){
-                        instance.close();
-                    }
+//                     this.close = function(){
+//                         instance.close();
+//                     }
 
-                    this.result = function(){
-                        instance.result(this);
-                        instance.close();
-                    }
-                }
-            });
+//                     this.result = function(){
+//                         instance.result(this);
+//                         instance.close();
+//                     }
+//                 }
+//             });
 
-            $scope.modal2 = new SpModal({
-                template : "test2Modal",
-                size : "lg",
-                realHeight: 400,
-                controller : function( instance, SpGrid, $http ){
-                    var vm = this;
+//             $scope.modal2 = new SpModal({
+//                 template : "test2Modal",
+//                 size : "lg",
+//                 realHeight: 400,
+//                 controller : function( instance, SpGrid, $http ){
+//                     var vm = this;
 
-                    vm.grid1 = new SpGrid({
-                        selectable : true,
-                        gridSize : {
-                            height : '300px'
-                        },
-                        columnDef : [
-                            {
-                                id : "no",
-                                type : "rowno",
-                                name : "순번",
-                                width : "50px"
-                            },
-                            {
-                                id : "name",
-                                name : "이름",
-                                width : "200px"
-                            },
-                            {
-                                id : "username",
-                                name : "유저이름",
-                                width : "300px"
-                            },
-                            {
-                                id : "email",
-                                name : "이메일",
-                                width : "200px"
-                            }
-                        ]
-                    });
+//                     vm.grid1 = new SpGrid({
+//                         selectable : true,
+//                         gridSize : {
+//                             height : '300px'
+//                         },
+//                         columnDef : [
+//                             {
+//                                 id : "no",
+//                                 type : "rowno",
+//                                 name : "순번",
+//                                 width : "50px"
+//                             },
+//                             {
+//                                 id : "name",
+//                                 name : "이름",
+//                                 width : "200px"
+//                             },
+//                             {
+//                                 id : "username",
+//                                 name : "유저이름",
+//                                 width : "300px"
+//                             },
+//                             {
+//                                 id : "email",
+//                                 name : "이메일",
+//                                 width : "200px"
+//                             }
+//                         ]
+//                     });
 
-                    vm.init = function(){
-
-
-                        $http.get("users.json",{})
-                            .success(function( data ){
-//                                instance.setTopPosition();
-                                vm.grid1.setData(data);
-
-                            });
+//                     vm.init = function(){
 
 
-                    };
+//                         $http.get("users.json",{})
+//                             .success(function( data ){
+// //                                instance.setTopPosition();
+//                                 vm.grid1.setData(data);
 
-                    vm.ok = function(){
-                        instance.result(vm.grid1.getSelectedRow());
-                        instance.close();
-                    };
+//                             });
 
-                    vm.showModal = function(){
-                        $scope.modal.open();
-                    }
-                },
-                modalAction : {
-                    onOpen : function( modal ){
-                        modal.init();
-                    },
-                    onResult : function( row ){
-                        $scope.row = row;
-                    }
-                }
-            })
+//                         Toast.datepicker().then(function(date){
+//                             alert(date);
+//                         })
+
+
+//                     };
+
+//                     vm.ok = function(){
+//                         instance.result(vm.grid1.getSelectedRow());
+//                         instance.close();
+//                     };
+
+//                     vm.showModal = function(){
+//                         $scope.modal.open();
+//                     }
+//                 },
+//                 modalAction : {
+//                     onOpen : function( modal ){
+//                         modal.init();
+//                     },
+//                     onResult : function( row ){
+//                         $scope.row = row;
+//                     }
+//                 }
+//             })
 
 
 
@@ -218,7 +225,7 @@
 
         }
 
-        function modalController( $scope, instance ){
+        function modalController( $scope, instance, Toast ){
             this.init = function(){
                 console.log("TEst!!!");
             }
@@ -226,9 +233,27 @@
                 instance.close();
             }
         }
-        angular.module("modalApp", ["SpUi"])
+
+
+        function spDatepickerModal( $parse, Toast ){
+            return {
+                restrict : "A",
+                require : "^ngModel",
+                link : function( scope, element, attr, ctrl ){
+                    element.on("click",function(){
+                        Toast.datepicker().then(function( date ){
+                            ctrl.$setViewValue(date);
+                            ctrl.$render();        
+                        });   
+                    });
+                
+                }
+            }
+        }
+        angular.module("modalApp", ["SpUi","mgcrea.ngStrap.datepicker"])
             .controller("testController", testController)
             .controller("modalController", modalController)
+            // .directive("spDatepickerModal", spDatepickerModal)
             .service("testService", function(){
                 this.test = function(){
                     console.log("#####");
@@ -237,17 +262,23 @@
     </script>
 </head>
 <body ng-app="modalApp" ng-controller="testController" ng-init="init();">
-{{row}}
-<input type="text" ng-model="inputTest" ng-change="ngChange()" sp-change="spChange($event)" sp-status-on="test.val"/>
-<!--<input type="text" sp-status-on="test.sub.val2"/>-->
-<!--<input type="text" sp-status-on="test.sub.val3"/>-->
-<!--<input type="text" sp-status-on="test.sub.val4"/>-->
-<!--<input type="text" sp-status-on="test.val5"/>-->
-<!--<input type="text" sp-status-on="test.val6"/>-->
-<input type="text" sp-status-on="form.test1"/>
-<input type="text" sp-status-on="form.test2"/>
-<input type="text" sp-status-on="form.sub.test3"/>
-<input type="text" sp-status-on="form.sub.test4"/>
+{{inputTest}}
+<input type="text" ng-model="inputTest" sp-datepicker-modal />
+<div class="nb-inputCalendarMore nb-2m sp-grid-data-edit">
+    <div class="nb-inputText calendar">
+        <label>
+            <div>
+                <input type="text" ng-model="row[headerColumn.id]"
+                       data-date-format="yyyy-MM-dd"
+                       data-model-date-format="yyyyMMdd"
+                       scms-keyup-control="N"
+                       bs-datepicker ng-trim />
+                <a href="javascript:void(0);"><em>날자검색</em></a>
+                <i></i>
+            </div>
+        </label>
+    </div>
+</div>
 <button class="btn btn-default" ng-click="showAlert();">Alert</button>
 <script type="text/ng-template" id="testModal2">
 <div class="sp-modal-header" ng-init="init();"></div>

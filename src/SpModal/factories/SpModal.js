@@ -96,6 +96,7 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
 
         var ctrlInput = {
             $scope : _self.scope,
+            $element : angular.element(modalTemplate),
             instance : {
                 close  : _self.close.bind(_self),
                 result : function(){
