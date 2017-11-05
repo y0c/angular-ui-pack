@@ -1,5 +1,5 @@
 
-function spDatepickerModal( $parse ){
+function spDatepickerModal( $parse, Toast ){
     return {
         restrict : "A",
         require : "^ngModel",
@@ -16,6 +16,7 @@ function spDatepickerModal( $parse ){
 }
 
 
+
 module.exports = function( app ){
-    // app.directive("spDatepickerModal", spDatepickerModal );
+    app.directive("spDatepickerModal", spDatepickerModal );
 }

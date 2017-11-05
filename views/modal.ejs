@@ -225,7 +225,7 @@
 
         }
 
-        function modalController( $scope, instance, Toast ){
+        function modalController( $scope, Toast ){
             this.init = function(){
                 console.log("TEst!!!");
             }
@@ -263,6 +263,7 @@
 </head>
 <body ng-app="modalApp" ng-controller="testController" ng-init="init();">
 {{inputTest}}
+<div ng-controller="modalController"></div>
 <input type="text" ng-model="inputTest" sp-datepicker-modal />
 <div class="nb-inputCalendarMore nb-2m sp-grid-data-edit">
     <div class="nb-inputText calendar">

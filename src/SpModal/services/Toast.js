@@ -1,5 +1,4 @@
 function ToastService( SpModal, $rootScope, $q, $templateCache, $timeout, $compile ){
-
     $templateCache.put( "alertTemplate",
         [
             "<div class=\"sp-modal-header\">",
@@ -47,7 +46,7 @@ function ToastService( SpModal, $rootScope, $q, $templateCache, $timeout, $compi
                     "<h2><em>날짜선택</em></h2>",
                 "</section>",
             "</div>",
-            "<div class=\"sp-modal-body\">",
+            "<div class=\"sp-modal-body\" sp-test=''>",
             "</div>",
             "<div class=\"sp-modal-footer\" ng-click\"modal.test();\">",
                 "<div class=\"nb-buttons center\">",
@@ -121,6 +120,11 @@ function ToastService( SpModal, $rootScope, $q, $templateCache, $timeout, $compi
         },
         modalAction : {
             onOpen : function( modal ){
+                if ( modal.$element.find(".nb-inputCalendarMore").size() == 0 ){
+                    modal.$element.find(".sp-modal-body").append(
+                        $compile($templateCache.get("datepicker"))(modal.$scope)
+                    );
+                }
                 $timeout(function(){
                     angular.element("#modalDatePicker").focus();
                     modal.params = modal.params || {};
@@ -131,13 +135,8 @@ function ToastService( SpModal, $rootScope, $q, $templateCache, $timeout, $compi
         },
         controller : function( instance, $element, $scope ){
             var vm = this;
-
-            vm.init = function(){
-                $element.find(".sp-modal-body").append(
-                    $compile($templateCache.get("datepicker"))($scope)
-                );
-            }
-            
+            vm.$element = $element;
+            vm.$scope   = $scope;
             vm.returnDate = function(){
                 instance.result(vm.selectedDate);
                 instance.close();
