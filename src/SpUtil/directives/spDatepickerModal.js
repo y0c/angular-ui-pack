@@ -3,14 +3,24 @@ function spDatepickerModal( $parse, Toast ){
     return {
         restrict : "A",
         require : "^ngModel",
-        link : function( scope, element, attr, ctrl ){
-            element.on("click",function(){
-                Toast.datepicker().then(function( date ){
-                    ctrl.$setViewValue(date);
-                    ctrl.$render();        
-                });   
-            });
-           
+        compile: function(element, attributes){
+
+            return {
+                pre: function(scope, element, attributes, controller, transcludeFn){
+
+                },
+                post: function(scope, element, attributes, controller, transcludeFn){
+                    element.on("click",function(){
+                        Toast.datepicker({
+                            date : controller.$viewValue
+                        }).then(function( date ){
+                            controller.$setViewValue(date);
+                            controller.$render();
+                        });
+                    });
+
+                }
+            }
         }
     }
 }
