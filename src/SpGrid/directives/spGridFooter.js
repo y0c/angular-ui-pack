@@ -8,7 +8,11 @@ function spGridFooter( SpGridConstant, SpGridUtil ){
         link : function ( scope, element, attrs ){
 
             scope.$on( scope.gridObject.getId() +  "gridDataReset", function(){
-                scope.group = SpGridUtil.aggregateGroup({ list : scope.gridObject.getData() }, scope.gridObject.getGrouping().aggregate );
+                if ( scope.gridObject.getTotalRecordCount() == 0 ){
+                    scope.group = {};
+                } else {
+                    scope.group = SpGridUtil.aggregateGroup({ list : scope.gridObject.getData() }, scope.gridObject.getGrouping().aggregate );
+                }
             });
         }
     }

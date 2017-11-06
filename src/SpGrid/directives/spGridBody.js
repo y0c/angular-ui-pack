@@ -22,9 +22,13 @@ function spGridBody($compile, SpGridConstant, $templateCache, SpGridUtil ){
             scope.$rows = null;
 
             scope.$on( scope.gridObject.getId() +  "gridDataReset", function(){
-                if( scope.gridObject.isGroupable() && scope.gridObject.getTotalRecordCount() > 0 ){
-                    var groupList = SpGridUtil.groupByList(scope.gridObject.getData(), scope.gridObject.getGrouping().groupingColumn );
-                    scope.$groups = SpGridUtil.aggregateGroupList(groupList,scope.gridObject.getGrouping().aggregate);
+                if( scope.gridObject.isGroupable() ){
+                    if( scope.gridObject.getTotalRecordCount() == 0 ){
+                        scope.$groups = [];
+                    } else {
+                        var groupList = SpGridUtil.groupByList(scope.gridObject.getData(), scope.gridObject.getGrouping().groupingColumn );
+                        scope.$groups = SpGridUtil.aggregateGroupList(groupList,scope.gridObject.getGrouping().aggregate);
+                    }
                 }
             });
 
