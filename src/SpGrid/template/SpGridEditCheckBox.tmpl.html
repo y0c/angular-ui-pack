@@ -4,6 +4,7 @@
             <input type="checkbox" ng-true-value="'{{checkbox.trueValue}}'"
                    ng-false-value="'{{checkbox.falseValue}}'"
                    ng-checked="row[headerColumn.id] == '{{checkbox.trueValue}}'"
+                   focus-on="{{headerColumn.id}}{{rowidx}}" sp-status-on="grid.{{headerColumn.id}}{{rowidx}}"
                    ng-model="row[headerColumn.id]" >
             <span>
             <i></i>
