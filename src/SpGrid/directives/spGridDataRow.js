@@ -29,13 +29,27 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
              * Grid Data Row 클릭시 기본 Action 과 커스텀 Action 동작
              */
             function onGridDataRowClick( row ){
-                scope.gridObject.selectCancelAll();
-                scope.gridObject.setSelectedRow( row );
-                scope.gridObject.getGridAction().onRowClick( row );
+
+                if ( scope.gridObject.isSelectable() ){
+                    var oldRowIdx = scope.gridObject.getSelectedIndex();
+                    var oldRow    = scope.gridObject.getSelectedRow();
+                    var newRowIdx = scope.rowidx;
+
+                    var onRowSelectedChange =  SpGridUtil.castToPromise(
+                        scope.gridObject.getGridAction().onRowSelectedChange( oldRowIdx, oldRow, newRowIdx, row )
+                    );
+
+                    onRowSelectedChange
+                        .then(function(){
+                            scope.gridObject.setSelectedRow( row );
+                        });
+                }
+
+                scope.gridObject.getGridAction().onRowClick( row, scope.rowidx );
             }
 
             function onGridDataRowDblClick( row ){
-                scope.gridObject.getGridAction().onRowDblClick( row );
+                scope.gridObject.getGridAction().onRowDblClick( row, scope.rowidx );
             }
 
             function checkRowValid(){
@@ -50,33 +64,34 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
              * Grid Data Row EditMode 변경
              */
             scope.rowEdit = function() {
-                if( scope.gridObject.isStatusChanged() ){
-                    return ;
-                }
+                // if( scope.gridObject.isStatusChanged() ){
+                //     return ;
+                // }
 
-                if( !scope.gridObject.getGridAction().onRowEditBefore() ){
-                    return ;
-                }
+                var onRowEditBefore =  SpGridUtil.castToPromise(scope.gridObject.getGridAction().onRowEditBefore( scope.row, scope.rowidx ));
 
 
-                //Deep Copy
-                if( !scope.row.hasOwnProperty("_originalRow") ){
-                    var _temp = {};
-                    SpGridUtil.rowCopy(scope.row, _temp);
-                    scope.row["_originalRow"] = _temp;
-                }
+                onRowEditBefore
+                    .then(function(){
+                        //Deep Copy
+                        if( !scope.row.hasOwnProperty("_originalRow") ){
+                            var _temp = {};
+                            SpGridUtil.rowCopy(scope.row, _temp);
+                            scope.row["_originalRow"] = _temp;
+                        }
 
 
+                        if( !scope.row.hasOwnProperty("cudFlag")  ){
 
-                if( !scope.row.hasOwnProperty("cudFlag")  ){
+                            scope.row.cudFlag      = SpGridConstant.UPDATE_FLAG;
+                        }
 
-                    scope.row.cudFlag      = SpGridConstant.UPDATE_FLAG;
-                }
+                        scope.row.__valid      = false;
+                        scope.row.__isTempSave = false;
+                        scope.gridObject.setStatus("edit");
+                        scope.$broadcast("changeMode");
+                    });
 
-                scope.row.__valid      = false;
-                scope.row.__isTempSave = false;
-                scope.gridObject.setStatus("edit");
-                scope.$broadcast("changeMode");
             };
 
             /**
@@ -102,23 +117,25 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
              * Grid Data Row Delete
              */
             scope.rowDelete =  function(){
-                if( scope.gridObject.isStatusChanged() ){
-                    return ;
-                }
+                // if( scope.gridObject.isStatusChanged() ){
+                //     return ;
+                // }
 
-                if( !scope.gridObject.getGridAction().onRowDeleteBefore( scope.row ) ){
-                   return ;
-                }
+                var onRowDeleteBefore =  SpGridUtil.castToPromise(scope.gridObject.getGridAction().onRowDeleteBefore( scope.row, scope.rowidx ));
 
-                // Row Delete시 생성된데이터는 배열에서 완전삭제
-                if( scope.row.cudFlag != SpGridConstant.CREATE_FLAG ){
-                    scope.row.cudFlag = SpGridConstant.DELETE_FLAG;
-                    scope.row.__valid = true;
-                } else {
-                    scope.gridObject.getData().splice(scope.$index, 1 );
-                }
-                scope.$parent.$broadcast("rowDelete");
-                scope.gridObject.getGridAction().onRowDeleteAfter( scope.row );
+                onRowDeleteBefore
+                    .then(function(){
+                        // Row Delete시 생성된데이터는 배열에서 완전삭제
+                        if( scope.row.cudFlag != SpGridConstant.CREATE_FLAG ){
+                            scope.row.cudFlag = SpGridConstant.DELETE_FLAG;
+                            scope.row.__valid = true;
+                        } else {
+                            scope.gridObject.getData().splice(scope.$index, 1 );
+                        }
+                        scope.$parent.$broadcast("rowDelete");
+                        scope.gridObject.getGridAction().onRowDeleteAfter( scope.row );
+                    });
+
             };
 
             /**
@@ -201,13 +218,28 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                                 } else {
                                     _customValidateFn = obj.fn;
 
-                                    if( !_customValidateFn( scope.row[_column.id], scope.row)){
-                                        _invalidArray.push(obj.message);
+                                    var validateResult = _customValidateFn( scope.row[_column.id], scope.row);
+
+                                    if( typeof validateResult == "string" ){
+                                        _invalidArray.push({
+                                            id : _column.id,
+                                            message : validateResult
+                                        });
+                                    } else if ( typeof validateResult == "boolean" ){
+                                        if( !validateResult ){
+                                            _invalidArray.push({
+                                                id : _column.id,
+                                                message : obj.message
+                                            });
+                                        }
                                     }
                                 }
                             } else {
                                 if( !_defineValidateFn( scope.row[_column.id], obj) ){
-                                    _invalidArray.push(obj.message);
+                                    _invalidArray.push({
+                                        id : _column.id,
+                                        message : obj.message
+                                    });
                                 }
                             }
 
@@ -225,32 +257,40 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
 
 
                 if( _invalidArray.length > 0 ){
-                    scope.gridObject.getValidateCallback()(_invalidArray[0]);
+                    scope.gridObject.getValidateCallback()( _invalidArray[0], scope.row, scope.$index);
                     return false;
                 } else {
-                    if( scope.row.hasOwnProperty("cudFlag") &&
-                        scope.row.cudFlag == SpGridConstant.CREATE_FLAG ){
-                        //처음 생성한 로우의 경우 배열을 옮겨줌
-                        if( scope.gridObject.getCreateData().length > 0 ){
-                            scope.gridObject.getData().unshift(
-                                scope.gridObject.getCreateData().splice(0,1)[0]
-                            );
-                        }
-                        scope.gridObject.getGridAction().onRowCreateAfter( scope.row );
-                    }
 
-                    if( scope.row.hasOwnProperty("cudFlag") &&
-                        scope.row.cudFlag == SpGridConstant.UPDATE_FLAG ){
-                        scope.gridObject.getGridAction().onRowEditAfter( scope.row );
-                    }
-                    scope.row.__valid      = true;
-                    scope.row.__isTempSave = true;
+
+                    var onRowSaveBefore =  SpGridUtil.castToPromise(scope.gridObject.getGridAction().onRowSaveBefore( scope.row, scope.rowidx ));
+
+                    onRowSaveBefore
+                        .then(function(){
+
+                            if( scope.row.hasOwnProperty("cudFlag") &&
+                                scope.row.cudFlag == SpGridConstant.CREATE_FLAG ){
+                                //처음 생성한 로우의 경우 배열을 옮겨줌
+                                if( scope.gridObject.getCreateData().length > 0 ){
+                                    scope.gridObject.getData().unshift(
+                                        scope.gridObject.getCreateData().splice(0,1)[0]
+                                    );
+                                }
+                                scope.gridObject.getGridAction().onRowCreateAfter( scope.row );
+                            }
+
+                            if( scope.row.hasOwnProperty("cudFlag") &&
+                                scope.row.cudFlag == SpGridConstant.UPDATE_FLAG ){
+                                scope.gridObject.getGridAction().onRowEditAfter( scope.row );
+                            }
+
+                            scope.row.__valid      = true;
+                            scope.row.__isTempSave = true;
+                            scope.gridObject.setStatus("");
+                            scope.$broadcast("changeMode");
+                        });
+
                 }
 
-
-
-                scope.gridObject.setStatus("");
-                scope.$broadcast("changeMode");
 
                 return true;
             };
@@ -262,7 +302,8 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
             }
 
             scope.$on( scope.gridObject.getId() + "rowStyleChange", setRowStyle);
-
+            scope.$on( scope.gridObject.getId() + "rowEditMode" + scope.rowidx, scope.rowEdit );
+            scope.$on( scope.gridObject.getId() + "EditMode", scope.rowEdit );
         }
     }
 }

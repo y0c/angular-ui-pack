@@ -7,17 +7,22 @@
     <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
     <script src="/javascripts/jquery-1.12.1.js"></script>
     <script src="/javascripts/angular.js"></script>
+    <script src="/javascripts/angular-strap.min.js"></script>
+    <script src="/javascripts/angular-strap.tpl.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/reset.css">
     <link rel="stylesheet" href="/stylesheets/page.css">
     <link rel="stylesheet" href="/stylesheets/animation.css">
     <link rel="stylesheet" href="/stylesheets/theme.css">
+    <link rel="stylesheet" href="/stylesheets/SpGrid.css">
 
     <!--<link rel="stylesheet" href="/stylesheets/SpGrid.css">-->
     <script type="text/javascript" src="/javascripts/dist/SpUi.js"></script>
+    <style>
 
+    </style>
     <script type="text/javascript">
 
-        angular.module("gridApp", [ "SpUi"] )
+        angular.module("gridApp", ["SpUi","mgcrea.ngStrap.datepicker"] )
             .controller("gridController", [ '$templateCache', '$scope','SpGrid','$http', function( $templateCache, $scope, SpGrid, $http ){
                 var vm = this;
 
@@ -40,6 +45,9 @@
                     totalize : true,  //총합여부
                     gridSize : {
                         height : "300px"
+                    },
+                    category : {
+
                     },
                     grouping : {
                         aggregate : {
@@ -69,14 +77,68 @@
                     }
                 });
 
+                vm.grid2 = new SpGrid({
+                    selectable : true,
+                    dataset : [{"postId":"58","bbsId":"B0081","title":"ㅅㄷㄴㅅ","regId":"065932","regNm":"김재휘 ( 065932 )","regDt":"2017-11-02","readCnt":19},
+                        {"postId":"59","bbsId":"B0081","title":"ㅅ33333ㄷㄴㅅ","regId":"065932","regNm":"김재휘 ( 065932 )","regDt":"2017-11-02","readCnt":19}],
+                    editable : true,
+                    columnDef : [
+                        {
+                            id : "postId",
+                            name : "포스트번호",
+                            width : "100px"
+                        },
+                        {
+                            id : "bbsId",
+                            name : "게시글번호",
+                            width : "100px"
+                        },
+                        {
+                            id : "regNm",
+                            name : "작성자",
+                            width: "100px",
+                            editType : "text"
+                        },
+                        {
+                            id: "regDt",
+                            name: "작성일",
+                            width: "100px",
+                            editType : "datepicker"
+                        }
+                    ],
+                    gridAction : {
+                        onRowSelectedChange : function( oldRowidx, oldRow, newRowidx, newRow ){
+                            console.log( oldRowidx, oldRow, newRowidx, newRow );
+                            return true;
+                        },
+                        onRowRenderFinished : function(){
+                            vm.grid2.setRowEditMode(0);
+                            vm.grid2.setRowEditMode(1);
+                        }
+//                        onRowClick : function(){
+//                            console.log(vm.grid2.getSelectedIndex());
+//                        }
+                    }
+                });
+
                 vm.init = function(){
                     $http.get("summarytest.json", {} )
                         .then(function( response ){
                             vm.grid.setData( response.data );
+                            vm.grid.setData([]);
                         });
+//                    vm.grid2.setRowEditMode(0);
                 }
 
-            }])
+                vm.test = function(){
+                    console.log(vm.grid2.getSelectedIndex());
+//                    alert(vm.grid2.isRowChanged(0));
+                }
+
+            }]);
+
+
+
 
     </script>
 
@@ -101,6 +163,16 @@
     <div sp-grid-cell-sizer="12" class="sp-grid-data-column">{{group.total.sum}}</div>
 </script>
 <div class="container">
+    <div class="row" style="margin-top:40px;">
+        <div class="col-md-12">
+            <sp-grid grid-object="vm.grid2">
+            </sp-grid>
+        </div>
+    </div>
+
+    <div class="row">
+        <button class="btn btn-default" ng-click="vm.test()">변경여부체크</button>
+    </div>
 
 
     <div class="row" style="margin-top:40px;">
@@ -110,7 +182,7 @@
         </div>
     </div>
 
-
+    <input type="text" bs-datepicker ng-model="test22" />
 </div>
 
 </body>

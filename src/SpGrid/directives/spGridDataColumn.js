@@ -49,6 +49,10 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,
                 return scope.type == "html";
             }
 
+            function isEditCell(){
+                return _headerColumn.hasOwnProperty("editType") || _headerColumn.hasOwnProperty("editTemplate");
+            }
+
 
             function changeModeByCudFlag(){
                 if( !scope.row ){
@@ -60,7 +64,7 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,
                                         && !scope.isTempSave() && !scope.row.__valid;
                 //수정 & 임시저장 X상태
                 var isUpdate = scope.row.cudFlag == SpGridConstant.UPDATE_FLAG &&
-                                _headerColumn.hasOwnProperty("editType") && !scope.isTempSave();
+                                            isEditCell() && !scope.isTempSave();
 
                 if( scope.row.hasOwnProperty("cudFlag") && scope.type == "data"){
                     if( isCreate || isUpdate ){
@@ -85,6 +89,7 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,
 
             function editMode(){
                 var _gridDataView    = null;
+                var _gridHtmlView    = null;
                 var _typeMap = {
                     "text"      : $templateCache.get(SpGridConstant.template.EDIT_INPUT),
                     "checkbox"  : $templateCache.get(SpGridConstant.template.EDIT_CHECKBOX),
@@ -95,7 +100,9 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,
                 var _typeName = null;
                 var _editType = null;
 
+                _gridHtmlView = element.find(".sp-grid-data-html");
                 _gridDataView = element.find(".sp-grid-data-view");
+
                 if ( _headerColumn.hasOwnProperty("editType") ){
                     _editType = _headerColumn.editType;
                     if( typeof _editType == "string" ){
@@ -173,14 +180,32 @@ function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,
                         }
                     }
 
-                    _gridDataView.replaceWith(
-                        $compile(_typeMap[_typeName] )(scope)
-                    );
 
                     // element.focus();
                 }
 
+                var template = null;
+
+                if ( isEditCell() ){
+                    if ( _headerColumn.editTemplate ){
+                        template = _headerColumn.editTemplate;
+                    } else {
+                        template = _typeMap[_typeName]
+                    }
+
+                    if( _headerColumn.type == "html" ){
+                        _gridHtmlView.replaceWith(
+                            $compile(template)(scope)
+                        );
+                    } else {
+                        _gridDataView.replaceWith(
+                            $compile( template )(scope)
+                        );
+                    }
+
+                }
             }
+
 
             function viewMode(){
                 var _gridEditElement = null;

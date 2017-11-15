@@ -48,11 +48,11 @@ function ToastService( SpModal, $rootScope, $q, $templateCache, $timeout, $compi
         },
         modalAction : {
             onOpen : function( modal ){
-                if ( modal.$element.find(".nb-inputCalendarMore").size() == 0 ){
-                    modal.$element.find(".sp-modal-body").append(
-                        $compile($templateCache.get("datepicker"))(modal.$scope)
-                    );
-                }
+                // if ( modal.$element.find(".nb-inputCalendarMore").size() == 0 ){
+                //     modal.$element.find(".sp-modal-body").append(
+                //         $compile($templateCache.get("datepicker"))(modal.$scope)
+                //     );
+                // }
                 $timeout(function(){
                     angular.element("#modalDatePicker").focus();
                     modal.params = modal.params || {};

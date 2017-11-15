@@ -29,7 +29,7 @@ module.exports = function(app){
         };
     });
 
-    app .directive('onFinishRender', function ($timeout) {
+    app.directive('onFinishRender', function ($timeout) {
         return {
             restrict: 'A',
             link: function (scope, element, attr) {
@@ -41,4 +41,17 @@ module.exports = function(app){
             }
         }
     });
+    app.directive('convertToNumber', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModel) {
+                ngModel.$parsers.push(function(val) {
+                    return val != null ? parseInt(val, 10) : null;
+                });
+                ngModel.$formatters.push(function(val) {
+                    return val != null ? '' + val : null;
+                });
+            }
+        };
+    })
 };

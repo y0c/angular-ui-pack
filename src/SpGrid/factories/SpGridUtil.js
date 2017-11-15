@@ -1,4 +1,4 @@
-function SpGridUtil( $filter ){
+function SpGridUtil( $filter, $q ){
     return  {
         /**
          * 배열안에 객체를 탐색해서 원하는 필드값을 리턴
@@ -41,14 +41,14 @@ function SpGridUtil( $filter ){
                         if( obj.value == "" || obj.value == null || obj.value === undefined ){
                             throw new Error(["MinLength 조건은 value값을 넣어주셔야 합니다."]);
                         }
-                        return data.length > obj.value;
+                        return data.length >= obj.value;
                     },
                     maxLength : function( data, obj ){
                         data = data || "";
                         if( obj.value == "" || obj.value == null || obj.value === undefined ){
                             throw new Error(["MaxLength 조건은 value값을 넣어주셔야 합니다."]);
                         }
-                        return data.length < obj.value;
+                        return data.length <= obj.value;
                     }
                 };
 
@@ -207,6 +207,30 @@ function SpGridUtil( $filter ){
                 return false;
             }
             return true;
+        },
+
+        castToPromise : function( result ){
+            var defer = $q.defer();
+            if( typeof result == "boolean" ){
+                if( result ){
+                    defer.resolve();
+                } else {
+                    defer.reject();
+                }
+                return defer.promise;
+            } else if ( this.isAngularPromise(result) ){
+                return result;
+            } else {
+                throw new Error(["return 값의 타입은 Boolean 혹은 Promise(function) 이어야합니다."])
+            }
+        },
+        isAngularPromise : function(value) {
+            if (typeof value.then !== 'function') {
+                return false;
+            }
+            var promiseThenSrc = String($q.defer().promise.then);
+            var valueThenSrc = String(value.then);
+            return promiseThenSrc === valueThenSrc;
         }
     }
 }

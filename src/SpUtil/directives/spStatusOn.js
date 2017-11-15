@@ -11,9 +11,9 @@ function SpStatusOnDirective(){
                 var matchCount = 0;
                 var paramGroup = params.id.split(".");
                 
-                for( var i = 0 ; i < group.length ; i ++ ){
-                    for( var j = 0 ; j < paramGroup.length ; j ++ ){
-                        if( group[i] == paramGroup[j] ){
+                for( var i = 0 ; i < paramGroup.length  ; i ++ ){
+                    for( var j = 0 ; j < group.length; j ++ ){
+                        if( group[j] == paramGroup[i] ){
                             matchCount++;
                             match = true;
                             break;

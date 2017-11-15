@@ -54,6 +54,10 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
                 onRowDblClick : function(){
 
                 },
+                onRowSelectedChange : function(){
+
+                    return true;
+                },
                 onRowDeleteBefore : function(){
                     return true;
                 },
@@ -71,6 +75,9 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
                 },
                 onRowCreateAfter : function(){
 
+                },
+                onRowSaveBefore : function(){
+                    return true;
                 },
                 onRowRenderFinished : function(){
                     console.log("rowRenderFinised");
@@ -113,8 +120,13 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
     SpGrid.prototype.getId = function(){
         return this.id;
     };
+
     SpGrid.prototype.getCreateData = function(){
         return this._gridOptions.createDataset;
+    };
+
+    SpGrid.prototype.setCreateData = function( createDataset ){
+        this._gridOptions.createDataset = createDataset;
     };
 
     SpGrid.prototype.getValidateCallback = function( ){
@@ -124,6 +136,15 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
     SpGrid.prototype.setValidateCallback = function( callback ){
         this._gridOptions.validateCallback = callback;
         return this;
+    };
+
+    /**
+     * 해당 index의 로우 변경여부체크
+     * @param rowidx
+     * @return boolean - 로우 변경여부
+     */
+    SpGrid.prototype.isRowChanged = function( rowidx ){
+        return !SpGridUtil.dirtyCheck( this.getOriginalData()[rowidx], this.getData()[rowidx]);
     };
 
     /**
@@ -206,11 +227,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      * @returns {SpGrid}
      */
     SpGrid.prototype.setSelectedRow = function( row ){
-        angular.forEach( this.getData() , function( _row ){
-            if( _row.hasOwnProperty("__isSelected")){
-                delete _row.__isSelected;
-            }
-        });
+        this.selectCancelAll();
         row.__isSelected = true;
         return this;
     };
@@ -227,6 +244,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
                 return i;
             }
         }
+        return -1;
     };
 
     /**
@@ -380,8 +398,11 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         if( this._gridOptions.enablePaging ){
             this._gridOptions.pagingOptions.totalRecordCount = dataset.length;
         }
+
+        this.setCreateData([]);
         // this._gridOptions.dataset = dataset;
         // this._originalDataset = angular.copy( this._gridOptions.dataset );
+
         $rootScope.$broadcast( this.getId() + "gridDataReset" );
         return this;
     };
@@ -589,7 +610,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         var _dataset = this.getData();
         for( var i = 0 ; i < _dataset.length ; i ++ ){
             if( _dataset[i] && _dataset[i].hasOwnProperty("cudFlag")
-                && _dataset[i].cudFlag != "" && _dataset[i].__valid ){
+                && _dataset[i].cudFlag != "" /* && _dataset[i].__valid */ ){
                 _result.push(_dataset[i]);
             }
         }
@@ -620,6 +641,22 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
             rowIdx : rowIdx,
             style : style
         });
+    };
+
+
+    /**
+     * 로우 모드 변경 에디트 모드로
+     * @param rowIdx
+     */
+    SpGrid.prototype.setRowEditMode = function( rowIdx ){
+        $rootScope.$broadcast( this.getId() + "rowEditMode" + rowIdx );
+    };
+
+    /**
+     * 그리드 전체 변경 모드로
+     */
+    SpGrid.prototype.setEditMode = function() {
+        $rootScope.$broadcast( this.getId() + "EditMode" );
     };
 
     /**
