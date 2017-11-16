@@ -24,7 +24,6 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
             scope.$on("gridColumnChange", function(){
                 scope.$columns           = scope.gridObject.getVisibleColumn();
             });
-
             /**
              * Grid Data Row 클릭시 기본 Action 과 커스텀 Action 동작
              */

@@ -10,8 +10,11 @@ function spGridHeaderColumn( SpGridConstant){
         templateUrl : SpGridConstant.template.SP_GRID_HEADER_COLUMN,
         link : function( scope, element, attr){
 
-            scope.getWidth = getWidth;
+            scope.columnWidth = getWidth();
 
+            scope.$watch("column", function( newval){
+                scope.columnWidth = newval.width;
+            }, true);
 
             function getWidth(){
                 if( scope.column.hasOwnProperty("spanWidth") ){
@@ -19,6 +22,10 @@ function spGridHeaderColumn( SpGridConstant){
                 }
                 return scope.column.width;
             }
+
+            // scope.$on(scope.gridObject.getId() + "resize", function(){
+            //     scope.columnWidth = getWidth();
+            // });
         }
     }
 }

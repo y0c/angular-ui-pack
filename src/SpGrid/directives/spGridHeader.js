@@ -13,14 +13,14 @@ function spGridHeader( $compile, SpGridConstant){
 
 
             function calculateWidth(){
-                var _headerWidth = getWidth();
+                var _headerWidth = element.width();
 
                 var _useageWidth = 0;
 
-                var _headerColumns = scope.gridObject.getColumnDef();
+                var _headerColumns = scope.gridObject.getVisibleColumn();
                 var _wildCardColumn = null;
 
-                angular.forEach( _headerColumns, function( column ){
+                angular.forEach( scope.gridObject.getVisibleColumn(), function( column ){
                     if( column.hasOwnProperty("width") ){
                         if( column.hasOwnProperty("fillRemainWidth")
                             && column.fillRemainWidth ){
@@ -38,11 +38,12 @@ function spGridHeader( $compile, SpGridConstant){
                 if( _wildCardColumn == null ){
                     if( _gapWidth > 0 ){
                         var _usePercentage = 0;
-                        angular.forEach( _headerColumns, function( column ){
+                        angular.forEach( scope.gridObject.getVisibleColumn(), function( column ){
                             _usePercentage = parseInt(column.width) / _useageWidth;
                             column.width = (parseInt(column.width) + parseFloat(( _usePercentage * _gapWidth ).toFixed(1))) + "px";
-                            console.log(parseFloat(( _usePercentage * _gapWidth ).toFixed(1)));
+                            console.log(column.width);
                         });
+
                     }
                 } else {
                     if( _gapWidth > 0 ){
@@ -52,13 +53,14 @@ function spGridHeader( $compile, SpGridConstant){
 
             }
 
-            function getWidth(){
-                var _resultWidth = 0;
-                element.css({ position :"absolute", visibility : "hidden", display : "block", width: "100%"});
-                _resultWidth = element.width();
-                element.css({ position : "", visibility : "", display : "" });
-                return _resultWidth;
-            }
+            scope.$on("gridColumnChange" , calculateWidth );
+            // function getWidth(){
+            //     var _resultWidth = 0;
+            //     element.css({ position :"absolute", visibility : "hidden", display : "block", width: "100%"});
+            //     _resultWidth = element.width();
+            //     element.css({ position : "", visibility : "", display : "" });
+            //     return _resultWidth;
+            // }
 
 
 
