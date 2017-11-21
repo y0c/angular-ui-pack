@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/stylesheets/font-awesome.css" />
       <script src="/javascripts/jquery-1.12.1.js"></script>
       <script src="/javascripts/angular.js"></script>
+    <link rel="stylesheet" href="/stylesheets/SpGrid.css">
     <link rel="stylesheet" href="/stylesheets/reset.css">
     <link rel="stylesheet" href="/stylesheets/page.css">
     <link rel="stylesheet" href="/stylesheets/animation.css">
@@ -34,6 +35,10 @@
                     useFooterSummary : true,
                     gridSize : {
                         height : '300px'
+                    },
+                    filterable : true,
+                    filtering : {
+                      columns : [ "SUBJECT_NO", "BUNBAN"]
                     },
                     columnDef: [
                         {

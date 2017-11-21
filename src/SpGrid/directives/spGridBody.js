@@ -23,10 +23,10 @@ function spGridBody($compile, SpGridConstant, $templateCache, SpGridUtil ){
 
             scope.$on( scope.gridObject.getId() +  "gridDataReset", function(){
                 if( scope.gridObject.isGroupable() ){
-                    if( scope.gridObject.getTotalRecordCount() == 0 ){
+                    if( scope.gridObject.getFilteredData().length == 0 ){
                         scope.$groups = [];
                     } else {
-                        var groupList = SpGridUtil.groupByList(scope.gridObject.getData(), scope.gridObject.getGrouping().groupingColumn );
+                        var groupList = SpGridUtil.groupByList(scope.gridObject.getFilteredData(), scope.gridObject.getGrouping().groupingColumn );
                         scope.$groups = SpGridUtil.aggregateGroupList(groupList,scope.gridObject.getGrouping().aggregate);
                     }
                 }
@@ -54,9 +54,9 @@ function spGridBody($compile, SpGridConstant, $templateCache, SpGridUtil ){
 
             function range( start, end ){
                 if( scope.gridObject.isEnablePaging() ){
-                    return scope.gridObject.getData().slice( start, end );
+                    return scope.gridObject.getFilteredData().slice( start, end );
                 }
-                return scope.gridObject.getData();
+                return scope.gridObject.getFilteredData();
             }
 
             function scrollTop(){

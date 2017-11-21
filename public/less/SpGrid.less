@@ -1,8 +1,10 @@
-@border-color:#f2f2f2;
+@border-color:#d9d9d9;
 @strong-border-color:#333333;
-@background-color:#f8f8f8;
+@background-color:#fafafa;
+@strong-background-color:#f4f6fa;
 @header-column-font-color:#4c4c4c;
 @data-column-font-color:#808080;
+@data-column-height:45px;
 
 .sp-grid-wrap{
     width: 100%;
@@ -161,7 +163,7 @@
                 font-weight:lighter;
                 font-size:13px;
                 padding:5px;
-                height:51px;
+                height:@data-column-height;
 
                 .sp-grid-data-header{
                     display:none;
@@ -199,7 +201,7 @@
             font-size:13px;
             font-weight:lighter;
             padding:10px;
-            height:51px;
+            height:@data-column-height;
         }
     }
     .sp-grid-header {
@@ -213,12 +215,12 @@
                 text-align: center;
                 display : table-cell;
                 vertical-align:middle;
-                background: @background-color;
+                background: @strong-background-color;
                 color: @header-column-font-color;
                 font-size:13px;
                 font-weight:lighter;
                 padding:10px;
-                height:51px;
+                height:@data-column-height;
             }
         }
     }
@@ -246,7 +248,7 @@
                 height:auto !important;
                 padding:10px;
 
-                & > .sp-grid-data-row , .sp-grid-grouping-row{
+                 .sp-grid-data-row , .sp-grid-grouping-row{
                     display:block;
                     height:auto;
                     margin-bottom:30px;

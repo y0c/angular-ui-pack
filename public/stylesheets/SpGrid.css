@@ -5,6 +5,7 @@
 .sp-grid-wrap .sp-grid .sp-grid-body {
     position: relative;
     overflow-x: hidden;
+
 }
 .sp-grid-wrap .sp-grid .sp-grid-body .sp-grid-notice-message {
     height: 150px;
@@ -106,12 +107,12 @@
 .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column {
     border-bottom: 1px solid #d9d9d9;
     box-sizing: border-box;
-    color: #808080;
+    color: #000;
     text-align: center;
     display: table-cell;
     vertical-align: middle;
     font-weight: lighter;
-    font-size: 13px;
+    font-size: 14px;
     padding: 5px;
     height: 45px;
 }
@@ -132,6 +133,13 @@
 .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data .nb-buttons,
 .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data .nb-buttons {
     vertical-align: middle;
+}
+.sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data .nb-buttons a,
+.sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data .nb-buttons button, 
+.sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data .nb-buttons a, 
+.sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data .nb-buttons button {
+	height: 30px;
+	line-height: 26px;
 }
 .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data .nb-buttons button,
 .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data .nb-buttons button {
@@ -160,12 +168,35 @@
     display: table-cell;
     vertical-align: middle;
     background: #f4f6fa;
-    color: #4c4c4c;
-    font-size: 13px;
+    color: #000;
+    font-size: 14px;
     font-weight: lighter;
     padding: 10px;
     height: 45px;
 }
+
+.sp-grid-filter-column{
+    height: 45px;
+    display: table-cell;
+    /*width: 100%;*/
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+.sp-grid-filtering-input{
+    display:inline-block;
+    width:100%;
+
+}
+.sp-grid-filtering-input > input[type=text]{
+    display:block;
+    width:90%;
+    margin: 0 auto;
+}
+
+
+
 @media (max-width: 743px) {
     .sp-grid-wrap.mb-vertical {
         width: 100% !important;
@@ -181,6 +212,7 @@
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body {
         height: auto !important;
         padding: 10px;
+        max-height:none !important;
     }
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-data-row,
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-grouping-row {
@@ -202,6 +234,9 @@
         box-sizing: border-box;
         font-size: 13px;
         padding: 0px;
+        min-height: 45px;
+        height: auto;
+        vertical-align: middle;
     }
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data-header,
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data-header,
@@ -212,7 +247,8 @@
         box-sizing: border-box;
         display: inline-block;
         padding: 10px;
-        height: 100%;
+        min-height: 45px;
+    	vertical-align: middle;
     }
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data-header,
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data-header {

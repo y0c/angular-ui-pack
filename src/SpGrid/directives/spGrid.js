@@ -2,7 +2,7 @@
  * Grid 전체 영역 Directive
  */
 
-function spGrid( $compile, SpGridConstant, orderByFilter ){
+function spGrid( $compile, SpGridConstant, orderByFilter, $filter ){
     return {
         restrict : "E",
         scope : {
@@ -18,6 +18,8 @@ function spGrid( $compile, SpGridConstant, orderByFilter ){
 
             scope.orderChange = orderChange;
 
+            scope.filtering   = filtering;
+
             function orderChange( columnId, orderBy ){
                 if( orderBy == "asc" ){
                     // scope.orderColumn = "-" + columnId;
@@ -30,8 +32,12 @@ function spGrid( $compile, SpGridConstant, orderByFilter ){
                 }
             }
 
-
-
+            function filtering(){
+                if( scope.gridObject.isEnablePaging() ){
+                    scope.gridObject.getPagingOptions().currentPage = 1;
+                }
+                scope.gridObject.setFilteredData( $filter("filter")(scope.gridObject.getData(), scope.gridObject.getFilteringQuery()) );
+            }
 
         }
     }

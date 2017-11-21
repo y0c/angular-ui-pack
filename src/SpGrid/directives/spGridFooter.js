@@ -11,7 +11,7 @@ function spGridFooter( SpGridConstant, SpGridUtil ){
                 if ( scope.gridObject.getTotalRecordCount() == 0 ){
                     scope.group = {};
                 } else {
-                    scope.group = SpGridUtil.aggregateGroup({ list : scope.gridObject.getData() }, scope.gridObject.getGrouping().aggregate );
+                    scope.group = SpGridUtil.aggregateGroup({ list : scope.gridObject.getFilteredData() }, scope.gridObject.getGrouping().aggregate );
                 }
             });
         }

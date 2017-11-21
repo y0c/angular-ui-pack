@@ -1,6 +1,7 @@
 function SpChangeDirective( $parse ){
     return {
         restrict : "A",
+        priority : 100,
         link : function( scope, element, attr ){
             var fn = $parse(attr.spChange);
             element.on("change", function( event ){

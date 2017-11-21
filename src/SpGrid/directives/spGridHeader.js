@@ -17,16 +17,18 @@ function spGridHeader( $compile, SpGridConstant){
 
                 var _useageWidth = 0;
 
-                var _headerColumns = scope.gridObject.getVisibleColumn();
+                var _headerColumns = scope.gridObject.getColumnDef();
                 var _wildCardColumn = null;
 
-                angular.forEach( scope.gridObject.getVisibleColumn(), function( column ){
+                angular.forEach( scope.gridObject.getColumnDef(), function( column ){
                     if( column.hasOwnProperty("width") ){
-                        if( column.hasOwnProperty("fillRemainWidth")
-                            && column.fillRemainWidth ){
-                            _wildCardColumn = column;
-                        } else {
-                            _useageWidth += parseInt(column.width);
+                        if( !column.hasOwnProperty("hidden") ){
+                            if( column.hasOwnProperty("fillRemainWidth")
+                                && column.fillRemainWidth ){
+                                _wildCardColumn = column;
+                            } else {
+                                _useageWidth += parseInt(column.width);
+                            }
                         }
                     } else {
                         throw new Error([ column.name + "컬럼의 너비를 지정해주세요"])
@@ -38,10 +40,11 @@ function spGridHeader( $compile, SpGridConstant){
                 if( _wildCardColumn == null ){
                     if( _gapWidth > 0 ){
                         var _usePercentage = 0;
-                        angular.forEach( scope.gridObject.getVisibleColumn(), function( column ){
-                            _usePercentage = parseInt(column.width) / _useageWidth;
-                            column.width = (parseInt(column.width) + parseFloat(( _usePercentage * _gapWidth ).toFixed(1))) + "px";
-                            console.log(column.width);
+                        angular.forEach( scope.gridObject.getColumnDef(), function( column ){
+                            if( !column.hasOwnProperty("hidden") ){
+                                _usePercentage = parseInt(column.width) / _useageWidth;
+                                column.width = (parseInt(column.width) + parseFloat(( _usePercentage * _gapWidth ).toFixed(1))) + "px";
+                            }
                         });
 
                     }

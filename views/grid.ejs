@@ -23,9 +23,13 @@
     <script type="text/javascript">
 
         angular.module("gridApp", ["SpUi","mgcrea.ngStrap.datepicker"] )
-            .controller("gridController", [ '$templateCache', '$scope','SpGrid','$http', function( $templateCache, $scope, SpGrid, $http ){
+            .controller("gridController", [ '$templateCache', '$scope','SpGrid','$http', 'spStatus', function( $templateCache, $scope, SpGrid, $http, spStatus ){
                 var vm = this;
-
+                vm.pagingOptions = {
+                    currentPage : 1,
+                    pageSize : 10,
+                    pageBlockSize : 10
+                };
                 vm.grid = new SpGrid({
                     columnDef : [
                         {id:"corsgb",name:"과정구분",width:"80px"}
@@ -121,11 +125,83 @@
                     }
                 });
 
+
+                vm.grid3 = new SpGrid({
+                    editable : true,
+                    selectable : true,
+                    deleteable : true,
+                    gridSize : {
+                        height : '300px'
+                    },
+                    filterable : true,
+                    filtering : {
+                        columns : [ "SUBJECT_NO", "BUNBAN", "CHASU_SEQ", "COMPT_UNIT_ELE_NO", "LIMIT_SCO"]
+                    },
+                    columnDef: [
+                        {
+                            id : "__idx",
+                            name : "순번",
+                            width: "50px",
+                            type : "rowno"
+                        },
+                        {
+                            id : "SUBJECT_NO",
+                            name : "과목번호",
+                            width:"150px",
+                            editType : "text",
+                            align : "left"
+                        },
+                        {
+                            id : "BUNBAN",
+                            name : "분반<br>분반2",
+                            width : "100px"
+                        },
+                        {
+                            id : "CHASU_SEQ",
+                            name : "차수",
+                            width : "100px",
+//                            hidden : true,
+                            editType : "text"
+                        },
+                        {
+                            id : "COMPT_UNIT_ELE_NO",
+                            name : "능력단위요소번호",
+                            width: "200px",
+                            align : "left",
+                            fillRemainWidth : true,
+                            editType : "textarea"
+                        },
+                        {
+                            id : "LIMIT_SCO",
+                            name : "요소별 배점",
+                            width:"100px",
+                            align:"right",
+                            editType : "text"
+                        },
+                        {
+                            id : "USE_YN" ,
+                            name :"사용여부",
+                            width: "80px"
+                        }
+                    ],
+                    enablePaging : true,
+                    pagingOptions : vm.pagingOptions
+                });
                 vm.init = function(){
                     $http.get("summarytest.json", {} )
                         .then(function( response ){
                             vm.grid.setData( response.data );
                             vm.grid.setData([]);
+                            spStatus("show","test");
+                            vm.grid2.resize();
+                        });
+
+                    $http.get("test.json")
+                        .then(function( response ){
+                            console.log(response.data);
+                            vm.grid3.setData(response.data);
+//                        $scope.grid.setSelectedRow($scope.grid.getData()[0]);
+//                        $scope.grid.getColumnDef()[0].name="테스트로";
                         });
 //                    vm.grid2.setRowEditMode(0);
                 }
@@ -163,8 +239,20 @@
     <div sp-grid-cell-sizer="12" class="sp-grid-data-column">{{group.total.sum}}</div>
 </script>
 <div class="container">
+
     <div class="row" style="margin-top:40px;">
-        <div class="col-md-12">
+        <div class="col-md-12" style="display:none" sp-status-on="test">
+            <sp-grid grid-object="vm.grid3">
+            </sp-grid>
+        </div>
+    </div>
+    <div class="row" style="margin-top:30px;">
+        <sp-grid-paging paging-options="vm.pagingOptions" style="margin-top:20px;">
+        </sp-grid-paging>
+    </div>
+
+    <div class="row" style="margin-top:40px;">
+        <div class="col-md-12" style="display:none" sp-status-on="test">
             <sp-grid grid-object="vm.grid2">
             </sp-grid>
         </div>

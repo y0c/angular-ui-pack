@@ -12,7 +12,6 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
             dataset   : [],
             createDataset : [],
             registerFunction : {},
-            useFooterSummary : false,
             enablePaging : false,
             groupable : false,
             totalize  : false,
@@ -30,8 +29,10 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
             /**
              * 필터 옵션
              */
-            filterOptions : {
-                query : ""
+            filterable : false,
+            filteringQuery : {},
+            filtering : {
+                columns : []
             },
             /**
              * 페이징 옵션
@@ -104,6 +105,8 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
 
         this._gridOptions     = angular.extend( this._defaultOptions, gridOptions );
 
+        this._filteredDataset = angular.copy( this._gridOptions.dataset );
+
         this._originalDataset = angular.copy( this._gridOptions.dataset );
 
         this.pageDataset      = angular.copy( this._gridOptions.dataset);
@@ -144,7 +147,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      * @return boolean - 로우 변경여부
      */
     SpGrid.prototype.isRowChanged = function( rowidx ){
-        return !SpGridUtil.dirtyCheck( this.getOriginalData()[rowidx], this.getData()[rowidx]);
+        return !SpGridUtil.dirtyCheck( this.getOriginalData()[rowidx], this.getFilteredData()[rowidx]);
     };
 
     /**
@@ -237,7 +240,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      * @returns Number
      */
     SpGrid.prototype.getSelectedIndex = function(){
-        var _dataset = this.getData();
+        var _dataset = this.getFilteredData();
         for( var i = 0 ; i < _dataset.length ; i ++ ){
             if( _dataset[i].hasOwnProperty("__isSelected")
                 && _dataset[i].__isSelected ){
@@ -252,14 +255,14 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      * @returns Number
      */
     SpGrid.prototype.getSelectedRow = function(){
-        return this.getData()[this.getSelectedIndex()];
+        return this.getFilteredData()[this.getSelectedIndex()];
     };
 
     /**
      *
      */
     SpGrid.prototype.selectCancelAll = function(){
-        angular.forEach( this.getData() , function( row ){
+        angular.forEach( this.getFilteredData() , function( row ){
             if( row.hasOwnProperty("__isSelected") ){
                 delete row.__isSelected;
             }
@@ -302,9 +305,101 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
     //     }
     // };
 
-    SpGrid.prototype.getFilterOptions = function(){
-        return this._gridOptions.filterOptions;
+    /**
+     * filter 상태 리턴
+     * @returns {boolean|*}
+     */
+    SpGrid.prototype.isFilterable = function(){
+        return this._gridOptions.filterable;
     };
+
+    /**
+     * filterable 셋팅
+     * @param filterable
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setFilterable = function( filterable ){
+        this._gridOptions.filterable = filterable;
+        return this;
+    };
+
+    /**
+     * filtering Query 리턴
+     * @returns {SpGrid._defaultOptions.filteringQuery|{}}
+     */
+    SpGrid.prototype.getFilteringQuery = function(){
+        return this._gridOptions.filteringQuery;
+    };
+
+    /**
+     * filtering Query 셋팅
+     * @param options
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setFilteringQuery = function( options ){
+        this._gridOptions.filteringQuery = options;
+        return this;
+    };
+
+    /**
+     * filteredDataset 리턴
+     * @returns {Array}
+     */
+    SpGrid.prototype.getFilteredData = function(){
+        if( this.isFilterable() ){
+            return this._filteredDataset;
+        } else {
+            return this.getData();
+        }
+    };
+
+    /**
+     * filteredDataset 셋팅
+     * @param dataset
+     * @returns {SpGrid}
+     */
+    SpGrid.prototype.setFilteredData = function( dataset ){
+
+        if( this._gridOptions.enablePaging ){
+            this._gridOptions.pagingOptions.totalRecordCount = dataset.length;
+        }
+        this.setCreateData([]);
+        // this._gridOptions.dataset = dataset;
+        // this._originalDataset = angular.copy( this._gridOptions.dataset );
+
+        $rootScope.$broadcast( this.getId() + "gridDataReset" );
+
+        this._filteredDataset = dataset;
+        return this;
+    };
+
+    /**
+     * filtering column 인지 체크
+     * @param column
+     * @returns {boolean}
+     */
+    SpGrid.prototype.isFilteringColumn = function( column ){
+        var filteringColumns = this.getFiltering().columns;
+
+        return filteringColumns.indexOf( column ) > -1;
+    };
+
+    /**
+     * filtering 컬럼 리턴
+     * @returns {Object|*}
+     */
+    SpGrid.prototype.getFiltering = function(){
+        return this._gridOptions.filtering;
+    };
+
+    /**
+     * filtering 컬럼 셋팅
+     * @param filtering
+     */
+    SpGrid.prototype.setFiltering = function( filtering ){
+        this._gridOptions.filtering = filtering;
+    };
+
 
     SpGrid.prototype.getPageSize = function(){
         return this._gridOptions.pagingOptions.pageSize;
@@ -393,10 +488,17 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
     SpGrid.prototype.setData = function( dataset ){
         // this.generateIdx( dataset );
         angular.copy(dataset,this._gridOptions.dataset);
-        angular.copy(this._gridOptions.dataset,this._originalDataset );
+
+        if( this._originalDataset == null || !this._originalDataset.length > 0 ){
+            angular.copy(this._gridOptions.dataset,this._originalDataset );
+        }
 
         if( this._gridOptions.enablePaging ){
             this._gridOptions.pagingOptions.totalRecordCount = dataset.length;
+        }
+
+        if( this.isFilterable() ){
+            this.setFilteredData(dataset);
         }
 
         this.setCreateData([]);
@@ -573,7 +675,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         row.cudFlag = SpGridConstant.CREATE_FLAG;
         row.__isTempSave = true;
         row.__valid      = true;
-        this.getData().push(row);
+        this.getFilteredData().push(row);
         return row;
     };
 
@@ -584,11 +686,11 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      * @returns {*}
      */
     SpGrid.prototype.updateRow = function( rowIdx, obj ){
-        this.getData()[rowIdx].cudFlag = SpGridConstant.UPDATE_FLAG;
-        this.getData()[rowIdx].__isTempSave = true;
-        this.getData()[rowIdx].__valid      = true;
-        this.getData()[rowIdx] = angular.extend( {}, this.getData()[rowIdx], obj);
-        return this.getData()[rowIdx];
+        this.getFilteredData()[rowIdx].cudFlag = SpGridConstant.UPDATE_FLAG;
+        this.getFilteredData()[rowIdx].__isTempSave = true;
+        this.getFilteredData()[rowIdx].__valid      = true;
+        this.getFilteredData()[rowIdx] = angular.extend( {}, this.getFilteredData()[rowIdx], obj);
+        return this.getFilteredData()[rowIdx];
     };
 
     /**
@@ -597,7 +699,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      * @returns {SpGrid}
      */
     SpGrid.prototype.deleteRow = function( rowIdx ){
-        this.getData()[rowIdx].cudFlag = SpGridConstant.DELETE_FLAG;
+        this.getFilteredData()[rowIdx].cudFlag = SpGridConstant.DELETE_FLAG;
         return this;
     };
 
