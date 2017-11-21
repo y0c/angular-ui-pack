@@ -2,7 +2,7 @@
  * Grid 전체 영역 Directive
  */
 
-function spGrid( $compile, SpGridConstant, orderByFilter, $filter ){
+function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
     return {
         restrict : "E",
         scope : {
@@ -15,6 +15,12 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter ){
             // scope.orderColumn = "";
             // scope.orderReverse = true;
 
+            if ($window.matchMedia('screen and (max-width: 900px)').matches) {
+                element.parent().css({
+                    paddingLeft : "15px",
+                    paddingRight : "15px"
+                });
+            }
 
             scope.orderChange = orderChange;
 
