@@ -7,12 +7,20 @@
     overflow-x: hidden;
 
 }
-.sp-grid-wrap .sp-grid .sp-grid-body .sp-grid-notice-message {
+.sp-grid-notice-message {
     height: 150px;
     text-align: center;
     vertical-align: bottom;
     padding-top: 60px;
     border-bottom: 1px solid #d9d9d9;
+    font-size: 13px;
+}
+.sp-grid-wrap.mb-vertical .sp-grid .sp-grid-body .sp-grid-notice-message {
+    height: 150px;
+    text-align: center;
+    vertical-align: bottom;
+    padding-top: 60px;
+    border: 1px solid #d9d9d9;
     font-size: 13px;
 }
 .sp-grid-wrap .sp-grid .sp-grid-body .sp-grid-data .nb-inputText {
@@ -28,6 +36,9 @@
     top: -2px;
     left: 2px;
 }
+.nb-reset-i-01 .sp-grid-wrap .sp-grid .sp-grid-body .sp-grid-data .nb-checkbox i {top: 10px;}
+
+
 .sp-grid-wrap .sp-grid .sp-grid-body .sp-grid-data .nb-textarea textarea {
     min-height: 90px !important;
 }
@@ -79,14 +90,14 @@
     bottom: -1px;
 }
 .sp-grid-wrap .sp-grid .sp-grid-data-active {
-    background: #fdfdfd;
+    background: #e1e9f9;
 }
 .sp-grid.selectable .sp-grid-data-row:hover {
-    background: #fdfdfd;
+    background: #e1e9f9;
     cursor: pointer;
 }
 .sp-grid.selectable .sp-grid-data-select {
-    background: #fdfdfd;
+    background: #e1e9f9;
 }
 .sp-grid {
     width: 100%;
@@ -112,9 +123,9 @@
     display: table-cell;
     vertical-align: middle;
     font-weight: lighter;
-    font-size: 14px;
-    padding: 5px;
-    height: 45px;
+    font-size: 13px;
+    padding: 4px;
+    height: 40px;
 }
 .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data-header,
 .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data-header {
@@ -122,10 +133,10 @@
 }
 .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data,
 .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data {
-    overflow: hidden;
+  /*   overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    word-break: break-all;
+    word-break: break-all; */
     box-sizing: border-box;
     padding-left: 5px;
     padding-right: 5px;
@@ -133,6 +144,7 @@
 .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data .nb-buttons,
 .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data .nb-buttons {
     vertical-align: middle;
+    margin: 0 !important;
 }
 .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data .nb-buttons a,
 .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data .nb-buttons button, 
@@ -169,7 +181,7 @@
     vertical-align: middle;
     background: #f4f6fa;
     color: #000;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: lighter;
     padding: 10px;
     height: 45px;
@@ -195,9 +207,88 @@
     margin: 0 auto;
 }
 
+.sp-grid .nb-select {padding: 0;}
+/* .nb-btn-default.btn-grid-horizontal > button, 
+.nb-btn-default.btn-grid-vertical > button {
+	border: none;
+}
+.nb-btn-default.btn-grid-horizontal {
+	border: 1px solid #666;
+}
+.nb-btn-default.btn-grid-vertical {
+	border: 1px solid #b3b3b3;
+} */
+.nb-title.page > .nb-buttons.grid-btn {float: right;margin: 0;}
+.nb-buttons > div.nb-btn-default.btn-grid-horizontal, 
+.nb-buttons > div.nb-btn-default.btn-grid-vertical {padding: 0;margin: 5px 2px;width: 26px;height: 25px;}
+
+.nb-buttons > div.nb-btn-default.btn-grid-horizontal > button, 
+.nb-buttons > div.nb-btn-default.btn-grid-vertical > button {height: 25px;}
+.nb-buttons > div.nb-btn-default.btn-grid-horizontal > button, 
+.nb-buttons > div.nb-btn-default.btn-grid-vertical > button {height: 25px;}
+
+.nb-btn-default.btn-grid-horizontal > button {
+	background-image: url(/common/image/icon/cell-none.png);
+    background-size: 14px;
+	background-position: center 5px;
+    background-repeat: no-repeat;
+    border: 1px solid #b3b3b3;
+}
+.nb-btn-default.btn-grid-horizontal > button.active {
+	background-image: url(/common/image/icon/cell-on.png);
+    background-size: 14px;
+	background-position: center 5px;
+    background-repeat: no-repeat;
+    border: 1px solid #666;
+}
+.nb-btn-default.btn-grid-vertical > button.active {
+	/* height: 25px; */
+	background-image: url(/common/image/icon/grid-on.png);
+    background-size: 14px;
+	background-position: center 5px;
+    background-repeat: no-repeat;
+    border: 1px solid #666;
+}
+.nb-btn-default.btn-grid-vertical > button {
+	height: 25px;
+	background-image: url(/common/image/icon/grid-none.png);
+    background-size: 14px;
+	background-position: center 5px;
+    background-repeat: no-repeat;
+    border: 1px solid #b3b3b3;
+}
+   .nb-btn-default.btn-grid-horizontal > button,
+   .nb-btn-default.btn-grid-vertical > button {
+   	font-size: 14px;
+   	line-height: 1;
+   	text-align: center;
+    height: 100%;
+	width: 100%;
+    padding: 0px 2px !important;
+}
+.sp-grid-wrap.mb-vertical .nb-buttons {
+	padding: 0;
+}
+
+div.sp-grid-data-column[sp-grid-cell-sizer] {
+    padding-left: 9px !important;
+    padding-right: 9px !important;
+}
 
 
-@media (max-width: 743px) {
+
+
+@media (max-width: 959px) {
+
+    .sp-grid {
+        padding-right:10px;
+    }
+
+	.sp-grid-wrap {
+	    width: 100%;
+	    overflow-x: auto;
+	    padding: 0 10px;
+	}
     .sp-grid-wrap.mb-vertical {
         width: 100% !important;
         overflow: hidden;
@@ -211,7 +302,7 @@
     }
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body {
         height: auto !important;
-        padding: 10px;
+        padding: 0;
         max-height:none !important;
     }
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-data-row,
@@ -227,12 +318,12 @@
         border-right: 1px solid #d9d9d9;
         border-bottom: 1px solid #d9d9d9;
         text-align: center;
-        display: block;
+        display: table;
         vertical-align: middle;
         min-width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box;
-        font-size: 13px;
+        font-size: 0;
         padding: 0px;
         min-height: 45px;
         height: auto;
@@ -245,25 +336,31 @@
         overflow: hidden;
         word-break: break-all;
         box-sizing: border-box;
-        display: inline-block;
+        display: table-cell;
         padding: 10px;
         min-height: 45px;
     	vertical-align: middle;
+    	font-size: 13px;
     }
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data-header,
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data-header {
         width: 20%;
-        display: inline-block;
+        display: table-cell;
         background: #fafafa;
+    }
+    .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data-view span,
+    .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data-view span {
+        white-space: normal;
     }
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data,
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data {
-        width: 79%;
+        width: 80%;
         text-align: left !important;
     }
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data .nb-buttons,
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data .nb-buttons {
         vertical-align: middle;
+        margin:0 !important;
     }
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column .sp-grid-data .nb-buttons button,
     .sp-grid-wrap.mb-vertical > .sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column .sp-grid-data .nb-buttons button {
@@ -272,4 +369,12 @@
     .sp-grid-wrap.mb-vertical > .sp-grid .sp-grid-footer {
         display: none;
     }
+}
+
+@media (min-width: 960px) {
+	.nb-buttons.grid-btn {display: none;}
+	.sp-grid > .sp-grid-body .sp-grid-data-row .sp-grid-data-column,
+	.sp-grid > .sp-grid-body .sp-grid-grouping-row .sp-grid-data-column {
+	    height: 45px;
+	}
 }

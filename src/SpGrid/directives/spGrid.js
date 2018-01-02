@@ -12,18 +12,9 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
         templateUrl : SpGridConstant.template.SP_GRID,
         link : function( scope, element, attrs, ctrls, transclude ){
 
-            // scope.orderColumn = "";
-            // scope.orderReverse = true;
-
-            // if ($window.matchMedia('screen and (max-width: 900px)').matches) {
-            //     element.parent().css({
-            //         paddingLeft : "15px",
-            //         paddingRight : "15px"
-            //     });
-            // }
 
             scope.orderChange = orderChange;
-
+            scope.noMessageShow = noMessageShow;
             scope.filtering   = filtering;
 
             function orderChange( columnId, orderBy ){
@@ -43,6 +34,19 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
                     scope.gridObject.getPagingOptions().currentPage = 1;
                 }
                 scope.gridObject.setFilteredData( $filter("filter")(scope.gridObject.getData(), scope.gridObject.getFilteringQuery()) );
+            }
+
+            function noMessageShow(){
+                if( scope.gridObject.isEnablePaging() ){
+                    var currentPage = scope.gridObject.getCurrentPage() || 1;
+                    var pageSize    = scope.gridObject.getPageSize();
+                    var start       = currentPage - 1;
+                    var end         = start + pageSize;
+                    return scope.gridObject.getFilteredData().slice(start,end).length === 0 || scope.gridObject.getCreateData().length === 0;
+                } else {
+                    return scope.gridObject.getFilteredData().length === 0 || scope.gridObject.getCreateData().length === 0;
+                }
+
             }
 
         }
