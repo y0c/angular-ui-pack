@@ -1,6 +1,6 @@
 <div class="sp-grid-header-column" ng-style="{ 'min-width' : columnWidth, 'max-width' : columnWidth }">
     <div>
-        <span ng-bind-html="column.name | to_trusted"></span>
+        <span compile-html="column.name"></span>
         <span class="sp-grid-order-wrap">
         <span class="sp-grid-order-desc" ng-show="column.type=='data'" ng-click="orderChange(column.id,'desc')">
             <i class="fa fa-caret-down" aria-hidden="true"></i>

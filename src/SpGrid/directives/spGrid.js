@@ -15,12 +15,12 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
             // scope.orderColumn = "";
             // scope.orderReverse = true;
 
-            if ($window.matchMedia('screen and (max-width: 900px)').matches) {
-                element.parent().css({
-                    paddingLeft : "15px",
-                    paddingRight : "15px"
-                });
-            }
+            // if ($window.matchMedia('screen and (max-width: 900px)').matches) {
+            //     element.parent().css({
+            //         paddingLeft : "15px",
+            //         paddingRight : "15px"
+            //     });
+            // }
 
             scope.orderChange = orderChange;
 

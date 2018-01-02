@@ -53,5 +53,18 @@ module.exports = function(app){
                 });
             }
         };
-    })
+    });
+
+    app.directive('compileHtml', function($compile) {
+        return {
+            restrict: 'A',
+            replace : true,
+            // require : "?spGrid",
+            link: function (scope, element, attrs) {
+                var compileHtml = scope.$eval(attrs.compileHtml);
+                element.html(compileHtml);
+                $compile(element.contents())(scope);
+            }
+        };
+    });
 };

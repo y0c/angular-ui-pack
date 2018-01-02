@@ -126,8 +126,7 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
                     .then(function(){
                         // Row Delete시 생성된데이터는 배열에서 완전삭제
                         if( scope.row.cudFlag != SpGridConstant.CREATE_FLAG ){
-                            scope.row.cudFlag = SpGridConstant.DELETE_FLAG;
-                            scope.row.__valid = true;
+                            scope.gridObject.deleteRow(scope.$index);
                         } else {
                             scope.gridObject.getData().splice(scope.$index, 1 );
                         }

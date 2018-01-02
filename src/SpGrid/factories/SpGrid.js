@@ -489,9 +489,10 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         // this.generateIdx( dataset );
         angular.copy(dataset,this._gridOptions.dataset);
 
-        if( this._originalDataset == null || !this._originalDataset.length > 0 ){
+        //2017.12.04  originalDataset을 업데이트 해주지않아 ajax새로 업데이트 후에도 그전값이 유지되는문제로 변경
+        // if( this._originalDataset == null || !this._originalDataset.length > 0 ){
             angular.copy(this._gridOptions.dataset,this._originalDataset );
-        }
+        // }
 
         if( this._gridOptions.enablePaging ){
             this._gridOptions.pagingOptions.totalRecordCount = dataset.length;
@@ -664,6 +665,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         _row.__valid      = false;
         this.setStatus("create");
         this.getCreateData().push(_row);
+        $rootScope.$broadcast( this.getId() + "gridDataReset");
         return _row;
     };
 
@@ -676,6 +678,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         row.__isTempSave = true;
         row.__valid      = true;
         this.getFilteredData().push(row);
+        $rootScope.$broadcast( this.getId() + "gridDataReset");
         return row;
     };
 
@@ -690,6 +693,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         this.getFilteredData()[rowIdx].__isTempSave = true;
         this.getFilteredData()[rowIdx].__valid      = true;
         this.getFilteredData()[rowIdx] = angular.extend( {}, this.getFilteredData()[rowIdx], obj);
+        $rootScope.$broadcast( this.getId() + "gridDataReset");
         return this.getFilteredData()[rowIdx];
     };
 
@@ -700,6 +704,8 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      */
     SpGrid.prototype.deleteRow = function( rowIdx ){
         this.getFilteredData()[rowIdx].cudFlag = SpGridConstant.DELETE_FLAG;
+        this.getFilteredData()[rowIdx].__valid = true;
+        $rootScope.$broadcast( this.getId() + "gridDataReset");
         return this;
     };
 

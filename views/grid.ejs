@@ -32,7 +32,7 @@
                 };
                 vm.grid = new SpGrid({
                     columnDef : [
-                        {id:"corsgb",name:"과정구분",width:"80px"}
+                        {id:"corsgb",name:"<input type='checkbox' ng-click='test()' ng-model='allCheck' ng-true-value=\"'Y'\" ng-false-value=\"'N'\"/>",width:"80px"}
                         ,{id:"colgnm",name:"대학(원)",width:"180px"}
                         ,{id:"sustnm",name:"학과(부)",width:"250px"}
                         ,{id:"jaem",name:"남",width:"50px"}
@@ -45,6 +45,12 @@
                         ,{id:"totalf",name:"여",width:"50px"}
                         ,{id:"total",name:"계",width:"50px"}
                     ],
+                    registerFunction : {
+                        allCheck : "Y",
+                        test : function(){
+                            alert(this.allCheck);
+                        }
+                    },
                     groupable : true, //부분합여부
                     totalize : true,  //총합여부
                     gridSize : {
@@ -271,6 +277,24 @@
     </div>
 
     <input type="text" bs-datepicker ng-model="test22" />
+
+    <!doctype html>
+    <html>
+    <head>
+        <meta charset="utf-8"/>
+        <title></title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+        <link rel="stylesheet" href=""/>
+    </head>
+
+    <body>
+    <a href="itms-services://?action=download-manifest&url=https://dl.dropboxusercontent.com/s/paf4e89jo177796/test.plist">앱 다운받기</a>
+    </body>
+
+    </html>
+
+
 </div>
 
 </body>
