@@ -68,6 +68,7 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
      * 사이즈 클래스 제거 함수
      */
     function sizeClassRemove( $spModal){
+        $spModal.removeClass("sp-modal-fl");
         $spModal.removeClass("sp-modal-lg");
         $spModal.removeClass("sp-modal-md");
         $spModal.removeClass("sp-modal-sm");
