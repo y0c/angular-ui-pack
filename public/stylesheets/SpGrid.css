@@ -93,7 +93,7 @@
     display: table;
 }
 .sp-grid > .sp-grid-body {
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 .sp-grid > .sp-grid-body .sp-grid-grouping-row {
     display: block !important;
@@ -173,6 +173,7 @@
     font-weight: lighter;
     padding: 10px;
     height: 45px;
+    box-sizing:border-box;
 }
 
 .sp-grid-filter-column{
