@@ -42,9 +42,9 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
                     var pageSize    = scope.gridObject.getPageSize();
                     var start       = currentPage - 1;
                     var end         = start + pageSize;
-                    return scope.gridObject.getFilteredData().slice(start,end).length === 0 || scope.gridObject.getCreateData().length === 0;
+                    return scope.gridObject.getFilteredData().slice(start,end).length === 0 && scope.gridObject.getCreateData().length === 0;
                 } else {
-                    return scope.gridObject.getFilteredData().length === 0 || scope.gridObject.getCreateData().length === 0;
+                    return scope.gridObject.getFilteredData().length === 0 && scope.gridObject.getCreateData().length === 0;
                 }
 
             }
