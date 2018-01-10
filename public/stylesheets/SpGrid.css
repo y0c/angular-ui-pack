@@ -1,3 +1,10 @@
+.sp-grid-box{
+    position:relative;
+    overflow:hidden;
+}
+/* .sp-grid-box.bd{
+    border-bottom:1px solid #b9b9b9;
+} */
 .sp-grid-wrap {
     width: 100%;
     overflow-x: auto;
@@ -5,23 +12,22 @@
 .sp-grid-wrap .sp-grid .sp-grid-body {
     position: relative;
     overflow-x: hidden;
-
+    min-height: 150px;
+    border-bottom: 1px solid #000;
+}
+.mb-vertical.sp-grid-wrap .sp-grid .sp-grid-body {
+	border-bottom: 0;
+}
+.mb-vertical .sp-grid {
+	padding-right: 0;
 }
 .sp-grid-notice-message {
-    height: 150px;
+    position: absolute;
     text-align: center;
     vertical-align: bottom;
-    padding-top: 60px;
-    border-bottom: 1px solid #d9d9d9;
     font-size: 13px;
-}
-.sp-grid-wrap.mb-vertical .sp-grid .sp-grid-body .sp-grid-notice-message {
-    height: 150px;
-    text-align: center;
-    vertical-align: bottom;
-    padding-top: 60px;
-    border: 1px solid #d9d9d9;
-    font-size: 13px;
+    top: 65px;
+    width: 100%;
 }
 .sp-grid-wrap .sp-grid .sp-grid-body .sp-grid-data .nb-inputText {
     padding: 0;
@@ -104,7 +110,7 @@
     display: table;
 }
 .sp-grid > .sp-grid-body {
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 .sp-grid > .sp-grid-body .sp-grid-grouping-row {
     display: block !important;
@@ -378,3 +384,7 @@ div.sp-grid-data-column[sp-grid-cell-sizer] {
 	    height: 45px;
 	}
 }
+
+
+.sp-grid-data-row:nth-child(even) {background-color: #fdfdfd;}
+

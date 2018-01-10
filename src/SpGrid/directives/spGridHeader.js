@@ -11,6 +11,33 @@ function spGridHeader( $compile, SpGridConstant){
         link : function( scope, element, attrs, ctrls, transclude ){
             calculateWidth();
 
+            scope.getScrollbarWidth = getScrollbarWidth;
+
+            function getScrollbarWidth() {
+                var outer = document.createElement("div");
+                outer.style.visibility = "hidden";
+                outer.style.width = "100px";
+                outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+                document.body.appendChild(outer);
+
+                var widthNoScroll = outer.offsetWidth;
+                // force scrollbars
+                outer.style.overflow = "scroll";
+
+                // add innerdiv
+                var inner = document.createElement("div");
+                inner.style.width = "100%";
+                outer.appendChild(inner);
+
+                var widthWithScroll = inner.offsetWidth;
+
+                // remove divs
+                outer.parentNode.removeChild(outer);
+
+                return widthNoScroll - widthWithScroll;
+            }
+
 
             function calculateWidth(){
                 var _headerWidth = element.width();
@@ -35,23 +62,37 @@ function spGridHeader( $compile, SpGridConstant){
                     }
                 });
 
-                var _gapWidth = (_headerWidth - _useageWidth)-5;
+                var _gapWidth = (_headerWidth - _useageWidth) - ( getScrollbarWidth()  );
 
+                var sumWidth = 0;
                 if( _wildCardColumn == null ){
                     if( _gapWidth > 0 ){
                         var _usePercentage = 0;
                         angular.forEach( scope.gridObject.getColumnDef(), function( column ){
                             if( !column.hasOwnProperty("hidden") ){
                                 _usePercentage = parseInt(column.width) / _useageWidth;
-                                column.width = (parseInt(column.width) + parseFloat(( _usePercentage * _gapWidth ).toFixed(1))) + "px";
+
+                                column.width = parseInt(column.width) + parseFloat(( _usePercentage * _gapWidth )) + "px";
+                                sumWidth += parseFloat(column.width);
                             }
                         });
 
                     }
                 } else {
-                    if( _gapWidth > 0 ){
-                        _wildCardColumn.width = (_gapWidth+5) + "px";
+                    angular.forEach( scope.gridObject.getColumnDef(), function( column ){
+                        if( _wildCardColumn.id !== column.id)
+                            sumWidth += parseFloat(column.width);
+                    });
+                    if( _gapWidth > 0 ) {
+                        _wildCardColumn.width = (_gapWidth ) + "px";
+                        sumWidth += parseFloat(_gapWidth);
                     }
+                }
+
+
+                if( _headerWidth > 0 && _headerWidth -1  <=  (sumWidth + getScrollbarWidth()) ) {
+                    var overWidth = (sumWidth + getScrollbarWidth()) - (_headerWidth - 8);
+                    _headerColumns[_headerColumns.length - 1].width = (parseFloat(_headerColumns[_headerColumns.length - 1].width) - overWidth) + "px";
                 }
 
             }
