@@ -13,9 +13,10 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
         link : function( scope, element, attrs, ctrls, transclude ){
 
 
-            scope.orderChange = orderChange;
-            scope.noMessageShow = noMessageShow;
-            scope.filtering   = filtering;
+            scope.orderChange       = orderChange;
+            scope.noMessageShow     = noMessageShow;
+            scope.filtering         = filtering;
+            scope.getScrollbarWidth = getScrollbarWidth;
 
             function orderChange( columnId, orderBy ){
                 if( orderBy == "asc" ){
@@ -48,6 +49,33 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
                 }
 
             }
+
+
+            function getScrollbarWidth() {
+                var outer = document.createElement("div");
+                outer.style.visibility = "hidden";
+                outer.style.width = "100px";
+                outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+                document.body.appendChild(outer);
+
+                var widthNoScroll = outer.offsetWidth;
+                // force scrollbars
+                outer.style.overflow = "scroll";
+
+                // add innerdiv
+                var inner = document.createElement("div");
+                inner.style.width = "100%";
+                outer.appendChild(inner);
+
+                var widthWithScroll = inner.offsetWidth;
+
+                // remove divs
+                outer.parentNode.removeChild(outer);
+
+                return widthNoScroll - widthWithScroll;
+            }
+
 
         }
     }

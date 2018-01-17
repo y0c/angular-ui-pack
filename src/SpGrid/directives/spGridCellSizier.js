@@ -8,12 +8,15 @@ function spGridCellSizer( $compile, SpGridConstant, $templateCache, SpGridUtil, 
         require: ['?spGridGropingRow'],
         link: function (scope, element, attrs ) {
             var headerColumns = scope.gridObject.getColumnDef();
+            setSize();
 
-            var size = getSize();
-            element.css({
-                maxWidth : size,
-                minWidth : size
-            });
+            function setSize() {
+                var size = getSize();
+                element.css({
+                    maxWidth : size,
+                    minWidth : size
+                });
+            }
 
             function getSize(){
                 var sizer = attrs.spGridCellSizer;
@@ -36,6 +39,7 @@ function spGridCellSizer( $compile, SpGridConstant, $templateCache, SpGridUtil, 
                 return headerColumns[ sizer - 1 ].width;
             }
 
+            scope.$on(scope.gridObject.getId() + "gridDataReset", setSize);
         }
 
     }
