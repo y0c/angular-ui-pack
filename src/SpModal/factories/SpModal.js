@@ -4,7 +4,7 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
 
     var backdropTemplate     = "<div class='sp-modal-backdrop out'></div>";
     var modalWrapperTemplate = "<div class='sp-modal-wrap out'>" +
-                                    "<div class='sp-modal' ng-class='modal.getModalAttr().class' ></div>" +
+                                    "<div class='sp-modal' ng-class='getModalAttr().class' ></div>" +
                                "</div>";
 
     var modalStack = [];
@@ -20,8 +20,7 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
             controller : null,
             size : "sm",
             attr : {
-                "class" : "",
-                "id" : "",
+                "class" : "sp-biz-modal"
             },
             realHeight : null,
             modalAction : {
@@ -38,6 +37,7 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
         };
 
         this.options = angular.extend({}, _defaultOptions, options);
+
 
         if( options.hasOwnProperty("modalAction")){
             this.options.modalAction = angular.extend({}, _defaultOptions.modalAction, options.modalAction );
@@ -112,13 +112,17 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
         if( this.controller.hasOwnProperty("init") ){
             this.controller.init();
         }
-        this.controller.getModalAttr = function(){
-            return options.attr;
+        _self.scope.getModalAttr = function(){
+            return _self.options.attr;
         };
         this.controller.close = _self.close.bind(_self);
         this.controller.stopPropagation = function( $event ){
             $event.stopPropagation();
         };
+
+        if( options.attr ) {
+            this.controller.clazz  = options.attr.class;
+        }
 
         this.controller.params = options.params;
 
@@ -189,6 +193,7 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
     SpModal.prototype.open = function(){
         var $spModal = this.$modalWrapper.find(".sp-modal");
 
+        angular.element($document[0].body).css('overflow','hidden');
         this.getModalAction().onOpen( this.controller );
         modalIn(this.$modalWrapper);
         modalIn(this.$backdrop);
@@ -215,6 +220,7 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
      * @returns {SpModal}
      */
     SpModal.prototype.close = function(){
+        angular.element($document[0].body).css('overflow','auto');
         this.getModalAction().onClose( this.controller );
         modalOut(this.$backdrop);
         modalOut(this.$modalWrapper);

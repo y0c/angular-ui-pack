@@ -1,5 +1,5 @@
 .sp-modal-backdrop {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -128,6 +128,13 @@
   }
 
   .sp-modal {
-    padding : 40px 0 !important;
+    padding : 40px 15px !important;
+
+    &.sp-biz-modal {
+      height:100%;
+      top:0 !important;
+      overflow-y:scroll;
+    }
   }
+
 }
