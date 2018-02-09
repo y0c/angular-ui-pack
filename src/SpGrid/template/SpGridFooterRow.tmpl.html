@@ -1,3 +1,4 @@
 <div class="sp-grid-footer-row">
     <sp-grid-footer-column ng-repeat="headerColumn in $columns track by $index" ></sp-grid-footer-column>
+    <div class="sp-grid-footer-column"  ng-style="{ 'min-width' : getScrollbarWidth(), 'max-width' : getScrollbarWidth() }"></div>
 </div>

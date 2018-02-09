@@ -1,5 +1,9 @@
 function ToastService( SpModal, $rootScope, $q, $templateCache, $timeout, $compile ){
-    
+
+    function replaceMessage( message ) {
+        message = message || '';
+        return message.replace(/\n/g, '<br/>');
+    }
 
     /**
      * alert modal instance 싱글톤 
@@ -11,6 +15,9 @@ function ToastService( SpModal, $rootScope, $q, $templateCache, $timeout, $compi
         },
         controller : function( instance ){
 
+            var vm = this;
+
+            vm.replaceMessage = replaceMessage;
         }
     });
 
@@ -24,6 +31,8 @@ function ToastService( SpModal, $rootScope, $q, $templateCache, $timeout, $compi
         },
         controller : function( instance ){
             var vm = this;
+
+            vm.replaceMessage = replaceMessage;
 
             vm.ok = function(){
                 instance.close();

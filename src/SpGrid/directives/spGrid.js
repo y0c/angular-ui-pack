@@ -12,19 +12,11 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
         templateUrl : SpGridConstant.template.SP_GRID,
         link : function( scope, element, attrs, ctrls, transclude ){
 
-            // scope.orderColumn = "";
-            // scope.orderReverse = true;
 
-            // if ($window.matchMedia('screen and (max-width: 900px)').matches) {
-            //     element.parent().css({
-            //         paddingLeft : "15px",
-            //         paddingRight : "15px"
-            //     });
-            // }
-
-            scope.orderChange = orderChange;
-
-            scope.filtering   = filtering;
+            scope.orderChange       = orderChange;
+            scope.noMessageShow     = noMessageShow;
+            scope.filtering         = filtering;
+            scope.getScrollbarWidth = getScrollbarWidth;
 
             function orderChange( columnId, orderBy ){
                 if( orderBy == "asc" ){
@@ -44,6 +36,46 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
                 }
                 scope.gridObject.setFilteredData( $filter("filter")(scope.gridObject.getData(), scope.gridObject.getFilteringQuery()) );
             }
+
+            function noMessageShow(){
+                if( scope.gridObject.isEnablePaging() ){
+                    var currentPage = scope.gridObject.getCurrentPage() || 1;
+                    var pageSize    = scope.gridObject.getPageSize();
+                    var start       = currentPage - 1;
+                    var end         = start + pageSize;
+                    return scope.gridObject.getFilteredData().slice(start,end).length === 0 && scope.gridObject.getCreateData().length === 0;
+                } else {
+                    return scope.gridObject.getFilteredData().length === 0 && scope.gridObject.getCreateData().length === 0;
+                }
+
+            }
+
+
+            function getScrollbarWidth() {
+                var outer = document.createElement("div");
+                outer.style.visibility = "hidden";
+                outer.style.width = "100px";
+                outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+                document.body.appendChild(outer);
+
+                var widthNoScroll = outer.offsetWidth;
+                // force scrollbars
+                outer.style.overflow = "scroll";
+
+                // add innerdiv
+                var inner = document.createElement("div");
+                inner.style.width = "100%";
+                outer.appendChild(inner);
+
+                var widthWithScroll = inner.offsetWidth;
+
+                // remove divs
+                outer.parentNode.removeChild(outer);
+
+                return widthNoScroll - widthWithScroll;
+            }
+
 
         }
     }
