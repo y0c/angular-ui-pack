@@ -2,7 +2,8 @@ function ToastService( SpModal, $rootScope, $q, $templateCache, $timeout, $compi
 
     function replaceMessage( message ) {
         message = message || '';
-        return message.replace(/\n/g, '<br/>');
+        return message.replace( /\\r/g, '<br/>')
+                      .replace( /\\n/g, '<br/>');
     }
 
     /**
