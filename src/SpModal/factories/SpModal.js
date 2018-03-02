@@ -22,6 +22,7 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
             attr : {
                 "class" : "sp-biz-modal"
             },
+            top : null,
             realHeight : null,
             modalAction : {
                 onOpen : function(){
@@ -210,8 +211,9 @@ function SpModalFactory( $rootScope, $controller, $document, $q, $templateCache,
         var _self = this;
         var $spModal = _self.$modalWrapper.find(".sp-modal");
         var height   = this.options.realHeight || $spModal.height();
+        var top      = this.options.top ? this.options.top : ( $window.innerHeight / 2 ) - ( height / 2 );
         // $timeout(function(){
-            $spModal.css("top", ( $window.innerHeight / 2 ) - ( height / 2 ));
+            $spModal.css("top", top);
         // });
     };
 
