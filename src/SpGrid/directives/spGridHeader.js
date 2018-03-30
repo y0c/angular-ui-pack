@@ -11,33 +11,6 @@ function spGridHeader( $compile, SpGridConstant){
         link : function( scope, element, attrs, ctrls, transclude ){
             calculateWidth();
 
-            scope.getScrollbarWidth = getScrollbarWidth;
-
-            function getScrollbarWidth() {
-                var outer = document.createElement("div");
-                outer.style.visibility = "hidden";
-                outer.style.width = "100px";
-                outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
-
-                document.body.appendChild(outer);
-
-                var widthNoScroll = outer.offsetWidth;
-                // force scrollbars
-                outer.style.overflow = "scroll";
-
-                // add innerdiv
-                var inner = document.createElement("div");
-                inner.style.width = "100%";
-                outer.appendChild(inner);
-
-                var widthWithScroll = inner.offsetWidth;
-
-                // remove divs
-                outer.parentNode.removeChild(outer);
-
-                return widthNoScroll - widthWithScroll;
-            }
-
 
             function calculateWidth(){
                 var _headerWidth = element.width();
@@ -63,7 +36,7 @@ function spGridHeader( $compile, SpGridConstant){
                     }
                 });
 
-                var _gapWidth = (_headerWidth - _useageWidth) - ( getScrollbarWidth()  );
+                var _gapWidth = (_headerWidth - _useageWidth) - ( scope.scrollBarWidth  );
 
                 var sumWidth = 0;
                 if( _wildCardColumn == null ){
