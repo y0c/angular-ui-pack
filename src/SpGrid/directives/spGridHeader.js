@@ -64,8 +64,8 @@ function spGridHeader( $compile, SpGridConstant){
                 }
 
 
-                if( _headerWidth > 0 && _headerWidth -1  <=  (sumWidth + getScrollbarWidth()) ) {
-                    var overWidth = (sumWidth + getScrollbarWidth()) - (_headerWidth - 2);
+                if( _headerWidth > 0 && _headerWidth -1  <=  (sumWidth + scope.scrollBarWidth) ) {
+                    var overWidth = (sumWidth + scope.scrollBarWidth) - (_headerWidth - 2);
                     _headerColumns[_headerColumns.length - 1].width = (parseFloat(_headerColumns[_headerColumns.length - 1].width) - overWidth) + "px";
                 }
 
