@@ -1,4 +1,4 @@
-<div class="sp-grid-box" ng-class="::noMessageShow() ? 'bd' : ''">
+<div class="sp-grid-box" ng-class="noMessageShow() ? 'bd' : ''">
     <div class="sp-grid-wrap" ng-style="::{ 'width' : gridObject.getSize().width }" ng-class="gridObject.getMobileStyle()">
         <div class="sp-grid" ng-class="::gridObject.isSelectable() ? 'selectable' : ''">
             <sp-grid-header></sp-grid-header>
@@ -6,7 +6,7 @@
             <sp-grid-footer ng-if="::gridObject.isTotalize()"></sp-grid-footer>
         </div>
     </div>
-    <div class="sp-grid-notice-message" ng-if="::noMessageShow()">
+    <div class="sp-grid-notice-message" ng-if="noMessageShow()">
         현재 조회된 데이터가 없습니다.
     </div>
 </div>
