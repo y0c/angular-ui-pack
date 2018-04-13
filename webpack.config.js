@@ -1,8 +1,11 @@
 var webpack = require("webpack");
 const path = require("path");
-
 const config = {
-    entry: './src/app.js',
+    entry: [
+        'webpack-dev-server/client?http://192.168.0.13:8080',
+        'webpack/hot/only-dev-server',
+        './src/app.js'
+    ],
     output: {
         path: path.resolve(__dirname) + '/public/javascripts/dist',
         filename: 'SpUi.js'
@@ -11,8 +14,24 @@ const config = {
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ],
+    devServer : {
+        contentBase : './public',
+        hot : true,
+        publicPath : '/',
+        port : 8080,
+        host: '192.168.0.13',
+        https: false,
+        disableHostCheck: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+        }
+    },
     module :{
         rules: [
         {
