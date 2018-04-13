@@ -1,4 +1,4 @@
-<div class="sp-grid-body" ng-style="{ 'maxHeight' : gridObject.getSize().height }" >
+<div class="sp-grid-body" ng-style="::{ 'maxHeight' : gridObject.getSize().height }" >
     <sp-grid-data-row ng-repeat="row in gridObject.getCreateData()"></sp-grid-data-row>
     <div ng-if="!gridObject.isGroupable()">
         <sp-grid-data-row
