@@ -2,9 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <link rel="stylesheet" href="/stylesheets/page.css">
+    <link rel="stylesheet" href="/stylesheets/animation.css">
+    <link rel="stylesheet" href="/stylesheets/theme.css">
+    <link rel="stylesheet" href="/stylesheets/SpGrid.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
 </head>
 <body>
-$END$
+<div class="wrap" ng-app="gridApp" ng-controller="GridController" ng-init="init()">
+    <table ng-table="tableParams" class="table" >
+        <tr ng-repeat="row in $data">
+            <td title="'과목번호'" >
+                {{row.SUBJECT_NO}}</td>
+            <td title="'분반'">
+                {{row.BUNBAN}}</td>
+            <td title="'능력단위번호'" >
+                {{row.COMPT_UNIT_ELE_NO}}</td>
+            <td title="'수행준거'">
+                {{row.ASSESS_ITEM}}</td>
+        </tr>
+    </table>
+</div>
 </body>
+<script
+        src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+<script type="text/javascript" src="javascripts/dist/SpUi.js"></script>
+<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+<script type="text/javascript">
+
+    angular.module("gridApp", [ "SpUi", "ngTable" ] )
+        .controller('GridController', function( $scope, SpGrid, $http, NgTableParams ) {
+            /** 
+                [{
+                "SUBJECT_NO": "S01221",
+                "BUNBAN": "B",
+                "CHASU_SEQ": 2,
+                "COMPT_UNIT_DIV": "J",
+                "NCS_DIV": "N",
+                "COMPT_UNIT_ELE_NO": "0202030207_13v1.4",
+                "SEQ_NO": 1,
+                "ASSESS_ITEM": "부서(팀) 일정관리하기 관련 지식/기술과 태도(부서 내의 업무 프로세스 등)",
+                "ASSESS_CONT": null,
+                "LIMIT_SCO": "1.50",
+                "REMARK": null,
+                "USE_YN": "Y",
+                "PGM_ID": "D5-4",
+                "CREATED_ID": "2002108",
+                "CREATED_DT": "2016-03-11 15:53:59",
+                "UPDATED_ID": "2002108",
+                "UPDATED_DT": "2016-03-11 15:53:59",
+                "UPDATED_IP": "211.221.251.72"
+                },
+            */
+            $scope.grid = new SpGrid({
+                columnDef : [
+                    {
+                        id : 'SUBJECT_NO',
+                        name : '과목번호',
+                        width : '100px',
+                    },
+                    {
+                        id : 'BUNBAN',
+                        name : '분반',
+                        width : '80px'
+                    },
+                    {
+                        id : 'COMPT_UNIT_ELE_NO',
+                        name : '능력단위 번호',
+                        width : '300px'
+                    },
+                    {
+                        id : 'ASSESS_ITEM',
+                        name : '수행준거',
+                        width : '400px', 
+                    }
+                ],
+                gridSize : {
+                    height : "300px"
+                }
+            });
+
+            $scope.init = function() {
+                $http.get('/test.json',{})
+                    .then(function(response){
+                        $scope.grid.setData(response.data);
+                    $scope.tableParams = new NgTableParams({ count : response.data.length}, { dataset: response.data});
+                    });
+            }
+        });
+</script>
 </html>
