@@ -9,10 +9,13 @@
     <link rel="stylesheet" href="/stylesheets/theme.css">
     <link rel="stylesheet" href="/stylesheets/SpGrid.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
 </head>
 <body>
-<div class="wrap" ng-app="gridApp" ng-controller="GridController" ng-init="init()">
+    <div class="wrap" ng-app="gridApp" ng-controller="GridController" ng-init="init()">
+        <sp-grid grid-object="grid"></sp-grid>
+    </div>
+<!-- <div class="wrap" ng-app="gridApp" ng-controller="GridController" ng-init="init()">
     <table ng-table="tableParams" class="table" >
         <tr ng-repeat="row in $data">
             <td title="'과목번호'" >
@@ -25,8 +28,13 @@
                 {{row.ASSESS_ITEM}}</td>
         </tr>
     </table>
-</div>
+</div> -->
 </body>
+<style>
+    body{
+        overflow:auto;
+    }
+</style>
 <script
         src="https://code.jquery.com/jquery-1.12.4.js"
         integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
@@ -61,6 +69,7 @@
                 },
             */
             $scope.grid = new SpGrid({
+                selectable : true,
                 columnDef : [
                     {
                         id : 'SUBJECT_NO',
@@ -89,10 +98,10 @@
             });
 
             $scope.init = function() {
-                $http.get('/test.json',{})
+                $http.get('/test2.json',{})
                     .then(function(response){
                         $scope.grid.setData(response.data);
-                    $scope.tableParams = new NgTableParams({ count : response.data.length}, { dataset: response.data});
+                        $scope.tableParams = new NgTableParams({ count : response.data.length}, { dataset: response.data});
                     });
             }
         });
