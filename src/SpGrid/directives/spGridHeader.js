@@ -1,7 +1,7 @@
 /**
  * Grid Header Wrap Directive
  */
-function spGridHeader( $compile, SpGridConstant){
+function spGridHeader( $compile, SpGridConstant, scrollWatchService){
     return {
         restrict : "E",
         controller : "spGridController",
@@ -36,7 +36,7 @@ function spGridHeader( $compile, SpGridConstant){
                     }
                 });
 
-                var _gapWidth = (_headerWidth - _useageWidth) - ( scope.scrollBarWidth  );
+                var _gapWidth = (_headerWidth - _useageWidth) - ( scope.scrollBarWidth - 10 );
 
                 var sumWidth = 0;
                 if( _wildCardColumn == null ){
@@ -80,9 +80,13 @@ function spGridHeader( $compile, SpGridConstant){
             //     return _resultWidth;
             // }
 
+            scope.$on( scope.gridObject.getId() + "gridWidthChange", function( event, param){
+                element.width(param.width);
+            });
 
-
-
+            scrollWatchService.on(function(pos){
+                element.scrollLeft(pos);
+            });
         }
     }
 }

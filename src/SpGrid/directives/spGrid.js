@@ -8,6 +8,7 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
         scope : {
             "gridObject" : "="
         },
+        replace : true,
         controller : "spGridController",
         templateUrl : SpGridConstant.template.SP_GRID,
         link : function( scope, element, attrs, ctrls, transclude ){
@@ -16,6 +17,11 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
             scope.orderChange       = orderChange;
             scope.noMessageShow     = noMessageShow;
             scope.filtering         = filtering;
+            scope.syncWidth         = syncWidth;
+
+            function syncWidth(width) {
+                scope.$broadcast(scope.gridObject.getId() + "gridWidthChange", { width : width});
+            }
 
             function orderChange( columnId, orderBy ){
                 if( orderBy == "asc" ){

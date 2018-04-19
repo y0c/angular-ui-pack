@@ -11,8 +11,41 @@ function ngRightClick($parse) {
 }
 
 
+function resize($window, $parse, $timeout) {
+    return {
+        restrict : 'A',
+        link : function( scope, element, attrs ) {  
+            var onResize = $parse(attrs.onResize);
+            var loadedWidth = element.width();
+
+            $timeout(function(){
+                onResize(scope, { width : loadedWidth  });
+            })
+            
+            angular.element($window).on('resize', function(){
+
+                if ( $window.innerWidth < loadedWidth ) {
+                    onResize(scope, { width : $window.innerWidth - 10 });
+                } else {
+                    onResize(scope, { width : loadedWidth });
+                }
+                // scope.gridObject.resize();
+
+            });
+
+            function cleanUp() {
+                angular.element($window).off('resize');
+            }
+
+            scope.$on('$destory', cleanUp);
+        }
+    }
+}
+
+
 module.exports = function(app){
     app.directive("ngRightClick", ngRightClick);
+    app.directive("wResize", resize);
     app.filter("to_trusted", ['$sce', function($sce){
         return function(text) {
             return $sce.trustAsHtml(text);

@@ -48,6 +48,7 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
 
     require("./factories/SpGrid")(app);
     require("./factories/SpGridUtil")(app)
+    require("./factories/scrollWatchService")(app);
     require("./controllers/spGridController")(app);
     require("./controllers/spGridBodyController")(app);
     require("./controllers/spGridFooterController")(app);
