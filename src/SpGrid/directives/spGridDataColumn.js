@@ -4,7 +4,7 @@
 function spGridDataColumn( $compile, SpGridConstant, $templateCache, SpGridUtil,  $timeout, $q ){
     return {
         restrict : "E",
-        controller : "spGridController",
+        // controller : "spGridController",
         require : "^spGridDataRow",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_DATA_COLUMN,

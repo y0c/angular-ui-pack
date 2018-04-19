@@ -32,6 +32,10 @@ function spGridBody($compile, SpGridConstant, $templateCache, SpGridUtil ){
                 }
             });
 
+            scope.$on( scope.gridObject.getId() + "gridWidthChange", function( event, param){
+                element.width(param.width);
+            });
+            
             scope.$on("onRowRenderFinished", scope.gridObject.getGridAction().onRowRenderFinished );
 
             scope.$watch("gridObject.getPagingOptions()", function(){
@@ -43,6 +47,9 @@ function spGridBody($compile, SpGridConstant, $templateCache, SpGridUtil ){
                 scope.$parent.$broadcast("pageChange");
             }, true);
 
+            function setWidth() {
+                element.width(element.width());
+            }
 
 
             function openContextMenu( event, index, rowManager ){
@@ -66,6 +73,20 @@ function spGridBody($compile, SpGridConstant, $templateCache, SpGridUtil ){
     }
 }
 
+function syncScrollDirective( scrollWatchService ){
+    var test = [];
+    return {
+        restrict : 'A',
+        link : function( scope, element, attrs ) {
+            element.on('scroll', function(){
+                var $target = $(this);
+                scrollWatchService.setPosition($target.scrollLeft());
+            });
+        }
+    }
+}
+
 module.exports = function(app){
     app.directive("spGridBody", spGridBody);
+    app.directive("syncScroll", syncScrollDirective);
 };
