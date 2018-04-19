@@ -7,11 +7,12 @@
 } */
 .sp-grid-wrap {
     width: 100%;
-    overflow-x: auto;
+    overflow:hidden;
 }
 .sp-grid-wrap .sp-grid .sp-grid-body {
     position: relative;
-    overflow-x: hidden;
+    overflow-y: scroll;
+    overflow-x: auto;
     min-height: 150px;
     border-bottom: 1px solid #000;
 }
@@ -110,7 +111,7 @@
     display: table;
 }
 .sp-grid > .sp-grid-body {
-    overflow-y: scroll;
+    overflow: scroll;
 }
 .sp-grid > .sp-grid-body .sp-grid-grouping-row {
     display: block !important;
@@ -176,6 +177,11 @@
     padding: 10px;
     height: 45px;
 }
+
+.sp-grid > .sp-grid-header {
+    overflow:hidden;
+}
+
 .sp-grid .sp-grid-header > .sp-grid-header-row {
     display: table-row;
 }
@@ -293,7 +299,7 @@ div.sp-grid-data-column[sp-grid-cell-sizer] {
 
 	.sp-grid-wrap {
 	    width: 100%;
-	    overflow-x: auto;
+	    /* overflow-x: auto; */
 	    padding: 0 10px;
 	}
     .sp-grid-wrap.mb-vertical {
