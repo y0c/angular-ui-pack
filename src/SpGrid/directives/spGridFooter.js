@@ -14,6 +14,10 @@ function spGridFooter( SpGridConstant, SpGridUtil ){
                     scope.group = SpGridUtil.aggregateGroup({ list : scope.gridObject.getFilteredData() }, scope.gridObject.getGrouping().aggregate );
                 }
             });
+
+            scope.scrollWatchService.on(function(pos){
+                element.scrollLeft(pos);
+            });
         }
     }
 }

@@ -18,7 +18,19 @@ function spGrid( $compile, SpGridConstant, orderByFilter, $filter, $window ){
             scope.noMessageShow     = noMessageShow;
             scope.filtering         = filtering;
             scope.syncWidth         = syncWidth;
-
+            scope.scrollWatchService = (function(){
+                var observers = [];
+                return {
+                    on : function( func ){
+                        observers.push(func);
+                    },
+                    setPosition : function( pos ){
+                        for( var i = 0 ; i < observers.length ; i ++ ) {
+                            observers[i](pos);
+                        }
+                    }
+                }
+            })();
             function syncWidth(width) {
                 scope.$broadcast(scope.gridObject.getId() + "gridWidthChange", { width : width});
             }
