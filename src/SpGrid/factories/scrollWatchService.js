@@ -1,16 +1,18 @@
-function scrollWatchService() {
-    var stage = [];
-    var watchFunc = null;
-    return {
-        setPosition : function( pos ){
-            watchFunc(pos);
-        },
-        on : function( func ){
-            watchFunc = func; 
-        }
-    }
+function ScrollWatchService() {
+    this.stage = [];
+    this.watchFunc = null;
 }
 
+ScrollWatchService.prototype.setPosition = function(pos){
+    this.watchFunc(pos);
+};
+
+ScrollWatchService.prototype.on = function( func ) {
+    this.watchFunc = func;
+};
+
 module.exports = function( app ){ 
-    app.factory('scrollWatchService', scrollWatchService );
-}
+    app.factory('ScrollWatchService', function(){
+        return ScrollWatchService
+    });
+};

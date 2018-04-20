@@ -5,7 +5,7 @@
 function spGridBody($compile, SpGridConstant, $templateCache, SpGridUtil ){
     return {
         restrict : "E",
-        controller : "spGridBodyController",
+        controller : 'spGridController',
         require : "^spGrid",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_BODY,
@@ -73,14 +73,15 @@ function spGridBody($compile, SpGridConstant, $templateCache, SpGridUtil ){
     }
 }
 
-function syncScrollDirective( scrollWatchService ){
+function syncScrollDirective( ){
     var test = [];
     return {
         restrict : 'A',
+        controller: 'spGridController',
         link : function( scope, element, attrs ) {
             element.on('scroll', function(){
                 var $target = $(this);
-                scrollWatchService.setPosition($target.scrollLeft());
+                scope.scrollWatchService.setPosition($target.scrollLeft());
             });
         }
     }

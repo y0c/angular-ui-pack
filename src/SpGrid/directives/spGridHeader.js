@@ -1,7 +1,7 @@
 /**
  * Grid Header Wrap Directive
  */
-function spGridHeader( $compile, SpGridConstant, scrollWatchService){
+function spGridHeader( $compile, SpGridConstant){
     return {
         restrict : "E",
         controller : "spGridController",
@@ -84,7 +84,7 @@ function spGridHeader( $compile, SpGridConstant, scrollWatchService){
                 element.width(param.width);
             });
 
-            scrollWatchService.on(function(pos){
+            scope.scrollWatchService.on(function(pos){
                 element.scrollLeft(pos);
             });
         }

@@ -117,6 +117,11 @@
     display: block !important;
     background-color: #fafafa;
 }
+
+.sp-grid > .sp-grid-footer .sp-grid-grouping-row {
+    border-bottom:1px solid #000;
+    background: #fafafa;
+}
 .sp-grid > .sp-grid-body .sp-grid-data-row,
 .sp-grid > .sp-grid-body .sp-grid-grouping-row {
     display: table-row;
@@ -165,8 +170,8 @@
     padding: 0 10px;
 }
 .sp-grid .sp-grid-footer .sp-grid-data-column {
-    border-top: 1px solid #333333;
-    border-bottom: 1px solid #333333;
+    /* border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333; */
     text-align: center;
     display: table-cell;
     vertical-align: middle;

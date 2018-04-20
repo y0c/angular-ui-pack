@@ -1,5 +1,5 @@
 
-function spGridController( $scope, SpGridUtil ){
+function spGridController( $scope, SpGridUtil, ScrollWatchService ){
     var _gridObject  = $scope.gridObject;
     var _gridColumns = _gridObject.getColumnDef();
 
@@ -7,6 +7,7 @@ function spGridController( $scope, SpGridUtil ){
 
 
     $scope.init = init;
+ 
 
     $scope.filterDataColumn = filterDataColumn;
 
