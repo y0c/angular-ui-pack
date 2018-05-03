@@ -5,3 +5,5 @@
 *.lock
 *.log
 *.iml
+
+package-lock.json
