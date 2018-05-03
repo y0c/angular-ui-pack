@@ -1,6 +1,6 @@
-<div class="sp-grid-data-column" ng-style="::{ 'max-width' : columnWidth , 'min-width' : columnWidth }" ng-click="onCellClick(row,rowidx,$index)">
+<div class="sp-grid-data-column" ng-style="{ 'max-width' : columnWidth , 'min-width' : columnWidth }" ng-click="onCellClick(row,rowidx,$index)">
     <div class="sp-grid-data-header" ng-bind-html="columnHeader | to_trusted"></div>
-    <div class="sp-grid-data" ng-class="::'text-{{headerColumn.align}}'">
+    <div class="sp-grid-data" ng-class="'text-{{headerColumn.align}}'">
         <span class="sp-grid-data-view">
             <span ng-if="isTypeRowno()" ng-bind="getRowno()"></span>
             <span ng-if="isTypeData()" ng-bind="headerColumn.resultFormatter(row[headerColumn.id],row)"></span>

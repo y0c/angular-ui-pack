@@ -1,6 +1,6 @@
 <div class="sp-grid-box" ng-class="noMessageShow() ? 'bd' : ''" >
     <div class="sp-grid-wrap" ng-style="{ 'width' : gridObject.getSize().width }" ng-class="gridObject.getMobileStyle()" >
-        <div class="sp-grid" ng-class="::gridObject.isSelectable() ? 'selectable' : ''" w-resize on-resize="syncWidth(width)">
+        <div class="sp-grid" ng-class="gridObject.isSelectable() ? 'selectable' : ''" w-resize on-resize="syncWidth(width)">
             <sp-grid-header></sp-grid-header>
             <sp-grid-body></sp-grid-body>
             <sp-grid-footer ng-if="gridObject.isTotalize()"></sp-grid-footer>
