@@ -56,30 +56,29 @@ function resize($window, $parse, $timeout) {
 
                 var gridSize = scope.gridObject.getSize();
 
-                scope.gridObject.setSize({
-                    width : width,
-                    height : gridSize.height
+                gridSize.width = width;
+            }
+
+            function setWidth() {
+                $timeout(function(){
+                    var parentSize = element.parents('.sp-grid-box').parent().width();
+                    if ( $window.innerWidth < loadedWidth ) {
+                        setSize($window.innerWidth - 10);
+                    } else {
+                        setSize(parentSize);
+                    }
                 });
             }
             
-            angular.element($window).on('resize', function(){
-                var parentSize = element.parents('.sp-grid-box').parent().width();
-                if ( $window.innerWidth < loadedWidth ) {
-                    setSize($window.innerWidth - 10);
-                } else {
-                    setSize(parentSize);
-                }
-
-            });
+            angular.element($window).on('resize', setWidth);
 
             function cleanUp() {
                 angular.element($window).off('resize');
             }
 
-            scope.$on(scope.gridObject.getId() + 'gridDataReset', function(){
-                var parentSize = element.parents('.sp-grid-box').parent().width();
-                setSize(parentSize);
-            });
+            scope.$on(scope.gridObject.getId() + 'gridDataReset', setWidth);
+            scope.$on(scope.gridObject.getId() + 'gridColumnChange', setWidth);
+
             scope.$on('$destory', cleanUp);
         }
     }

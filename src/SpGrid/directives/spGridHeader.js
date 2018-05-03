@@ -71,7 +71,7 @@ function spGridHeader( $compile, SpGridConstant){
 
             }
 
-            scope.$on("gridColumnChange" , calculateWidth );
+            scope.$on(scope.gridObject.getId() + "gridColumnChange" , calculateWidth );
             // function getWidth(){
             //     var _resultWidth = 0;
             //     element.css({ position :"absolute", visibility : "hidden", display : "block", width: "100%"});

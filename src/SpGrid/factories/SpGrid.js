@@ -754,7 +754,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
      * 그리드 resize
      */
     SpGrid.prototype.resize = function(){
-        $rootScope.$broadcast("gridColumnChange");
+        $rootScope.$broadcast( this.getId() + "gridColumnChange");
     };
 
 
@@ -824,7 +824,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
             this.getColumnDef()[colIdx] = angular.extend({}, propObj );
         }
 
-        $rootScope.$broadcast("gridColumnChange");
+        $rootScope.$broadcast(scope.gridObject.getId() + "gridColumnChange");
 
         return this;
     };

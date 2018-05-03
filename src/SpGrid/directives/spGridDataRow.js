@@ -21,7 +21,7 @@ function spGridDataRow( SpGridConstant, SpGridUtil ){
 
             scope.$columns           = scope.gridObject.getVisibleColumn();
 
-            scope.$on("gridColumnChange", function(){
+            scope.$on(scope.gridObject.getId() + "gridColumnChange", function(){
                 scope.$columns           = scope.gridObject.getVisibleColumn();
             });
             /**

@@ -17,7 +17,7 @@ function spGridHeaderRow( $compile, SpGridConstant ){
             //     scope.headerColumns = getColumns();
             // },true );
 
-            scope.$on("gridColumnChange", function(){
+            scope.$on(scope.gridObject.getId() + "gridColumnChange", function(){
                 scope.headerColumns = getColumns();
             });
             /**

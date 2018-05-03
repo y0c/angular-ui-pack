@@ -1,7 +1,7 @@
 <div class="sp-grid-header">
     <sp-grid-header-row></sp-grid-header-row>
     <div class="sp-grid-header-row" ng-if="gridObject.isFilterable()">
-        <div class="sp-grid-filter-column" ng-repeat='column in headerColumns track by $index' ng-style="::{ 'min-width' : column.width, 'max-width' : column.width }">
+        <div class="sp-grid-filter-column" ng-repeat='column in headerColumns track by $index' ng-style="{ 'min-width' : column.width, 'max-width' : column.width }">
             <div class="sp-grid-filtering-input">
                 <input type="text" ng-model="gridObject.getFilteringQuery()[column.id]" ng-change="filtering(column.id)" ng-if="gridObject.isFilterable() && gridObject.isFilteringColumn(column.id)" />
             </div>
