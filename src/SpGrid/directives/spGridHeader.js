@@ -9,7 +9,7 @@ function spGridHeader( $compile, SpGridConstant){
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_HEADER,
         link : function( scope, element, attrs, ctrls, transclude ){
-            calculateWidth();
+            // calculateWidth();
 
 
             function calculateWidth(){
@@ -87,6 +87,29 @@ function spGridHeader( $compile, SpGridConstant){
             scope.scrollWatchService.on(function(pos){
                 element.scrollLeft(pos);
             });
+
+
+            scope.headerColumns = getColumns();
+
+
+            // scope.$watch("gridObject.getColumnDef()", function(){
+            //     scope.headerColumns = getColumns();
+            // },true );
+
+            scope.$on(scope.gridObject.getId() + "gridColumnChange", function(){
+                scope.headerColumns = getColumns();
+            });
+            /**
+             * colSpan 및 컬럼별 히든처리
+             * @returns {Array}
+             */
+            function getColumns(){
+                var _columns = [];
+                angular.copy( scope.gridObject.getVisibleColumn(), _columns );
+                return _columns;
+            }
+
+            
         }
     }
 }

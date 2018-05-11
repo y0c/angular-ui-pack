@@ -9,6 +9,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
             deleteable : false,
             selectable : false,
             columnDef : [],
+            headerDef : null,
             dataset   : [],
             createDataset : [],
             registerFunction : {},
@@ -118,6 +119,10 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
         this.init();
 
         this.id = SpGridConstant.INSTANCE_ID_PREFIX + id++;
+    }
+
+    SpGrid.prototype.getHeaderDef = function(){
+        return this._gridOptions.headerDef;
     }
 
     SpGrid.prototype.getId = function(){
