@@ -1,10 +1,57 @@
 <div class="sp-grid-header">
-    <sp-grid-header-row></sp-grid-header-row>
-    <div class="sp-grid-header-row" ng-if="gridObject.isFilterable()">
+    <table>
+        <colgroup>
+            <col ng-repeat="column in headerColumns" ng-style="{ width : column.width }"></col>
+        </colgroup>
+        <thead>
+            <!-- Grid Header is Set -->
+            <tr ng-repeat="pos in gridObject.getHeaderDef().index" ng-if="gridObject.getHeaderDef()">
+                <th 
+                    ng-repeat='column in headerColumns track by $index' 
+                    class="sp-grid-header-column" 
+                    ng-if="column.headers[pos].colSpan != '#colSpan' && column.headers[pos].rowSpan != '#rowSpan'"
+                    colspan='{{column.headers[pos].colSpan}}'
+                    rowspan='{{column.headers[pos].rowSpan}}'
+                >
+                    <div>
+                        <span compile-html="column.headers[pos].name"></span>
+                        <span class="sp-grid-order-wrap">
+                            <span class="sp-grid-order-desc" ng-click="orderChange(column.id,'desc')">
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </span>
+                            <span class="sp-grid-order-asc"  ng-click="orderChange(column.id,'asc')">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                            </span>
+                        </span>
+                    </div>
+                </th>
+            </tr>
+            <!-- Grid HeaderDef is Not Set -->
+            <tr ng-if="!gridObject.getHeaderDef()">
+                <th
+                    ng-repeat='column in headerColumns track by $index' 
+                    class="sp-grid-header-column" 
+                >
+                    <div>
+                        <span compile-html="column.name"></span>
+                        <span class="sp-grid-order-wrap">
+                            <span class="sp-grid-order-desc" ng-click="orderChange(column.id,'desc')">
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </span>
+                            <span class="sp-grid-order-asc"  ng-click="orderChange(column.id,'asc')">
+                                <i class="fa fa-caret-up" aria-hidden="true"></i>
+                            </span>
+                        </span>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <!-- <div class="sp-grid-header-row" ng-if="gridObject.isFilterable()">
         <div class="sp-grid-filter-column" ng-repeat='column in headerColumns track by $index' ng-style="{ 'min-width' : column.width, 'max-width' : column.width }">
             <div class="sp-grid-filtering-input">
                 <input type="text" ng-model="gridObject.getFilteringQuery()[column.id]" ng-change="filtering(column.id)" ng-if="gridObject.isFilterable() && gridObject.isFilteringColumn(column.id)" />
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

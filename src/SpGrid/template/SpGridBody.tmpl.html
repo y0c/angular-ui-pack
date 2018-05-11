@@ -1,17 +1,19 @@
 <div class="sp-grid-body" ng-style="{ 'maxHeight' : gridObject.getSize().height }" sync-scroll >
-    <sp-grid-data-row ng-repeat="row in gridObject.getCreateData()"></sp-grid-data-row>
-    <div ng-if="!gridObject.isGroupable()">
-        <sp-grid-data-row
-                ng-repeat="row in range(start,start+pageSize)" ng-init="rowidx=$index" on-finish-render="onRowRenderFinished"></sp-grid-data-row>
+    <div class="sp-grid-body-canvas">
+        <div class="sp-grid-col-group">
+            <div ng-repeat="column in gridObject.getColumnDef()" ng-style="{ width : column.width}"></div>
+        </div>
+        <sp-grid-data-row ng-repeat="row in gridObject.getCreateData()"></sp-grid-data-row>
+            <sp-grid-data-row ng-if="!gridObject.isGroupable()"
+                    ng-repeat="row in range(start,start+pageSize)" ng-init="rowidx=$index" on-finish-render="onRowRenderFinished"></sp-grid-data-row>
 
-    </div>
 
-    <div ng-if="gridObject.isGroupable()" class="sp-grid-row-grouping">
-        <div ng-repeat="group in $groups" on-finish-render="onRowRenderFinished">
-            <sp-grid-data-row
-                    ng-repeat="row in group.list" ng-init="rowidx=$index" ></sp-grid-data-row>
-            <sp-grid-grouping-row grouping-type="group"></sp-grid-grouping-row>
+        <div ng-if="gridObject.isGroupable()" class="sp-grid-row-grouping">
+            <div ng-repeat="group in $groups" on-finish-render="onRowRenderFinished">
+                <sp-grid-data-row
+                        ng-repeat="row in group.list" ng-init="rowidx=$index" ></sp-grid-data-row>
+                <sp-grid-grouping-row grouping-type="group"></sp-grid-grouping-row>
+            </div>
         </div>
     </div>
-
 </div>

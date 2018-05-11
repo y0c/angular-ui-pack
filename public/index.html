@@ -70,26 +70,49 @@
             */
             $scope.grid = new SpGrid({
                 selectable : true,
+                // headerDef : {
+                //     index : [ 0, 1, 2 ]
+                // },
                 columnDef : [
                     {
                         id : 'SUBJECT_NO',
                         name : '과목번호',
                         width : '100px',
+                        headers : [
+                            { name : '3단병합', colSpan : 4},
+                            { name : 'Test', colSpan : 2 },
+                            { name : '과목번호'}
+                        ]
                     },
                     {
                         id : 'BUNBAN',
                         name : '분반',
-                        width : '80px'
+                        width : '80px',
+                        headers : [
+                            { name : '', colSpan : '#colSpan' },
+                            { name : '', colSpan : '#colSpan' },
+                            { name : '분반' }
+                        ]
                     },
                     {
                         id : 'COMPT_UNIT_ELE_NO',
                         name : '능력단위 번호',
-                        width : '300px'
+                        width : '300px',
+                        headers : [
+                            { name : '', colSpan : '#colSpan' },
+                            { name : '능력단위번호', rowSpan : 2},
+                            { name : '', rowSpan : '#rowSpan'}
+                        ]
                     },
                     {
                         id : 'ASSESS_ITEM',
                         name : '수행준거',
                         width : '400px', 
+                        headers : [
+                            { name : '', colSpan : '#colSpan' },
+                            { name : '평가'},
+                            { name : '수행준거'}
+                        ]
                     }
                 ],
                 gridSize : {

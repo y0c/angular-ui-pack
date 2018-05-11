@@ -2,8 +2,7 @@ var webpack = require("webpack");
 const path = require("path");
 const config = {
     entry: [
-        'webpack-dev-server/client?http://192.168.0.13:8080',
-        'webpack/hot/only-dev-server',
+        'webpack-dev-server/client?http://localhost:8080',
         './src/app.js'
     ],
     output: {
@@ -22,7 +21,7 @@ const config = {
         hot : true,
         publicPath : '/',
         port : 8080,
-        host: '192.168.0.13',
+        host: 'localhost',
         https: false,
         disableHostCheck: true,
         headers: {
