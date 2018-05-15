@@ -15,6 +15,10 @@ function spGridFooter( SpGridConstant, SpGridUtil ){
                 }
             });
 
+            scope.$on( scope.gridObject.getId() + "gridWidthChange", function( event, param){
+                element.width(param.width);
+            });
+
             scope.scrollWatchService.on(function(pos){
                 element.scrollLeft(pos);
             });
