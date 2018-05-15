@@ -28,8 +28,6 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
 
 
     $templateCache.put( SpGridConstant.template.SP_GRID_FOOTER        , require("./template/SpGridFooter.tmpl.html"));
-    $templateCache.put( SpGridConstant.template.SP_GRID_FOOTER_ROW    , require("./template/SpGridFooterRow.tmpl.html"));
-    $templateCache.put( SpGridConstant.template.SP_GRID_FOOTER_COLUMN , require("./template/SpGridFooterColumn.tmpl.html"));
 
     /**
      * Grid Util
@@ -59,8 +57,6 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
     require("./directives/spGridHeaderColumn")(app);
     require("./directives/spGridBody")(app);
     require("./directives/spGridFooter")(app);
-    require("./directives/spGridFooterColumn")(app);
-    require("./directives/spGridFooterRow")(app);
     require("./directives/spGridDataRow")(app);
     require("./directives/spGridGroupingRow")(app);
     require("./directives/spGridCellSizier")(app);

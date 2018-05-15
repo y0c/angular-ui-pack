@@ -1,10 +1,8 @@
 function spGridGroupingRow( SpGridConstant, $compile ){
     return {
-        restrict : "E",
+        restrict : "C",
         controller : "spGridBodyController",
         require : "^spGrid",
-        replace : true,
-        template : "<div class=\"sp-grid-grouping-row\"></div>",
         link : function ( scope, element, attrs ){
 
             scope.groupingType =  attrs.groupingType;
