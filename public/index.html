@@ -26,7 +26,26 @@
             <td class="sp-grid-data-column">{{group.huef.sum}}</td>
             <td class="sp-grid-data-column">{{group.hue.sum}}</td>
         </script>
+                    <!-- <table ng-table="tableParams" class="table" >
+                            <tr ng-repeat="row in $data">
+                                <td title="'대학(원)'" >
+                                    {{row.colgnm}}</td>
+                                <td title="'분반'">
+                                    {{row.sustnm}}</td>
+                                <td title="'능력단위번호'" >
+                                    {{row.jaem}}</td>
+                                <td title="'수행준거'">
+                                    {{row.jaef}}</td>
+                                    <td title="'수행준거'">
+                                            {{row.jae}}</td>
+                                            <td title="'수행준거'">
+                                                    {{row.huem}}</td>
+                                                    <td title="'수행준거'">
+                                                            {{row.huef}}</td>
+                            </tr>
+                        </table> -->
     </div>
+    
 <!-- <div class="wrap" ng-app="gridApp" ng-controller="GridController" ng-init="init()">
     <table ng-table="tableParams" class="table" >
         <tr ng-repeat="row in $data">
@@ -183,6 +202,7 @@
             $http.get("summarytest.json", {} )
                 .then(function( response ){
                     $scope.grid.setData(response.data);
+                    $scope.tableParams = new NgTableParams({ count : response.data.length}, { dataset: response.data});
                 });
 
         });
