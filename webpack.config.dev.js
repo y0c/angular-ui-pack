@@ -13,8 +13,8 @@ const config = {
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
-        }),
-        new webpack.HotModuleReplacementPlugin()
+        })
+        // new webpack.HotModuleReplacementPlugin()
     ],
     devServer : {
         contentBase : './public',
@@ -33,15 +33,25 @@ const config = {
     },
     module :{
         rules: [
-        {
-            test: /\.html$/,
-            use: [ {
-                loader: 'html-loader',
-                options: {
-                    minimize: true
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env']
+                    }
                 }
-            }]
-        },
+            },
+            {
+                test: /\.html$/,
+                use: [ {
+                    loader: 'html-loader',
+                    options: {
+                        minimize: true
+                    }
+                }]
+            },
             {
                 test: /\.css$/,
                 use: [ 'style-loader', 'css-loader' ]
@@ -61,7 +71,7 @@ const config = {
 
         ]
     },
-    devtool: '#inline-source-map'
+    // devtool: '#inline-source-map'
 };
 
 module.exports = config;

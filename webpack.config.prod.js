@@ -16,6 +16,20 @@ const config = {
         new webpack.HotModuleReplacementPlugin()
     ],
     module :{
+        module: {
+            rules: [
+              {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: ['env']
+                  }
+                }
+              }
+            ]
+          },
         rules: [
         {
             test: /\.html$/,
