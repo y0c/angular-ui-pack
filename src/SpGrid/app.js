@@ -1,7 +1,10 @@
 // require("../../public/less/SpGrid.less");
 // var angular = require("angular");
 
-
+import spGridDataColumn from './directives/spGridDataColumn';
+import spGridDataRow from './directives/spGridDataRow';
+import spGridDataRowController from './controllers/spGridDataRowController';
+import spGridDataColumnController from './controllers/spGridDataColumnController';
 var app = angular.module("SpGrid", [ ]);
 
 app.constant("SpGridConstant", require("./SpGridConstant"));
@@ -57,11 +60,15 @@ app.run( ['$templateCache', 'SpGridConstant', function( $templateCache, SpGridCo
     require("./directives/spGridHeaderColumn")(app);
     require("./directives/spGridBody")(app);
     require("./directives/spGridFooter")(app);
-    require("./directives/spGridDataRow")(app);
+    // require("./directives/spGridDataRow")(app);
     require("./directives/spGridGroupingRow")(app);
     require("./directives/spGridCellSizier")(app);
     // require("./directives/spGridDataContextMenu")(app);
-    require("./directives/spGridDataColumn")(app);
+    // require("./directives/spGridDataColumn")(app);
+    app.directive('spGridDataColumn', spGridDataColumn)
+        .directive('spGridDataRow', spGridDataRow)
+        .controller('spGridDataRowController', spGridDataRowController)
+        .controller('spGridDataColumnController', spGridDataColumnController);
     require("./directives/util/spUtil")(app);
     require("./directives/spGridPaging")(app);
 

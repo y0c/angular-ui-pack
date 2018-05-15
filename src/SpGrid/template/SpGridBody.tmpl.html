@@ -3,17 +3,17 @@
         <div class="sp-grid-col-group">
             <div ng-repeat="column in gridObject.getColumnDef()" ng-style="{ width : column.width}"></div>
         </div>
-        <sp-grid-data-row ng-repeat="row in gridObject.getCreateData()"></sp-grid-data-row>
-            <sp-grid-data-row ng-if="!gridObject.isGroupable()"
-                    ng-repeat="row in range(start,start+pageSize)" ng-init="rowidx=$index" on-finish-render="onRowRenderFinished"></sp-grid-data-row>
+        <!-- <sp-grid-data-row ng-repeat="row in gridObject.getCreateData()"></sp-grid-data-row> -->
+            <sp-grid-data-row 
+                    ng-repeat="row in range(start,start+pageSize)"  on-finish-render="onRowRenderFinished"></sp-grid-data-row>
 
 
-        <div ng-if="gridObject.isGroupable()" >
+        <!-- <div ng-if="gridObject.isGroupable()" >
             <div ng-repeat="group in $groups" on-finish-render="onRowRenderFinished">
                 <sp-grid-data-row
                         ng-repeat="row in group.list" ng-init="rowidx=$index" ></sp-grid-data-row>
                 <div class="sp-grid-grouping-row" grouping-type="group"></div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
