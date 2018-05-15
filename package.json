@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "build": "webpack --watch --config webpack.config.prod.js",
-    "serve": "webpack --watch --config webpack.config.dev.js" 
+    "serve": "webpack-dev-server --config webpack.config.dev.js" 
   },
   "dependencies": {
     "angular": "^1.6.6",

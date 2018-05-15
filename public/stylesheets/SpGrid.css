@@ -125,6 +125,10 @@
     table-layout:fixed;
     width:100%;
 }
+.sp-grid > .sp-grid-footer > table { 
+    table-layout:fixed;
+    width:100%;
+}
 .sp-grid > .sp-grid-body .sp-grid-grouping-row {
     display: block !important;
     background-color: #fafafa;
