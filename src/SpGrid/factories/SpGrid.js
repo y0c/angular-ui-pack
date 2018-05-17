@@ -824,7 +824,7 @@ function SpGrid( SpGridConstant, SpGridUtil, $templateCache, $rootScope ){
             this.getColumnDef()[colIdx] = angular.extend({}, propObj );
         }
 
-        $rootScope.$broadcast(scope.gridObject.getId() + "gridColumnChange");
+        $rootScope.$broadcast( this.getId() + "gridColumnChange");
 
         return this;
     };
