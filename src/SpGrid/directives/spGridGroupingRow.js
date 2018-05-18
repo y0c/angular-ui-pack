@@ -1,8 +1,6 @@
 function spGridGroupingRow( SpGridConstant, $compile ){
     return {
         restrict : "C",
-        controller : "spGridBodyController",
-        require : "^spGrid",
         link : function ( scope, element, attrs ){
 
             scope.groupingType =  attrs.groupingType;

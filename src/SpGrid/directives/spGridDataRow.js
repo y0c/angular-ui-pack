@@ -7,7 +7,7 @@ const spGridDataRow = ( $compile ) => {
     return {
         restrict : 'E',
         replace : true,
-        controller : 'spGridDataRowController',
+        controller : 'SpGridDataRowController',
         controllerAs : '$row',
         template,
         compile : () => ( $scope, $elem, $attrs, $ctrl ) =>  $elem.html($compile($ctrl.generateRowTemplate())($scope)   )

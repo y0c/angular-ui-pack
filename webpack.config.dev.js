@@ -2,24 +2,25 @@ var webpack = require("webpack");
 const path = require("path");
 const config = {
     entry: [
-        'webpack-dev-server/client?http://localhost:8080',
         './src/app.js'
     ],
     output: {
-        path: path.resolve(__dirname) + '/public/javascripts/dist',
+        path: path.resolve(__dirname) +  '/public/javascripts/dist',
+        publicPath : '/javascripts/dist',
         filename: 'SpUi.js'
     },
     plugins: [
         new webpack.ProvidePlugin({
             $: "jquery",
-            jQuery: "jquery"
-        })
-        // new webpack.HotModuleReplacementPlugin()
+            jQuery: "jquery",
+            // angular : 'angular'
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ],
     devServer : {
         contentBase : './public',
         hot : true,
-        publicPath : '/',
+        inline:true,
         port : 8080,
         host: 'localhost',
         https: false,
@@ -39,7 +40,8 @@ const config = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['env']
+                        presets: ['env'],
+                        plugins : [ 'transform-class-properties']
                     }
                 }
             },
@@ -71,7 +73,7 @@ const config = {
 
         ]
     },
-    // devtool: '#inline-source-map'
+    devtool: 'source-map'
 };
 
 module.exports = config;

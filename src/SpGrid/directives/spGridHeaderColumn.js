@@ -4,7 +4,7 @@
 function spGridHeaderColumn( SpGridConstant){
     return {
         restrict : "E",
-        controller : "spGridController",
+        controller : "SpGridController",
         require : "^spGridHeaderRow",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_HEADER_COLUMN,

@@ -1,7 +1,7 @@
 <div class="sp-grid-header">
     <table>
         <colgroup>
-            <col ng-repeat="column in headerColumns" ng-style="{ width : column.width }"></col>
+            <col ng-repeat="column in $header.columns" ng-style="{ width : column.width }"></col>
         </colgroup>
         <thead>
             <!-- Grid Header is Set -->
@@ -29,7 +29,7 @@
             <!-- Grid HeaderDef is Not Set -->
             <tr ng-if="!gridObject.getHeaderDef()">
                 <th
-                    ng-repeat='column in headerColumns track by $index' 
+                    ng-repeat='column in $header.columns track by $index' 
                     class="sp-grid-header-column" 
                 >
                     <div>

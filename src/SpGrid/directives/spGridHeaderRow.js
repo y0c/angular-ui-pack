@@ -4,7 +4,7 @@
 function spGridHeaderRow( $compile, SpGridConstant ){
     return {
         restrict : "E",
-        controller : "spGridController",
+        controller : "SpGridController",
         require : "^spGridHeader",
         replace : true,
         templateUrl : SpGridConstant.template.SP_GRID_HEADER_ROW,

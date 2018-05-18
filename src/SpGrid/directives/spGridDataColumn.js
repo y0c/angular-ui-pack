@@ -8,14 +8,7 @@ import template from '../template/SpGridDataColumn.tmpl.html';
         restrict : 'E',
         template,
         replace : true,
-        // scope : {
-        //     row : '=',
-        //     column : '='
-        // },
-        // link : $scope => {
-        //     $scope.test = () => "erer";
-        // }
-        controller : 'spGridDataColumnController',
+        controller : 'SpGridDataColumnController',
         controllerAs : '$ctrl'
      };
  }

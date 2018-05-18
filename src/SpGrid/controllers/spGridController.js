@@ -1,105 +1,140 @@
+import GridController from './GridController';
 
-function spGridController( $scope, SpGridUtil, ScrollWatchService ){
-    var _gridObject  = $scope.gridObject;
-    var _gridColumns = _gridObject.getColumnDef();
-
-    var _gridColumnIds = getGridColumnIds();
-
-
-    $scope.init = init;
- 
-
-    $scope.filterDataColumn = filterDataColumn;
-
-    $scope.getColumnData = getColumnData;
-
-
-    $scope.scrollBarWidth = (function(){
-        var outer = document.createElement("div");
-        outer.style.visibility = "hidden";
-        outer.style.width = "100px";
-        outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
-
-        document.body.appendChild(outer);
-
-        var widthNoScroll = outer.offsetWidth;
-        // force scrollbars
-        outer.style.overflow = "scroll";
-
-        // add innerdiv
-        var inner = document.createElement("div");
-        inner.style.width = "100%";
-        outer.appendChild(inner);
-
-        var widthWithScroll = inner.offsetWidth;
-
-        // remove divs
-        outer.parentNode.removeChild(outer);
-
-        return widthNoScroll - widthWithScroll;
-    })();
-
-
-
-    function init(){
-        registerFunction();
+class SpGridController extends GridController {
+    constructor( $scope, SpGridUtil ) {
+        super($scope);
+        this._util = SpGridUtil;
+        this.init();
     }
-    /**
-     * Header Column 의 아이디 값만 배열로 리턴
-     * @returns {Array}
-     */
-    function getGridColumnIds(){
-        var result = [];
-        angular.forEach( _gridColumns, function( col ){
-            if( col.hasOwnProperty("id"))
-                result.push(col.id);
-        });
-        return result;
-    }
-
-    /**
-     * header Column에 있는 애들만 display 함
-     * @param data
-     * @returns {{}} - filter Object
-     */
-    function filterDataColumn( data ){
-        var result      = {};
-        var _columns    = this.getColumnDef();
-
-        angular.forEach( data, function( value, key ){
-            if( _gridColumnIds.indexOf(key) != -1 ){
-                result[key] = value;
+    
+    init() {
+        const { _scope } = this;
+        _scope.scrollWatchService = (() => {
+            let observers = [];
+            return {
+                on( func ) {
+                    observers.push(func);
+                },
+                setPosition( pos ) {
+                    observers.forEach(v=> v(pos));
+                }
             }
-        });
+        })();
+
+        //TODO: refactoring
+        _scope.scrollBarWidth = (() => {
+            let outer = document.createElement("div");
+            outer.style.visibility = "hidden";
+            outer.style.width = "100px";
+            outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+    
+            document.body.appendChild(outer);
+    
+            let widthNoScroll = outer.offsetWidth;
+            // force scrollbars
+            outer.style.overflow = "scroll";
+    
+            // add innerdiv
+            let inner = document.createElement("div");
+            inner.style.width = "100%";
+            outer.appendChild(inner);
+    
+            let widthWithScroll = inner.offsetWidth;
+    
+            // remove divs
+            outer.parentNode.removeChild(outer);
+    
+            return widthNoScroll - widthWithScroll;
+        })();
+         
+        _scope.syncWidth = this.syncWidth.bind(this);        
+        _scope.filterDataColumn = this.filterDataColumn.bind(this);
+        _scope.getColumnData = this.getColumnData.bind(this);
+        _scope.orderChange   = this.orderChange.bind(this);
+        _scope.filtering     = this.filtering.bind(this);
+        _scope.noMessageShow = this.noMessageShow.bind(this);
+        this._registerFunction();
+    }
+
+
+    syncWidth( width ) {
+        this.broadCastGridEvent('gridWidthChange', { width });
+    }
+
+    orderChange( columnId, orderBy ) {
+        const { _grid, _filter} = this;
+        let orderByFilter = _filter('orderBy');
+        if( orderBy == "asc" ){
+            _grid.setData(orderByFilter(_grid.getData(),"-" + columnId, true));
+        } else if ( orderBy == "desc" ){
+            _grid.setData(orderByFilter(_grid.getData(),"-" + columnId, false));
+        }
+    }
+
+    filtering() {
+        const { _grid, _filter } = this;
+        if( _grid.isEnablePaging() ){
+            _grid.getPagingOptions().currentPage = 1;
+        }
+        _grid.setFilteredData( _filter("filter")(_grid.getData(), _grid.getFilteringQuery()) );
+    }
+    
+    noMessageShow() {
+        const { _grid } = this;
+        if( _grid.isEnablePaging() ){
+            let currentPage = _grid.getCurrentPage() || 1;
+            let pageSize    = _grid.getPageSize();
+            let start       = currentPage - 1;
+            let end         = start + pageSize;
+            return _grid.getFilteredData().slice(start,end).length === 0
+                     && _grid.getCreateData().length === 0;
+        } else {
+            return _grid.getFilteredData().length === 0
+                 && _grid.getCreateData().length === 0;
+        }
+
+    }
+
+    bindEvents() {
+        const { _scope } = this;
+        
+    }
+
+    _registerFunction() {
+        const { _scope, _grid } = this;
+        let _functions = _grid.getRegisterFunction();
+        for( let key in _functions) {
+            _scope[key] = _functions[key];     
+        }
+    }
+
+    filterDataColumn( data ) {
+        const { _grid } = this;
+        let result      = {};
+        let _columns    = _grid.getColumnDef();
+
+        for ( let key in data ) {
+            if( this._gridColumnIds().indexOf(key) != -1 ) {
+                result[key] = data[key];
+            }
+        }
 
         return result;
     }
 
+    getGridColumnIds() {
+        const { _scope } = this;
+        let _columns = _grid.getColumnDef();
 
-    /**
-     * id 값으로 컬럼 너비를 구해옴
-     * @param id
-     * @param targetField
-     * @returns {*|targetValue}
-     */
-    function getColumnData( id, targetField ){
-        return SpGridUtil.getMapData( _gridColumns, id, 'id', targetField );
+        return _columns.reduce((result, v) => {
+            if( v.hasOwnProperty('id') ) result.push(v.id);
+        },[]);
     }
 
-
-    function registerFunction(){
-        var _functions = _gridObject.getRegisterFunction();
-
-        angular.forEach( _functions, function( fn, key ){
-            $scope[key] = fn;
-        });
+    getColumnData( id, targetFiled ) {
+        const { _util, _grid } = this;
+        return _util.getMapData( _grid.getColumnDdef() , id, 'id', targetField );
     }
-
-
-    init();
 }
 
-
-module.exports = function( app ){
-    app.controller("spGridController", spGridController);
-};
+export default SpGridController;
