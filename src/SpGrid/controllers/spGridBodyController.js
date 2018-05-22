@@ -31,7 +31,7 @@ class SpGridBodyController extends GridController {
        });
 
        this.bindGridEvent('gridWidthChange', (event, param) => _element.width(param.width));
-       _scope.$on('onRowRenderFinished', _grid.getGridAction().onRowRenderFinished );
+       _scope.$on('onRowRenderFinished', _grid.gridAction.onRowRenderFinished );
 
        _scope.$watch('gridObject.getPagingOptions()', () => {
             let _currentPage = _grid.getCurrentPage() || 1;
@@ -40,7 +40,7 @@ class SpGridBodyController extends GridController {
             _scope.pageSize = _pageSize;
             // scope.$rows               = range( scope.gridObject.getData(), scope.start, scope.start + scope.pageSize );
             _scope.$parent.$broadcast("pageChange");
-       })
+       },true)
     }
 
     range( start, end ){

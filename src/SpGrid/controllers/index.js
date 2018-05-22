@@ -4,6 +4,7 @@ import SpGridFooterController from './SpGridFooterController';
 import SpGridHeaderController from './SpGridHeaderController';
 import SpGridController from './SpGridController';
 import SpGridBodyController from './SpGridBodyController';
+import SpGridPagingController from './SpGridPagingController';
 
 export {
     SpGridDataRowController,
@@ -11,5 +12,6 @@ export {
     SpGridFooterController,
     SpGridHeaderController,
     SpGridController,
-    SpGridBodyController
+    SpGridBodyController,
+    SpGridPagingController
 };

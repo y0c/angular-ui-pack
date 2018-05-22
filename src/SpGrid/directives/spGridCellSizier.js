@@ -7,7 +7,7 @@ function spGridCellSizer( $compile, SpGridConstant, $templateCache, SpGridUtil, 
         controller: "SpGridController",
         require: ['?spGridGropingRow'],
         link: function (scope, element, attrs ) {
-            var headerColumns = scope.gridObject.getColumnDef();
+            var headerColumns = scope.gridObject.columnDef;
             setSize();
 
             function setSize() {

@@ -8,7 +8,7 @@ class SpGridFooterController extends GridController{
         this._scope      = $scope;
         this._element    = $element;
         this._util       = SpGridUtil;
-        this.columns     = this._grid.getColumnDef();
+        this.columns     = this._grid.columnDef;
         this.bindEvents();
     }
 

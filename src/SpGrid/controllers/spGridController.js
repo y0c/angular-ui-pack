@@ -111,7 +111,7 @@ class SpGridController extends GridController {
     filterDataColumn( data ) {
         const { _grid } = this;
         let result      = {};
-        let _columns    = _grid.getColumnDef();
+        let _columns    = _grid.columnDef;
 
         for ( let key in data ) {
             if( this._gridColumnIds().indexOf(key) != -1 ) {
@@ -123,8 +123,7 @@ class SpGridController extends GridController {
     }
 
     getGridColumnIds() {
-        const { _scope } = this;
-        let _columns = _grid.getColumnDef();
+        let _columns = _grid.columnDef;
 
         return _columns.reduce((result, v) => {
             if( v.hasOwnProperty('id') ) result.push(v.id);

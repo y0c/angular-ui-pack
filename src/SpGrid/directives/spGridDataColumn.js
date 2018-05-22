@@ -21,7 +21,7 @@ import template from '../template/SpGridDataColumn.tmpl.html';
 //         replace : true,
 //         templateUrl : SpGridConstant.template.SP_GRID_DATA_COLUMN,
 //         link : function( scope, element, attr ){
-//             var _headerColumns = scope.gridObject.getColumnDef();
+//             var _headerColumns = scope.gridObject.columnDef;
 //             var _headerColumn = scope.headerColumn;
 //             scope.columnWidth = _headerColumn.width;
 //             scope.columnHeader= _headerColumn.name;
@@ -35,7 +35,7 @@ import template from '../template/SpGridDataColumn.tmpl.html';
 
 //             scope.getRowno    = getRowno;
 
-//             scope.onCellClick = scope.gridObject.getGridAction().onCellClick;
+//             scope.onCellClick = scope.gridObject.gridAction.onCellClick;
 
 
 //             if( scope.isTypeHtml() ) {
@@ -154,11 +154,11 @@ import template from '../template/SpGridDataColumn.tmpl.html';
 //                             (function(){
 //                                 var defer = $q.defer();
 
-//                                 if( typeof scope.gridObject.getColumnDef()[scope.$index].editType.dataset == "function"){
+//                                 if( typeof scope.gridObject.columnDef[scope.$index].editType.dataset == "function"){
 //                                     scope.selectbox.dataset = [];
 //                                     _editType.dataset().then(function( dataset ){
 //                                         scope.selectbox.dataset = dataset;
-//                                         scope.gridObject.getColumnDef()[scope.$index].editType.dataset       = dataset;
+//                                         scope.gridObject.columnDef[scope.$index].editType.dataset       = dataset;
 //                                         defer.resolve();
 //                                     },defer.reject);
 //                                 }

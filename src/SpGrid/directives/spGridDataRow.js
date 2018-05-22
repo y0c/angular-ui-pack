@@ -50,7 +50,7 @@ const spGridDataRow = ( $compile ) => {
 //                     var newRowIdx = scope.rowidx;
 
 //                     var onRowSelectedChange =  SpGridUtil.castToPromise(
-//                         scope.gridObject.getGridAction().onRowSelectedChange( oldRowIdx, oldRow, newRowIdx, row )
+//                         scope.gridObject.gridAction.onRowSelectedChange( oldRowIdx, oldRow, newRowIdx, row )
 //                     );
 
 //                     onRowSelectedChange
@@ -59,11 +59,11 @@ const spGridDataRow = ( $compile ) => {
 //                         });
 //                 }
 
-//                 scope.gridObject.getGridAction().onRowClick( row, scope.rowidx );
+//                 scope.gridObject.gridAction.onRowClick( row, scope.rowidx );
 //             }
 
 //             function onGridDataRowDblClick( row ){
-//                 scope.gridObject.getGridAction().onRowDblClick( row, scope.rowidx );
+//                 scope.gridObject.gridAction.onRowDblClick( row, scope.rowidx );
 //             }
 
 //             function checkRowValid(){
@@ -82,7 +82,7 @@ const spGridDataRow = ( $compile ) => {
 //                 //     return ;
 //                 // }
 
-//                 var onRowEditBefore =  SpGridUtil.castToPromise(scope.gridObject.getGridAction().onRowEditBefore( scope.row, scope.rowidx ));
+//                 var onRowEditBefore =  SpGridUtil.castToPromise(scope.gridObject.gridAction.onRowEditBefore( scope.row, scope.rowidx ));
 
 
 //                 onRowEditBefore
@@ -135,7 +135,7 @@ const spGridDataRow = ( $compile ) => {
 //                 //     return ;
 //                 // }
 
-//                 var onRowDeleteBefore =  SpGridUtil.castToPromise(scope.gridObject.getGridAction().onRowDeleteBefore( scope.row, scope.rowidx ));
+//                 var onRowDeleteBefore =  SpGridUtil.castToPromise(scope.gridObject.gridAction.onRowDeleteBefore( scope.row, scope.rowidx ));
 
 //                 onRowDeleteBefore
 //                     .then(function(){
@@ -146,7 +146,7 @@ const spGridDataRow = ( $compile ) => {
 //                             scope.gridObject.getData().splice(scope.$index, 1 );
 //                         }
 //                         scope.$parent.$broadcast("rowDelete");
-//                         scope.gridObject.getGridAction().onRowDeleteAfter( scope.row );
+//                         scope.gridObject.gridAction.onRowDeleteAfter( scope.row );
 //                     });
 
 //             };
@@ -212,7 +212,7 @@ const spGridDataRow = ( $compile ) => {
 //              * @returns {boolean}
 //              */
 //             scope.row.__validate = function(){
-//                 var _headerColumns   = scope.gridObject.getColumnDef();
+//                 var _headerColumns   = scope.gridObject.columnDef;
 //                 var _validateObject  = SpGridUtil.getValidateObject();
 //                 var _invalidArray  = [];
 //                 //미리정의된 유효성검사 함수
@@ -275,7 +275,7 @@ const spGridDataRow = ( $compile ) => {
 //                 } else {
 
 
-//                     var onRowSaveBefore =  SpGridUtil.castToPromise(scope.gridObject.getGridAction().onRowSaveBefore( scope.row, scope.rowidx ));
+//                     var onRowSaveBefore =  SpGridUtil.castToPromise(scope.gridObject.gridAction.onRowSaveBefore( scope.row, scope.rowidx ));
 
 //                     onRowSaveBefore
 //                         .then(function(){
@@ -288,12 +288,12 @@ const spGridDataRow = ( $compile ) => {
 //                                         scope.gridObject.getCreateData().splice(0,1)[0]
 //                                     );
 //                                 }
-//                                 scope.gridObject.getGridAction().onRowCreateAfter( scope.row );
+//                                 scope.gridObject.gridAction.onRowCreateAfter( scope.row );
 //                             }
 
 //                             if( scope.row.hasOwnProperty("cudFlag") &&
 //                                 scope.row.cudFlag == SpGridConstant.UPDATE_FLAG ){
-//                                 scope.gridObject.getGridAction().onRowEditAfter( scope.row );
+//                                 scope.gridObject.gridAction.onRowEditAfter( scope.row );
 //                             }
 
 //                             scope.row.__valid      = true;
