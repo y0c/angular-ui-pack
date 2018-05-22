@@ -1,4 +1,4 @@
-<div class="sp-grid-header">
+<div class="sp-grid-header" ng-style='{ paddingRight : scrollBarWidth }'>
     <table>
         <colgroup>
             <col ng-repeat="column in $header.columns" ng-style="{ width : column.width }"></col>
@@ -25,6 +25,7 @@
                         </span>
                     </div>
                 </th>
+                <th></th>
             </tr>
             <!-- Grid HeaderDef is Not Set -->
             <tr ng-if="!gridObject.getHeaderDef()">
@@ -53,5 +54,4 @@
                 <input type="text" ng-model="gridObject.getFilteringQuery()[column.id]" ng-change="filtering(column.id)" ng-if="gridObject.isFilterable() && gridObject.isFilteringColumn(column.id)" />
             </div>
         </div> -->
-    </div>
 </div>

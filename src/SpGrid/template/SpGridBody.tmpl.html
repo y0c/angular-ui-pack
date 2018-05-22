@@ -1,7 +1,7 @@
 <div class="sp-grid-body" ng-style="{ 'maxHeight' : gridObject.getSize().height }" sync-scroll >
     <div class="sp-grid-body-canvas">
         <div class="sp-grid-col-group">
-            <div ng-repeat="column in gridObject.getColumnDef()" ng-style="{ width : column.width}"></div>
+            <div ng-repeat="column in gridObject.columnDef" ng-style="{ width : column.width}"></div>
         </div>
         <!-- <sp-grid-data-row ng-repeat="row in gridObject.getCreateData()"></sp-grid-data-row> -->
             <sp-grid-data-row 
