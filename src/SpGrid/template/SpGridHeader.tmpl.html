@@ -5,13 +5,14 @@
         </colgroup>
         <thead>
             <!-- Grid Header is Set -->
-            <tr ng-repeat="pos in gridObject.getHeaderDef().index" ng-if="gridObject.getHeaderDef()">
+            <tr ng-repeat="pos in gridObject.headerDef.index" ng-if="gridObject.headerDef">
                 <th 
-                    ng-repeat='column in headerColumns track by $index' 
+                    ng-repeat='column in $header.columns track by $index' 
                     class="sp-grid-header-column" 
                     ng-if="column.headers[pos].colSpan != '#colSpan' && column.headers[pos].rowSpan != '#rowSpan'"
                     colspan='{{column.headers[pos].colSpan}}'
                     rowspan='{{column.headers[pos].rowSpan}}'
+                    ng-style="{borderBottom : column.headers[pos].rowSpan != '#rowSpan' ? 'none !important' : '' }"
                 >
                     <div>
                         <span compile-html="column.headers[pos].name"></span>
@@ -25,10 +26,9 @@
                         </span>
                     </div>
                 </th>
-                <th></th>
             </tr>
             <!-- Grid HeaderDef is Not Set -->
-            <tr ng-if="!gridObject.getHeaderDef()">
+            <tr ng-if="!gridObject.headerDef">
                 <th
                     ng-repeat='column in $header.columns track by $index' 
                     class="sp-grid-header-column" 

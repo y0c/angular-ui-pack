@@ -10,7 +10,7 @@ const spGridDataRow = ( $compile ) => {
         controller : 'SpGridDataRowController',
         controllerAs : '$row',
         template,
-        compile : () => ( $scope, $elem, $attrs, $ctrl ) =>  $elem.html($compile($ctrl.generateRowTemplate())($scope)   )
+        // compile : () => ( $scope, $elem, $attrs, $ctrl ) =>  $elem.html($compile($ctrl.generateRowTemplate())($scope)   )
         // compile : () => {
         //     return ( $scope, $elem, $attrs, $ctrl ) => $elem.html($ctrl.generateRowTemplate());
         // }
@@ -36,35 +36,6 @@ const spGridDataRow = ( $compile ) => {
 
 //             scope.$columns           = scope.gridObject.getVisibleColumn();
 
-//             scope.$on(scope.gridObject.getId() + "gridColumnChange", function(){
-//                 scope.$columns           = scope.gridObject.getVisibleColumn();
-//             });
-//             /**
-//              * Grid Data Row 클릭시 기본 Action 과 커스텀 Action 동작
-//              */
-//             function onGridDataRowClick( row ){
-
-//                 if ( scope.gridObject.isSelectable() ){
-//                     var oldRowIdx = scope.gridObject.getSelectedIndex();
-//                     var oldRow    = scope.gridObject.getSelectedRow();
-//                     var newRowIdx = scope.rowidx;
-
-//                     var onRowSelectedChange =  SpGridUtil.castToPromise(
-//                         scope.gridObject.gridAction.onRowSelectedChange( oldRowIdx, oldRow, newRowIdx, row )
-//                     );
-
-//                     onRowSelectedChange
-//                         .then(function(){
-//                             scope.gridObject.setSelectedRow( row );
-//                         });
-//                 }
-
-//                 scope.gridObject.gridAction.onRowClick( row, scope.rowidx );
-//             }
-
-//             function onGridDataRowDblClick( row ){
-//                 scope.gridObject.gridAction.onRowDblClick( row, scope.rowidx );
-//             }
 
 //             function checkRowValid(){
 //                 return scope.row.hasOwnProperty("__valid") && scope.row.__valid;
@@ -185,28 +156,11 @@ const spGridDataRow = ( $compile ) => {
 //              * Grid Data Row 삭제된 로우인지 체크
 //              * @returns {boolean}
 //              */
-//             scope.isRowDeleted = function(){
-//                 if( scope.row.hasOwnProperty("cudFlag") ){
-//                     return scope.row.cudFlag == SpGridConstant.DELETE_FLAG;
-//                 }
-//                 return false;
-//             };
 
 //             /**
 //              * Grid Row 클래스 결정
 //              * @returns {*}
 //              */
-//             scope.getRowClass = function(){
-//               if( scope.isRowActive() ){
-//                   return SpGridConstant.ROW_ACTIVE_CLASS;
-//               }
-
-//               if( scope.gridObject.isSelectable() && scope.row.hasOwnProperty("__isSelected") && scope.row.__isSelected ){
-//                   return SpGridConstant.ROW_SELECT_CLASS;
-//               }
-
-//               return ""
-//             };
 //             /**
 //              *
 //              * @returns {boolean}
@@ -308,13 +262,6 @@ const spGridDataRow = ( $compile ) => {
 //                 return true;
 //             };
 
-//             function setRowStyle( $scope, paramMap){
-//                 if( paramMap.rowIdx == scope.$index ){
-//                     element.css(paramMap.style);
-//                 }
-//             }
-
-//             scope.$on( scope.gridObject.getId() + "rowStyleChange", setRowStyle);
 //             scope.$on( scope.gridObject.getId() + "rowEditMode" + scope.rowidx, scope.rowEdit );
 //             scope.$on( scope.gridObject.getId() + "EditMode", scope.rowEdit );
 //         }

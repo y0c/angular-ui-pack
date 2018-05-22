@@ -9,7 +9,7 @@ import template from '../template/SpGridDataColumn.tmpl.html';
         template,
         replace : true,
         controller : 'SpGridDataColumnController',
-        controllerAs : '$ctrl'
+        controllerAs : '$column'
      };
  }
 

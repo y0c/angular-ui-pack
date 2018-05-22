@@ -2,6 +2,7 @@
 // var angular = require("angular");
 // import angular from 'angular';
 import SpGrid from './factories/SpGrid';
+import vsRepeat from 'angular-vs-repeat';
 import SpGridConstant from './SpGridConstant';
 import {
     spGridDataColumn,
@@ -31,7 +32,7 @@ import {
     SpGridPagingController
 } from './controllers';
 
-const app = angular.module("SpGrid", [ ]);
+const app = angular.module("SpGrid", [ vsRepeat ]);
 
 
 
@@ -48,11 +49,11 @@ const app = angular.module("SpGrid", [ ]);
         .directive('spGridPaging', spGridPaging)
         
         //Util Directive
-        .directive('startFrom', startFrom)
-        .directive('compileHtml', compileHtml)
-        .directive('toTrusted', toTrusted)
+        .filter('startFrom', startFrom)
+        .filter('to_trusted', toTrusted)
+        .filter('convertToNumber', convertToNumber)
         .directive('wResize', resize)
-        .directive('convertToNumber', convertToNumber)
+        .directive('compileHtml', compileHtml)
         .directive('onFinishRender', onFinishRender)
 
         //Controller

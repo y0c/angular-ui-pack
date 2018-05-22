@@ -131,11 +131,8 @@ export default ( SpGridConstant, SpGridUtil, $rootScope ) => {
         get gridAction(){ return this._gridOptions.gridAction; }
 
         set gridAction(action){ this._gridOptions.gridAction = action;}
-        /**
-         * header Column 정의 
-         * @returns {Array} 
-         */
-        getHeaderDef() { return this._gridOptions.headerDef; } 
+
+        get headerDef() { return this._gridOptions.headerDef; }
         /**
          * Grid Instance Id 리턴 
          * @returns {Int} 
