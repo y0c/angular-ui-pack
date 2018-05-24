@@ -1,7 +1,7 @@
-<div class="sp-grid-footer">
+<div class="sp-grid-footer" ng-style='{ paddingRight : scrollBarWidth }'>
     <table>
         <colgroup>
-            <col ng-repeat="column in headerColumns" ng-style="{ width : column.width }"></col>
+            <col ng-repeat="column in $footer.columns" ng-style="{ width : column.width }"></col>
         </colgroup>
         <tbody>
             <tr class="sp-grid-grouping-row" grouping-type="total">

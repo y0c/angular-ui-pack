@@ -4,10 +4,10 @@
 function spGridCellSizer( $compile, SpGridConstant, $templateCache, SpGridUtil,  $timeout, $q ) {
     return {
         restrict: "A",
-        controller: "spGridController",
+        controller: "SpGridController",
         require: ['?spGridGropingRow'],
         link: function (scope, element, attrs ) {
-            var headerColumns = scope.gridObject.getColumnDef();
+            var headerColumns = scope.gridObject.columnDef;
             setSize();
 
             function setSize() {

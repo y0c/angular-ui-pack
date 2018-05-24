@@ -2,24 +2,25 @@ var webpack = require("webpack");
 const path = require("path");
 const config = {
     entry: [
-        'webpack-dev-server/client?http://localhost:8080',
         './src/app.js'
     ],
     output: {
-        path: path.resolve(__dirname) + '/public/javascripts/dist',
+        path: path.resolve(__dirname) +  '/public/javascripts/dist',
+        publicPath : '/javascripts/dist',
         filename: 'SpUi.js'
     },
     plugins: [
         new webpack.ProvidePlugin({
             $: "jquery",
-            jQuery: "jquery"
+            jQuery: "jquery",
+            // angular : 'angular'
         }),
         new webpack.HotModuleReplacementPlugin()
     ],
     devServer : {
         contentBase : './public',
         hot : true,
-        publicPath : '/',
+        inline:true,
         port : 8080,
         host: 'localhost',
         https: false,
@@ -33,15 +34,26 @@ const config = {
     },
     module :{
         rules: [
-        {
-            test: /\.html$/,
-            use: [ {
-                loader: 'html-loader',
-                options: {
-                    minimize: true
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env'],
+                        plugins : [ 'transform-class-properties']
+                    }
                 }
-            }]
-        },
+            },
+            {
+                test: /\.html$/,
+                use: [ {
+                    loader: 'html-loader',
+                    options: {
+                        minimize: true
+                    }
+                }]
+            },
             {
                 test: /\.css$/,
                 use: [ 'style-loader', 'css-loader' ]
@@ -61,7 +73,7 @@ const config = {
 
         ]
     },
-    devtool: '#inline-source-map'
+    devtool: 'source-map'
 };
 
 module.exports = config;

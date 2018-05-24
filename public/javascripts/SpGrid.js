@@ -45,7 +45,7 @@
                         "</div>");
         $templateCache.put( SpGridConstant.template.SP_GRID_HEADER_ROW,
                         "<div class=\"sp-grid-header-row\">" +
-                            "<sp-grid-header-column ng-repeat='column in gridObject.getColumnDef() track by $index'>" +
+                            "<sp-grid-header-column ng-repeat='column in gridObject.columnDef track by $index'>" +
                             "</sp-grid-header-column>" +
                         "</div>");
 
@@ -204,7 +204,7 @@
          * Grid 로우 추가
          */
         SpGrid.prototype.addEmptyRow = function( ){
-            var _columns = this.getColumnDef();
+            var _columns = this.columnDef;
             var _row     = {};
 
             for( var i = 0 ; i < _columns.length ; i ++ ){
@@ -255,7 +255,7 @@
 
     app.controller("spGridController", ['$scope', 'spGridUtil', function( $scope, spGridUtil ){
         var _gridObject  = $scope.gridObject;
-        var _gridColumns = _gridObject.getColumnDef();
+        var _gridColumns = _gridObject.columnDef;
 
         var _gridColumnIds = getGridColumnIds();
 

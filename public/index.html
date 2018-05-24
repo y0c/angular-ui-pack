@@ -10,11 +10,17 @@
     <link rel="stylesheet" href="/stylesheets/SpGrid.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+    <style>
+        .wrap{
+            width : 1100px;
+            margin:50px auto;
+        }
+    </style>
 </head>
 <body>
     <div class="wrap" ng-app="gridApp" ng-controller="GridController" ng-init="init()" >
         <sp-grid grid-object="grid"></sp-grid>
-        <script type="text/ng-template" id="gridGroupingRowTemplate">
+        <!-- <script type="text/ng-template" id="gridGroupingRowTemplate">
             <td colspan='2' class="sp-grid-data-column">
                 <span ng-if="groupingType == 'total'">총계</span>
                 <span ng-if="groupingType == 'group'">합계</span>
@@ -26,7 +32,28 @@
             <td class="sp-grid-data-column">{{group.huef.sum}}</td>
             <td class="sp-grid-data-column">{{group.hue.sum}}</td>
         </script>
+        <sp-grid-paging paging-options="pagingOptions" style="margin-top:20px;">
+        </sp-grid-paging> -->
+                    <!-- <table ng-table="tableParams" class="table" >
+                            <tr ng-repeat="row in $data">
+                                <td title="'대학(원)'" >
+                                    {{row.colgnm}}</td>
+                                <td title="'분반'">
+                                    {{row.sustnm}}</td>
+                                <td title="'능력단위번호'" >
+                                    {{row.jaem}}</td>
+                                <td title="'수행준거'">
+                                    {{row.jaef}}</td>
+                                    <td title="'수행준거'">
+                                            {{row.jae}}</td>
+                                            <td title="'수행준거'">
+                                                    {{row.huem}}</td>
+                                                    <td title="'수행준거'">
+                                                            {{row.huef}}</td>
+                            </tr>
+                        </table> -->
     </div>
+    
 <!-- <div class="wrap" ng-app="gridApp" ng-controller="GridController" ng-init="init()">
     <table ng-table="tableParams" class="table" >
         <tr ng-repeat="row in $data">
@@ -80,65 +107,76 @@
                 "UPDATED_IP": "211.221.251.72"
                 },
             */
-            // $scope.grid = new SpGrid({
-            //     selectable : true,
-            //     // headerDef : {
-            //     //     index : [ 0, 1, 2 ]
-            //     // },
-            //     columnDef : [
-            //         {
-            //             id : 'SUBJECT_NO',
-            //             name : '과목번호',
-            //             width : '100px',
-            //             headers : [
-            //                 { name : '3단병합', colSpan : 4},
-            //                 { name : 'Test', colSpan : 2 },
-            //                 { name : '과목번호'}
-            //             ]
-            //         },
-            //         {
-            //             id : 'BUNBAN',
-            //             name : '분반',
-            //             width : '80px',
-            //             headers : [
-            //                 { name : '', colSpan : '#colSpan' },
-            //                 { name : '', colSpan : '#colSpan' },
-            //                 { name : '분반' }
-            //             ]
-            //         },
-            //         {
-            //             id : 'COMPT_UNIT_ELE_NO',
-            //             name : '능력단위 번호',
-            //             width : '300px',
-            //             headers : [
-            //                 { name : '', colSpan : '#colSpan' },
-            //                 { name : '능력단위번호', rowSpan : 2},
-            //                 { name : '', rowSpan : '#rowSpan'}
-            //             ]
-            //         },
-            //         {
-            //             id : 'ASSESS_ITEM',
-            //             name : '수행준거',
-            //             width : '400px', 
-            //             headers : [
-            //                 { name : '', colSpan : '#colSpan' },
-            //                 { name : '평가'},
-            //                 { name : '수행준거'}
-            //             ]
-            //         }
-            //     ],
-            //     gridSize : {
-            //         height : "300px"
-            //     }
-            // });
+            $scope.grid = new SpGrid({
+                selectable : true,
+                headerDef : {
+                    index : [ 0, 1, 2 ]
+                },
+                columnDef : [
+                    {
+                        id : 'SUBJECT_NO',
+                        name : '과목번호',
+                        width : '100px',
+                        headers : [
+                            { name : '3단병합', colSpan : 4},
+                            { name : 'Test', colSpan : 2 },
+                            { name : '과목번호'}
+                        ]
+                    },
+                    {
+                        id : 'BUNBAN',
+                        name : '분반',
+                        width : '80px',
+                        headers : [
+                            { name : '', colSpan : '#colSpan' },
+                            { name : '', colSpan : '#colSpan' },
+                            { name : '분반' }
+                        ]
+                    },
+                    {
+                        id : 'COMPT_UNIT_ELE_NO',
+                        name : '능력단위 번호',
+                        width : '300px',
+                        headers : [
+                            { name : '', colSpan : '#colSpan' },
+                            { name : '능력단위번호', rowSpan : 2},
+                            { name : '', rowSpan : '#rowSpan'}
+                        ]
+                    },
+                    {
+                        id : 'ASSESS_ITEM',
+                        name : '수행준거',
+                        width : '400px', 
+                        headers : [
+                            { name : '', colSpan : '#colSpan' },
+                            { name : '평가'},
+                            { name : '수행준거'}
+                        ]
+                    }
+                ],
+                gridSize : {
+                    height : "300px"
+                },
+                gridAction : {
+                    onRowRenderFinished : function() {
+                        $scope.grid.setRowStyle(3, {
+                            background:'red'
+                        });
+                        $scope.grid.setCellStyle(3,2, {
+                            background:'yellow',
+                            fontSize : '20px'
+                        })
+                    }
+                }
+            });
 
-            // $scope.init = function() {
-            //     $http.get('/test2.json',{})
-            //         .then(function(response){
-            //             $scope.grid.setData(response.data);
-            //             $scope.tableParams = new NgTableParams({ count : response.data.length}, { dataset: response.data});
-            //         });
-            // }
+            $scope.init = function() {
+                $http.get('/test.json',{})
+                    .then(function(response){
+                        $scope.grid.setData(response.data);
+                        $scope.tableParams = new NgTableParams({ count : response.data.length}, { dataset: response.data});
+                    });
+            }
 //   {
 //     "corsgb": "학사",
 //     "colg": "001021000000",
@@ -155,35 +193,46 @@
 //     "totalf": 261,
 //     "total": 376
 //   },
-            $scope.grid  = new SpGrid({
-                columnDef   : [
-                    {id:"colgnm",name:"대학(원)",width:"180px"}
-                    ,{id:"sustnm",name:"학과(부)",width:"250px"}
-                    ,{id:"jaem",name:"남",width:"50px"}
-                    ,{id:"jaef",name:"여",width:"50px"}
-                    ,{id:"jae",name:"계",width:"50px"}
-                    ,{id:"huem",name:"남",width:"50px"}
-                    ,{id:"huef",name:"여",width:"50px"}
-                    ,{id:"hue",name:"계",width:"50px"}
-                ],
-                totalize : true,
-                grouping : {
-                    aggregate : {
-                        jae : "sum",
-                        jaem : "sum",
-                        jaef : "sum",
-                        huem : "sum",
-                        huef : "sum",
-                        hue : "sum",
-                    },
-                    totalRowTemplate : $templateCache.get("gridGroupingRowTemplate")
-                }
-            });
+                $scope.pagingOptions = {
+                    currentPage : 1,
+                    pageSize : 10,
+                    pageBlockSize : 10
+                };
+            // $scope.grid  = new SpGrid({
+            //     columnDef   : [
+            //         {id:"colgnm",name:"대학(원)",width:"180px"}
+            //         ,{id:"sustnm",name:"학과(부)",width:"250px"}
+            //         ,{id:"jaem",name:"남",width:"50px"}
+            //         ,{id:"jaef",name:"여",width:"50px"}
+            //         ,{id:"jae",name:"계",width:"50px"}
+            //         ,{id:"huem",name:"남",width:"50px"}
+            //         ,{id:"huef",name:"여",width:"50px"}
+            //         ,{id:"hue",name:"계",width:"50px"}
+            //     ],
+            //     totalize : true,
+            //     grouping : {
+            //         aggregate : {
+            //             jae : "sum",
+            //             jaem : "sum",
+            //             jaef : "sum",
+            //             huem : "sum",
+            //             huef : "sum",
+            //             hue : "sum",
+            //         },
+            //         totalRowTemplate : $templateCache.get("gridGroupingRowTemplate")
+            //     },
+            //     gridSize : {
+            //         height : "300px"
+            //     },
+            //     enablePaging : true,
+            //     pagingOptions : $scope.pagingOptions
+            // });
 
-            $http.get("summarytest.json", {} )
-                .then(function( response ){
-                    $scope.grid.setData(response.data);
-                });
+            // $http.get("summarytest.json", {} )
+            //     .then(function( response ){
+            //         $scope.grid.setData(response.data);
+            //         $scope.tableParams = new NgTableParams({ count : response.data.length}, { dataset: response.data});
+            //     });
 
         });
 </script>

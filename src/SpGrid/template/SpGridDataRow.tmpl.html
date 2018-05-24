@@ -1,7 +1,7 @@
 <div class="sp-grid-data-row" 
-    ng-click="onGridDataRowClick(row)"
-     ng-dblclick="onGridDataRowDblClick(row)"
-    ng-hide="isRowDeleted()"
-    ng-class="getRowClass()">
-    <sp-grid-data-column ng-repeat="headerColumn in $columns"></sp-grid-data-column>
+    ng-click="$row.onGridDataRowClick(row)"
+     ng-dblclick="$row.onGridDataRowDblClick(row)"
+    ng-hide="$row.isRowDeleted()"
+    ng-class="$row.getRowClass()">
+    <sp-grid-data-column ng-repeat="headerColumn in $row.$columns"></sp-grid-data-column>
 </div>

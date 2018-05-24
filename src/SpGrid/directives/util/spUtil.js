@@ -1,35 +1,18 @@
-function ngRightClick($parse) {
-    return function(scope, element, attrs) {
-        var fn = $parse(attrs.ngRightClick);
-        element.bind('contextmenu', function(event) {
-            scope.$apply(function() {
-                event.preventDefault();
-                fn(scope, {$event:event});
-            });
-        });
-    };
-}
-
-
-function resize($window, $parse, $timeout) {
+const resize = ( $window, $parse, $timeout ) => {
     return {
         restrict : 'A',
-        link : function( scope, element, attrs ) {  
-            var onResize = $parse(attrs.onResize);
+        link(scope, element, attrs ) {
+            
+            let onResize = $parse(attrs.onResize);
             //gridbody의 처음 width를 가져와서 할당 
             //만약 div가 보이지 않는 상황이라면 모든 컬럼의 너비를 더해서 계산함
-            var loadedWidth = (function(){
-                var headerColumns = scope.gridObject.getColumnDef(),
+            let loadedWidth = (function(){
+                var headerColumns = scope.gridObject.columnDef,
                     elemWidth     = element.parents('.sp-grid-box').parent().width(),
                     windowWidth   = $window.innerWidth,
                     loadedWidth   = null,
                     sumWidth      = 0;
                 
-                // var testDiv = '<div id="sp-grid-test-div" style="position:absolute;width:100%;visibility:hidden;z-index:9999"></div>"';
-                // elemWidth = element.parents('.sp-grid-box').parents(":visible").eq(0).append(testDiv)
-                //     .find('#sp-grid-test-div').width();
-
-
                 angular.forEach( headerColumns, function( column ){
                     sumWidth += parseInt(column.width);                    
                 });
@@ -37,17 +20,10 @@ function resize($window, $parse, $timeout) {
                 sumWidth += scope.scrollBarWidth;
 
                 loadedWidth = elemWidth < sumWidth ? sumWidth : elemWidth;
-                // loadedWidth = elemWidth;
                 
                 if ( loadedWidth > windowWidth ) {
                     loadedWidth = windowWidth; 
                 }
-              
-
-                // $timeout(function(){
-                //     onResize(scope, { width : loadedWidth });
-                // });
-
                 return loadedWidth;
             })();
 
@@ -85,61 +61,66 @@ function resize($window, $parse, $timeout) {
 }
 
 
-module.exports = function(app){
-    app.directive("ngRightClick", ngRightClick);
-    app.directive("wResize", resize);
-    app.filter("to_trusted", ['$sce', function($sce){
-        return function(text) {
-            return $sce.trustAsHtml(text);
-        };
-    }]);
 
-    app.filter('startFrom', function () {
-        return function (input, start) {
-            if (input) {
-                start = +start;
-                return input.slice(start);
-            }
-            return [];
-        };
-    });
+const toTrusted = ( $sce ) => {
+    return text => $sce.trustAsHtml(text);
+};
 
-    app.directive('onFinishRender', function ($timeout) {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attr) {
-                if (scope.$last === true) {
-                    $timeout(function () {
-                        scope.$emit(attr.onFinishRender);
-                    });
-                }
+const startFrom = () => {
+    return (input, start) => {
+        if ( input ) {
+            start = + start;
+            return input.slice(start);
+        }
+        return [];
+    }
+};
+
+const onFinishRender = $timeout => {
+    return {
+        restrcit : 'A',
+        link(scope, element, attr) {
+            if (scope.$last === true) {
+                $timeout(() => {
+                    scope.$emit(attr.onFinishRender);
+                });
             }
         }
-    });
-    app.directive('convertToNumber', function() {
-        return {
-            require: 'ngModel',
-            link: function(scope, element, attrs, ngModel) {
-                ngModel.$parsers.push(function(val) {
-                    return val != null ? parseInt(val, 10) : null;
-                });
-                ngModel.$formatters.push(function(val) {
-                    return val != null ? '' + val : null;
-                });
-            }
-        };
-    });
+    }
+};
 
-    app.directive('compileHtml', function($compile) {
-        return {
-            restrict: 'A',
-            replace : true,
-            // require : "?spGrid",
-            link: function (scope, element, attrs) {
-                var compileHtml = scope.$eval(attrs.compileHtml);
-                element.html(compileHtml);
-                $compile(element.contents())(scope);
-            }
-        };
-    });
+const convertToNumber = () => {
+    return {
+        require: 'ngModel',
+        link(scope, element, attrs, ngModel) {
+            ngModel.$parsers.push(function(val) {
+                return val != null ? parseInt(val, 10) : null;
+            });
+            ngModel.$formatters.push(function(val) {
+                return val != null ? '' + val : null;
+            });
+        }
+    };
+};
+
+const compileHtml = ( $compile) => {
+    return {
+        restrict: 'A',
+        replace : true,
+        // require : "?spGrid",
+        link(scope, element, attrs) {
+            let compileHtml = scope.$eval(attrs.compileHtml);
+            element.html(compileHtml);
+            $compile(element.contents())(scope);
+        }
+    };
+} 
+
+export {
+    compileHtml,
+    convertToNumber,
+    onFinishRender,
+    startFrom,
+    toTrusted,
+    resize
 };
