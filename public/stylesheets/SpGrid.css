@@ -28,7 +28,8 @@
     text-align: center;
     vertical-align: bottom;
     font-size: 13px;
-    top: 65px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 100%;
 }
 .sp-grid-wrap .sp-grid .sp-grid-body .sp-grid-data .nb-inputText {
